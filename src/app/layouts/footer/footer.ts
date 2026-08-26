@@ -35,19 +35,18 @@ export class FooterComponent {
   address = '24 Culinary Avenue, New York, NY 10001';
 
   navLinks: NavLink[] = [
-    { label: 'Home', path: '/' },
+    { label: 'Home', path: '/home' },
     { label: 'About', path: '/about' },
     { label: 'Menu', path: '/menu' },
     { label: 'Gallery', path: '/gallery' },
-    { label: 'Blog', path: '/blog' },
     { label: 'Contact', path: '/contact' },
   ];
 
   socials: Social[] = [
-    { name: 'Instagram', url: 'https://instagram.com', icon: 'bi-instagram' },
-    { name: 'Facebook', url: 'https://facebook.com', icon: 'bi-facebook' },
-    { name: 'Twitter/X', url: 'https://x.com', icon: 'bi-twitter-x' },
-    { name: 'YouTube', url: 'https://youtube.com', icon: 'bi-youtube' },
+    { name: 'Instagram', url: 'https://instagram.com', icon: 'fa-instagram' },
+    { name: 'Facebook', url: 'https://facebook.com', icon: 'fa-facebook' },
+    { name: 'Twitter/X', url: 'https://x.com', icon: 'fa-twitter' },
+    { name: 'YouTube', url: 'https://youtube.com', icon: 'fa-youtube' },
   ];
 
   hours: Hours[] = [

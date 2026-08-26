@@ -19,7 +19,7 @@ export class HeaderComponent {
   navOpen = false;
 
   navLinks: NavLink[] = [
-    { label: 'Home', path: '/' },
+    { label: 'Home', path: '/home' },
     { label: 'About', path: '/about' },
     { label: 'Menu', path: '/menu' },
     { label: 'Gallery', path: '/gallery' },
