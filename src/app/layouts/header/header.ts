@@ -1,6 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import {
+  Component,
+  HostListener,
+  Inject,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import {
+  NavigationEnd,
+  Router,
+  RouterLink,
+  RouterLinkActive,
+} from '@angular/router';
+import { filter } from 'rxjs';
 
 interface NavLink {
   label: string;
@@ -14,9 +27,10 @@ interface NavLink {
   styleUrls: ['./header.scss'],
   imports: [CommonModule, RouterLink, RouterLinkActive],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   isScrolled = false;
   navOpen = false;
+  isBrowser: boolean;
 
   navLinks: NavLink[] = [
     { label: 'Home', path: '/home' },
@@ -26,12 +40,51 @@ export class HeaderComponent {
     { label: 'Contact', path: '/contact' },
   ];
 
-  @HostListener('window:scroll', [])
+  constructor(
+    private router: Router,
+    @Inject(PLATFORM_ID) platformId: Object,
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
+
+  ngOnInit(): void {
+    this.updateNavbarState();
+
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.navOpen = false;
+        this.updateNavbarState();
+      });
+  }
+
+  @HostListener('window:scroll')
   onWindowScroll(): void {
-    this.isScrolled = window.scrollY > 60;
+    if (!this.isBrowser) {
+      return;
+    }
+
+    const isHome = this.router.url === '/' || this.router.url === '/home';
+
+    if (isHome) {
+      this.isScrolled = window.scrollY > 60;
+    } else {
+      this.isScrolled = true;
+    }
+  }
+
+  private updateNavbarState(): void {
+    const isHome = this.router.url === '/' || this.router.url === '/home';
+    const scrollY = this.isBrowser ? window.scrollY : 0;
+
+    this.isScrolled = !isHome || scrollY > 60;
   }
 
   toggleNav(): void {
     this.navOpen = !this.navOpen;
+  }
+
+  closeNav(): void {
+    this.navOpen = false;
   }
 }

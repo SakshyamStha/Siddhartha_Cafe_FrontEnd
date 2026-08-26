@@ -72,19 +72,30 @@ body {
 }
 
 //  Navbar
-
 .navbar {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   padding-block: 1.2rem;
-  background: transparent;
+  background: transparent !important;
+  z-index: 1000;
   transition:
     background 0.3s ease,
     padding 0.3s ease,
     box-shadow 0.3s ease;
 
   &.scrolled {
-    background: rgba($dark, 0.96);
+    background: rgba($dark, 0.96) !important;
     padding-block: 0.7rem;
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .brand-name {
@@ -108,6 +119,136 @@ body {
     &.active {
       color: $primary !important;
     }
+  }
+}
+
+body {
+  padding-top: 0;
+}
+
+.navbar-desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.navbar-toggle {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 42px;
+  height: 42px;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  cursor: pointer;
+  position: relative;
+  z-index: 1100;
+
+  &:focus,
+  &:focus-visible,
+  &:active {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: $white !important;
+    border-radius: 2px;
+    transition:
+      transform 0.3s ease,
+      opacity 0.3s ease;
+  }
+
+  &.open {
+    span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    span:nth-child(2) {
+      opacity: 0;
+    }
+    span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+  }
+}
+
+.navbar-mobile-menu {
+  position: fixed;
+  inset: 0;
+  background: rgba($dark, 0.98);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.75rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-16px);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    visibility 0.3s;
+  z-index: 1050;
+  pointer-events: none;
+
+  .nav-link {
+    font-size: 1.15rem;
+    letter-spacing: 0.1em;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  &.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+}
+
+@media (min-width: 992px) {
+  .navbar-toggle {
+    display: none !important;
+  }
+
+  .navbar-mobile-menu {
+    display: none !important;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .navbar-desktop-nav,
+  .navbar-actions {
+    display: none !important;
+  }
+
+  .navbar-toggle {
+    display: flex !important;
   }
 }
 
@@ -932,5 +1073,205 @@ body {
   .section-cta .btn {
     width: 100%;
     margin-bottom: 0.75rem;
+  }
+}
+
+// contact
+
+.contact-page {
+  padding-block: $section-py;
+  background: $white;
+
+  &__container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+    align-items: start;
+  }
+
+  &__desc {
+    font-size: 1.02rem;
+    line-height: 1.8;
+    color: $text-muted;
+    margin-bottom: 1.75rem;
+    max-width: 460px;
+  }
+
+  &__list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 3rem;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.95rem;
+      color: $text;
+      margin-bottom: 0.85rem;
+
+      i {
+        color: $primary;
+        font-size: 1.1rem;
+      }
+    }
+  }
+
+  &__cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+}
+
+.info-card {
+  background: $bg-light;
+  border: 1px solid $border;
+  border-radius: $border-radius;
+  padding: 1.5rem;
+
+  &__title {
+    font-family: $font-display;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: $dark;
+    margin-bottom: 0.5rem;
+  }
+
+  &__desc {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: $text-muted;
+    margin-bottom: 1rem;
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: $primary;
+    text-decoration: none;
+    transition: color 0.2s;
+
+    i {
+      font-size: 0.9rem;
+    }
+
+    &:hover {
+      color: $primary-dark;
+    }
+  }
+}
+
+.contact-form-card {
+  background: $bg-light;
+  border: 1px solid $border;
+  border-radius: $border-radius;
+  padding: 2.25rem;
+
+  &__title {
+    font-family: $font-display;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: $dark;
+    margin-bottom: 1.75rem;
+  }
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+
+  label {
+    display: block;
+    font-family: $font-body;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: $text-muted;
+    margin-bottom: 0.5rem;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    font-family: $font-body;
+    font-size: 0.92rem;
+    color: $text;
+    background: $white;
+    border: 1px solid $border;
+    border-radius: $border-radius;
+    padding: 0.7rem 0.9rem;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+
+    &::placeholder {
+      color: rgba($text-muted, 0.6);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $primary;
+      box-shadow: 0 0 0 3px rgba($primary, 0.15);
+    }
+
+    &.is-invalid {
+      border-color: #c0392b;
+
+      &:focus {
+        box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.12);
+      }
+    }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 110px;
+  }
+}
+
+.form-error {
+  font-size: 0.78rem;
+  color: #c0392b;
+  margin-top: 0.4rem;
+}
+
+.form-success {
+  font-size: 0.85rem;
+  color: #2f7d4f;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+@media (max-width: 991px) {
+  .contact-page__container {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .contact-page__cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 575px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-form-card {
+    padding: 1.5rem;
   }
 }
