@@ -30,9 +30,9 @@ export class FooterComponent {
   currentYear = new Date().getFullYear();
   newsletterEmail = '';
 
-  contactPhone = '+1 (555) 012-3456';
-  contactEmail = 'hello@Siddhartha Caferestaurant.com';
-  address = '24 Culinary Avenue, New York, NY 10001';
+  contactPhone = '+9841123322';
+  contactEmail = 'hello@sidcafe.com';
+  address = 'Thulovaryang, Kathmandu, Nepal';
 
   navLinks: NavLink[] = [
     { label: 'Home', path: '/home' },

@@ -42,20 +42,6 @@
           <p><i class="bi bi-telephone me-2"></i>{{ contactPhone }}</p>
           <p><i class="bi bi-envelope me-2"></i>{{ contactEmail }}</p>
         </address>
-        <div class="footer__newsletter mt-3">
-          <input
-            type="email"
-            class="form-control"
-            placeholder="Your email address"
-            [(ngModel)]="newsletterEmail"
-          />
-          <button
-            class="btn btn-primary mt-2 w-100"
-            (click)="subscribeNewsletter()"
-          >
-            Subscribe to Newsletter
-          </button>
-        </div>
       </div>
     </div>
     <hr class="footer__divider" />
