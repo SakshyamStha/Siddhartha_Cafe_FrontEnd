@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 interface About {
@@ -276,7 +276,43 @@ export class HomeComponent implements OnInit {
     this.activeCategory = cat;
   }
 
+  // lightbox
+  lightboxOpen = false;
+  lightboxIndex = 0;
+
   openLightbox(index: number): void {
-    console.log('Open lightbox at index:', index);
+    this.lightboxIndex = index;
+    this.lightboxOpen = true;
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeLightbox(): void {
+    this.lightboxOpen = false;
+    document.body.style.overflow = '';
+  }
+
+  nextImage(): void {
+    this.lightboxIndex = (this.lightboxIndex + 1) % this.galleryImages.length;
+  }
+
+  prevImage(): void {
+    this.lightboxIndex =
+      (this.lightboxIndex - 1 + this.galleryImages.length) %
+      this.galleryImages.length;
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeydown(event: KeyboardEvent): void {
+    if (!this.lightboxOpen) {
+      return;
+    }
+
+    if (event.key === 'Escape') {
+      this.closeLightbox();
+    } else if (event.key === 'ArrowRight') {
+      this.nextImage();
+    } else if (event.key === 'ArrowLeft') {
+      this.prevImage();
+    }
   }
 }
