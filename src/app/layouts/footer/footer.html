@@ -14,7 +14,7 @@
             rel="noopener"
             [attr.aria-label]="s.name"
           >
-            <i [class]="'bi ' + s.icon"></i>
+            <i [class]="s.icon"></i>
           </a>
         </div>
       </div>
@@ -26,7 +26,7 @@
           </li>
         </ul>
       </div>
-      <div class="col-6 col-lg-2">
+      <div class="col-6 col-lg-3">
         <h6 class="footer__heading">Hours</h6>
         <ul class="footer__hours">
           <li *ngFor="let h of hours">
@@ -35,7 +35,7 @@
           </li>
         </ul>
       </div>
-      <div class="col-lg-4">
+      <div class="col-lg-3">
         <h6 class="footer__heading">Find Us</h6>
         <address class="footer__address">
           <p><i class="bi bi-geo-alt me-2"></i>{{ address }}</p>
