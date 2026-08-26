@@ -1,1 +1,189 @@
-<p>contact works!</p>
+<section class="contact-page">
+  <div class="contact-page__container">
+    <div class="contact-page__left">
+      <span class="section-eyebrow">Contact Us</span>
+      <h1 class="section-title">How can We Help?</h1>
+      <p class="contact-page__desc">
+        Get in touch with our sales and support teams for demos, onboarding
+        support, or product questions.
+      </p>
+
+      <!-- <ul class="contact-page__list">
+        <li>
+          <i class="bi bi-check-circle"></i>
+          Request a demo
+        </li>
+        <li>
+          <i class="bi bi-check-circle"></i>
+          Learn which plan is right for your team
+        </li>
+        <li>
+          <i class="bi bi-check-circle"></i>
+          Get onboarding help
+        </li>
+      </ul> -->
+
+      <div class="contact-page__cards">
+        <div class="info-card">
+          <h3 class="info-card__title">General communication</h3>
+          <p class="info-card__desc">
+            For other queries, please get in touch with us via email.
+          </p>
+          <a class="info-card__link" href="mailto:hello@sidcafe.com">
+            <i class="bi bi-envelope"></i>
+            contact@sidcafe.com
+          </a>
+        </div>
+
+        <div class="info-card">
+          <h3 class="info-card__title">Documentation</h3>
+          <p class="info-card__desc">k xa huh k xaaa</p>
+          <a class="info-card__link" href="#">
+            nathich malai
+            <i class="bi bi-arrow-up-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-page__right">
+      <div class="contact-form-card">
+        <h2 class="contact-form-card__title">Contact our sales team</h2>
+
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First name</label>
+              <input
+                id="firstName"
+                type="text"
+                formControlName="firstName"
+                placeholder="Johaness Mark"
+                [class.is-invalid]="
+                  hasError('firstName', 'required') ||
+                  hasError('firstName', 'minlength')
+                "
+              />
+              <div class="form-error" *ngIf="hasError('firstName', 'required')">
+                First name is required.
+              </div>
+              <div
+                class="form-error"
+                *ngIf="hasError('firstName', 'minlength')"
+              >
+                Minimum 2 characters required.
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="lastName">Last name</label>
+              <input
+                id="lastName"
+                type="text"
+                formControlName="lastName"
+                placeholder="Parker"
+                [class.is-invalid]="
+                  hasError('lastName', 'required') ||
+                  hasError('lastName', 'minlength')
+                "
+              />
+              <div class="form-error" *ngIf="hasError('lastName', 'required')">
+                Last name is required.
+              </div>
+              <div class="form-error" *ngIf="hasError('lastName', 'minlength')">
+                Minimum 2 characters required.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="contact.uixmk@gmail.com"
+              [class.is-invalid]="
+                hasError('email', 'required') || hasError('email', 'pattern')
+              "
+            />
+            <div class="form-error" *ngIf="hasError('email', 'required')">
+              Email is required.
+            </div>
+            <div class="form-error" *ngIf="hasError('email', 'pattern')">
+              Enter a valid email address.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone number</label>
+            <input
+              id="phone"
+              type="tel"
+              formControlName="phone"
+              placeholder="+5 123 4554 784"
+              [class.is-invalid]="
+                hasError('phone', 'required') || hasError('phone', 'pattern')
+              "
+            />
+            <div class="form-error" *ngIf="hasError('phone', 'required')">
+              Phone number is required.
+            </div>
+            <div class="form-error" *ngIf="hasError('phone', 'pattern')">
+              Enter a valid phone number.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="companyWebsite">Company website</label>
+            <input
+              id="companyWebsite"
+              type="text"
+              formControlName="companyWebsite"
+              placeholder="meostudio.agency"
+              [class.is-invalid]="hasError('companyWebsite', 'invalidWebsite')"
+            />
+            <div
+              class="form-error"
+              *ngIf="hasError('companyWebsite', 'invalidWebsite')"
+            >
+              Enter a valid website domain.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Your message</label>
+            <textarea
+              id="message"
+              rows="4"
+              formControlName="message"
+              placeholder="Tell us more about your project..."
+              [class.is-invalid]="
+                hasError('message', 'required') ||
+                hasError('message', 'minlength')
+              "
+            ></textarea>
+            <div class="form-error" *ngIf="hasError('message', 'required')">
+              Message is required.
+            </div>
+            <div class="form-error" *ngIf="hasError('message', 'minlength')">
+              Minimum 10 characters required.
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-dark w-100"
+            [disabled]="isSubmitting"
+          >
+            {{ isSubmitting ? "Sending..." : "Send Message" }}
+          </button>
+
+          <div class="form-success" *ngIf="submitSuccess">
+            Your message has been sent successfully.
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
