@@ -46,11 +46,23 @@ export class FooterComponent {
     {
       name: 'Instagram',
       url: 'https://instagram.com',
-      icon: 'fa fa-instagram',
+      icon: 'fab fa-instagram',
     },
-    { name: 'Facebook', url: 'https://facebook.com', icon: 'fa fa-facebook' },
-    { name: 'Twitter/X', url: 'https://x.com', icon: 'fa fa-twitter' },
-    { name: 'YouTube', url: 'https://youtube.com', icon: 'fa fa-youtube' },
+    {
+      name: 'Facebook',
+      url: 'https://facebook.com',
+      icon: 'fab fa-facebook-f',
+    },
+    {
+      name: 'Twitter/X',
+      url: 'https://x.com',
+      icon: 'fab fa-x-twitter',
+    },
+    {
+      name: 'YouTube',
+      url: 'https://youtube.com',
+      icon: 'fab fa-youtube',
+    },
   ];
 
   hours: Hours[] = [
