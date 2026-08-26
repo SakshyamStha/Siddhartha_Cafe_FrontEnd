@@ -1,0 +1,74 @@
+<footer class="footer">
+  <div class="container">
+    <div class="row g-5 mb-5">
+      <div class="col-lg-4">
+        <h4 class="footer__brand">Siddhartha Cafe</h4>
+        <p class="footer__tagline">
+          Contemporary cuisine, timeless hospitality.
+        </p>
+        <div class="footer__socials mt-3">
+          <a
+            *ngFor="let s of socials"
+            [href]="s.url"
+            target="_blank"
+            rel="noopener"
+            [attr.aria-label]="s.name"
+          >
+            <i [class]="'bi ' + s.icon"></i>
+          </a>
+        </div>
+      </div>
+      <div class="col-6 col-lg-2">
+        <h6 class="footer__heading">Navigate</h6>
+        <ul class="footer__links">
+          <li *ngFor="let link of navLinks">
+            <a [routerLink]="link.path">{{ link.label }}</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg-2">
+        <h6 class="footer__heading">Hours</h6>
+        <ul class="footer__hours">
+          <li *ngFor="let h of hours">
+            <span>{{ h.day }}</span>
+            <span>{{ h.time }}</span>
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-4">
+        <h6 class="footer__heading">Find Us</h6>
+        <address class="footer__address">
+          <p><i class="bi bi-geo-alt me-2"></i>{{ address }}</p>
+          <p><i class="bi bi-telephone me-2"></i>{{ contactPhone }}</p>
+          <p><i class="bi bi-envelope me-2"></i>{{ contactEmail }}</p>
+        </address>
+        <div class="footer__newsletter mt-3">
+          <input
+            type="email"
+            class="form-control"
+            placeholder="Your email address"
+            [(ngModel)]="newsletterEmail"
+          />
+          <button
+            class="btn btn-primary mt-2 w-100"
+            (click)="subscribeNewsletter()"
+          >
+            Subscribe to Newsletter
+          </button>
+        </div>
+      </div>
+    </div>
+    <hr class="footer__divider" />
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <p class="footer__copy">
+          © {{ currentYear }} Siddhartha Cafe Restaurant. All rights reserved.
+        </p>
+      </div>
+      <div class="col-md-6 text-md-end">
+        <a routerLink="/privacy" class="footer__legal-link">Privacy Policy</a>
+        <a routerLink="/terms" class="footer__legal-link ms-4">Terms of Use</a>
+      </div>
+    </div>
+  </div>
+</footer>
