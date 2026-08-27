@@ -1,1 +1,196 @@
-<p>about works!</p>
+<section
+  class="page-banner"
+  [style.background-image]="'url(' + heroImage + ')'"
+>
+  <div class="page-banner__overlay"></div>
+  <div class="page-banner__content">
+    <h1 class="page-banner__title">{{ heroTitle }}</h1>
+    <!-- <p class="page-banner__subtitle">{{ heroSubtitle }}</p> -->
+  </div>
+</section>
+
+<section class="section-about" id="about">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <div class="about__image-wrap">
+          <img [src]="storyImage" alt="Our story" class="about__img" />
+          <div class="about__badge">
+            <span class="about__badge-year">{{ foundedYear }}</span>
+            <span class="about__badge-label">Est.</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <p class="section-eyebrow">Our Story</p>
+        <h2 class="section-title">
+          Crafted with <em>passion</em>,<br />served with heart.
+        </h2>
+        <p class="section-body mb-3" *ngFor="let para of storyBody">
+          {{ para }}
+        </p>
+        <ul class="about__features">
+          <li *ngFor="let feat of features">
+            <i class="bi bi-check-circle-fill"></i>
+            {{ feat }}
+          </li>
+        </ul>
+        <a href="#" class="btn btn-primary px-4 py-2 mt-2">Reserve a Table</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-stats">
+  <div class="container">
+    <div class="row g-4 text-center">
+      <div class="col-6 col-md-3" *ngFor="let stat of stats">
+        <div class="stat-card">
+          <span class="stat-card__number">{{ stat.value }}</span>
+          <span class="stat-card__label">{{ stat.label }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-about-services">
+  <div class="container">
+    <div class="section-header text-center mb-5">
+      <p class="section-eyebrow">What We Offer</p>
+      <h2 class="section-title">An experience <em>beyond</em> the plate</h2>
+      <p class="section-sub">
+        From intimate dinners to grand celebrations, we bring the same devotion
+        to every occasion we touch.
+      </p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4" *ngFor="let svc of services">
+        <div class="about-service-card">
+          <div class="about-service-card__icon">
+            <i [class]="'bi ' + svc.icon"></i>
+          </div>
+          <h3 class="about-service-card__title">{{ svc.title }}</h3>
+          <p class="about-service-card__desc">{{ svc.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-about-chef">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6 order-lg-2">
+        <img [src]="chefSignatureImage" alt="Chef at work" class="chef__img" />
+      </div>
+      <div class="col-lg-6 order-lg-1">
+        <p class="section-eyebrow">The Kitchen</p>
+        <h2 class="section-title">Where <em>craft</em> meets fire</h2>
+        <p class="section-body mb-4">
+          Our kitchen is the heartbeat of everything we do. Led by Executive
+          Chef Marco Bellini, a team of dedicated artisans work in harmony every
+          service — each station a discipline, each plate a statement. No
+          shortcuts, no compromises.
+        </p>
+        <div class="chef__awards">
+          <div class="chef__award">
+            <i class="bi bi-patch-check-fill"></i>
+            <span>3 Michelin Stars — awarded consecutively since 2018</span>
+          </div>
+          <div class="chef__award">
+            <i class="bi bi-trophy-fill"></i>
+            <span>World's 50 Best Restaurants — Top 30, 2023</span>
+          </div>
+          <div class="chef__award">
+            <i class="bi bi-star-fill"></i>
+            <span>James Beard Outstanding Chef Award, 2021</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-testimonials">
+  <div class="container">
+    <div class="section-header text-center mb-5">
+      <p class="section-eyebrow">Kind Words</p>
+      <h2 class="section-title">What guests are <em>saying</em></h2>
+    </div>
+    <div class="row g-4 justify-content-center">
+      <div class="col-md-6" *ngFor="let t of testimonials">
+        <div class="testimonial-card">
+          <div class="testimonial-card__stars">
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+          </div>
+          <p class="testimonial-card__body">"{{ t.quote }}"</p>
+          <div class="testimonial-card__author">
+            <img
+              [src]="t.avatar"
+              [alt]="t.author"
+              class="testimonial-card__avatar"
+            />
+            <div>
+              <strong>{{ t.author }}</strong>
+              <small>{{ t.role }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-about-team">
+  <div class="container">
+    <div class="section-header text-center mb-5">
+      <p class="section-eyebrow">The People</p>
+      <h2 class="section-title">Meet our <em>great</em> team</h2>
+      <p class="section-sub">
+        Behind every remarkable meal is a remarkable person. Here are the faces
+        that make it all happen.
+      </p>
+    </div>
+    <div class="row g-4">
+      <div class="col-sm-6 col-lg-3" *ngFor="let member of team">
+        <div class="team-card">
+          <div class="team-card__img-wrap">
+            <img
+              [src]="member.image"
+              [alt]="member.name"
+              class="team-card__img"
+            />
+            <div class="team-card__overlay">
+              <p class="team-card__bio">{{ member.bio }}</p>
+            </div>
+          </div>
+          <div class="team-card__body">
+            <h3 class="team-card__name">{{ member.name }}</h3>
+            <span class="team-card__role">{{ member.role }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-cta text-center">
+  <div class="container">
+    <p class="section-eyebrow" style="color: #c8973a">Join Us</p>
+    <h2 class="section-title" style="color: #fff">
+      Ready for an <em>unforgettable</em> evening?
+    </h2>
+    <p class="section-sub mb-5" style="color: rgba(255, 255, 255, 0.65)">
+      Reserve your table today and let us take care of the rest.
+    </p>
+    <div class="d-flex justify-content-center gap-3 flex-wrap">
+      <a href="#" class="btn btn-primary px-4 py-2">Reserve a Table</a>
+      <a href="#" class="btn btn-outline-light px-4 py-2">View Our Menu</a>
+    </div>
+  </div>
+</section>
