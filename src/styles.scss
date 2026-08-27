@@ -20,12 +20,12 @@ router-outlet + * {
   flex-shrink: 0;
 }
 
-$primary: #c8973a; // warm gold
+$primary: #c8973a;
 $primary-dark: #a67c2e;
 $dark: #1a1a1a;
 $text: #3d3d3d;
 $text-muted: #7a7a7a;
-$bg-light: #f8f5f0; // warm off-white
+$bg-light: #f8f5f0;
 $white: #ffffff;
 $border: #e8e0d5;
 
@@ -34,8 +34,7 @@ $font-body: "Inter", "Helvetica Neue", sans-serif;
 
 $section-py: 6rem;
 $border-radius: 4px;
-
-//  Base
+$navbar-height: 90px;
 
 *,
 *::before,
@@ -48,8 +47,6 @@ body {
   color: $text;
   background: $white;
 }
-
-//  Shared Section Helpers
 
 .section-eyebrow {
   font-family: $font-body;
@@ -87,7 +84,6 @@ body {
   color: $text-muted;
 }
 
-//  Navbar
 .navbar {
   position: fixed !important;
   top: 0;
@@ -269,8 +265,6 @@ body {
   }
 }
 
-//  Hero
-
 .hero {
   position: relative;
   min-height: 100vh;
@@ -363,7 +357,51 @@ body {
   }
 }
 
-//  About
+.page-banner {
+  position: relative;
+  min-height: 22vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-top: $navbar-height;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      160deg,
+      rgba($dark, 0.72) 40%,
+      rgba($dark, 0.4) 100%
+    );
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    max-width: 640px;
+    padding-inline: 1rem;
+  }
+
+  &__title {
+    font-family: $font-display;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: $white;
+    margin-bottom: 0.75rem;
+  }
+
+  &__subtitle {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: rgba($white, 0.82);
+    line-height: 1.7;
+    margin: 0;
+  }
+}
 
 .section-about {
   padding-block: $section-py;
@@ -428,8 +466,6 @@ body {
     }
   }
 }
-
-//  Menu
 
 .section-menu {
   padding-block: $section-py;
@@ -549,8 +585,6 @@ body {
   }
 }
 
-//  Stats
-
 .section-stats {
   padding-block: 5rem;
   background: $dark;
@@ -577,8 +611,6 @@ body {
     }
   }
 }
-
-//  Gallery
 
 .section-gallery {
   padding-block: 0;
@@ -635,8 +667,6 @@ body {
   }
 }
 
-//  Testimonials
-
 .section-testimonials {
   padding-block: $section-py;
   background: $bg-light;
@@ -687,8 +717,6 @@ body {
   }
 }
 
-//  Chef
-
 .section-chef {
   padding-block: $section-py;
 
@@ -724,8 +752,6 @@ body {
     }
   }
 }
-
-//  Blog
 
 .section-blog {
   padding-block: $section-py;
@@ -832,8 +858,6 @@ body {
   }
 }
 
-//  CTA
-
 .section-cta {
   padding-block: 6rem;
   background: $dark
@@ -857,8 +881,6 @@ body {
     color: $white;
   }
 }
-
-//  Footer
 
 .footer {
   background: #111;
@@ -1002,8 +1024,6 @@ body {
   }
 }
 
-//  Buttons
-
 .btn-primary {
   background: $primary;
   border-color: $primary;
@@ -1059,8 +1079,6 @@ body {
   border-radius: $border-radius;
 }
 
-//  Responsive
-
 @media (max-width: 991px) {
   .navbar-collapse {
     background: rgba($dark, 0.97);
@@ -1092,8 +1110,6 @@ body {
     margin-bottom: 0.75rem;
   }
 }
-
-// contact
 
 .contact-page {
   padding-block: $section-py;
@@ -1293,7 +1309,6 @@ body {
   }
 }
 
-// lightbox
 .lightbox {
   position: fixed;
   inset: 0;
@@ -1445,4 +1460,8 @@ body {
   .lightbox__content {
     max-width: 94vw;
   }
+}
+
+.section-next-banner {
+  padding-top: 3rem;
 }
