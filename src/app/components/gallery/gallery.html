@@ -1,1 +1,133 @@
-<p>gallery works!</p>
+<section
+  class="page-banner"
+  [style.background-image]="'url(' + heroImage + ')'"
+>
+  <div class="page-banner__overlay"></div>
+  <div class="page-banner__content">
+    <h1 class="page-banner__title">{{ heroTitle }}</h1>
+    <!-- <p class="page-banner__subtitle">{{ heroSubtitle }}</p> -->
+  </div>
+</section>
+
+<section class="section-next-banner" id="gallery">
+  <div class="container">
+    <div class="section-header text-center">
+      <p class="section-eyebrow">Moments & Memories</p>
+    </div>
+
+    <div class="menu-tabs d-flex justify-content-center gap-2 mb-5 flex-wrap">
+      <button
+        *ngFor="let cat of galleryCategories"
+        class="menu-tab"
+        [class.active]="activeCategory === cat"
+        (click)="setCategory(cat)"
+      >
+        {{ cat }}
+      </button>
+    </div>
+  </div>
+
+  <div class="container-fluid px-0">
+    <div class="gallery-grid">
+      <div
+        class="gallery-item"
+        *ngFor="let img of pagedGalleryImages; let i = index"
+        [class.gallery-item--wide]="i === 0 || i === 4"
+        (click)="openLightbox(i)"
+      >
+        <img [src]="img.src" [alt]="img.alt" class="gallery-item__img" />
+        <div class="gallery-item__overlay">
+          <i class="bi bi-zoom-in"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="mt-5" *ngIf="totalPages > 1">
+      <nav class="pagination">
+        <button
+          class="pagination__btn pagination__btn--nav"
+          [disabled]="currentPage === 1"
+          (click)="goToPage(currentPage - 1)"
+          aria-label="Previous page"
+        >
+          <i class="bi bi-chevron-left"></i>
+        </button>
+
+        <ng-container *ngFor="let page of pageNumbers">
+          <span *ngIf="page === -1" class="pagination__ellipsis">…</span>
+          <button
+            *ngIf="page !== -1"
+            class="pagination__btn"
+            [class.active]="page === currentPage"
+            (click)="goToPage(page)"
+            [attr.aria-current]="page === currentPage ? 'page' : null"
+          >
+            {{ page }}
+          </button>
+        </ng-container>
+
+        <button
+          class="pagination__btn pagination__btn--nav"
+          [disabled]="currentPage === totalPages"
+          (click)="goToPage(currentPage + 1)"
+          aria-label="Next page"
+        >
+          <i class="bi bi-chevron-right"></i>
+        </button>
+      </nav>
+
+      <p class="pagination__info">
+        Page <span>{{ currentPage }}</span> of
+        <span>{{ totalPages }}</span> &nbsp;·&nbsp; Showing
+        <span>{{ pagedGalleryImages.length }}</span> of
+        <span>{{ filteredGalleryImages.length }}</span> items
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" *ngIf="lightboxOpen" (click)="closeLightbox()">
+  <button
+    type="button"
+    class="lightbox__close"
+    (click)="closeLightbox()"
+    aria-label="Close"
+  >
+    <i class="bi bi-x-lg"></i>
+  </button>
+
+  <button
+    type="button"
+    class="lightbox__nav lightbox__nav--prev"
+    (click)="prevImage(); $event.stopPropagation()"
+    aria-label="Previous image"
+  >
+    <i class="bi bi-chevron-left"></i>
+  </button>
+
+  <div class="lightbox__content" (click)="$event.stopPropagation()">
+    <img
+      [src]="filteredGalleryImages[lightboxIndex].src"
+      [alt]="filteredGalleryImages[lightboxIndex].alt"
+      class="lightbox__image"
+    />
+    <div class="lightbox__caption">
+      {{ filteredGalleryImages[lightboxIndex].alt }}
+    </div>
+    <div class="lightbox__counter">
+      {{ lightboxIndex + 1 }} / {{ filteredGalleryImages.length }}
+    </div>
+  </div>
+
+  <button
+    type="button"
+    class="lightbox__nav lightbox__nav--next"
+    (click)="nextImage(); $event.stopPropagation()"
+    aria-label="Next image"
+  >
+    <i class="bi bi-chevron-right"></i>
+  </button>
+</div>
