@@ -31,7 +31,7 @@ export class FooterComponent {
   newsletterEmail = '';
 
   contactPhone = '+9841123322';
-  contactEmail = 'hello@sidcafe.com';
+  contactEmail = 'siddarthacafe1@gmail.com';
   address = 'Thulovaryang, Kathmandu, Nepal';
 
   navLinks: NavLink[] = [
