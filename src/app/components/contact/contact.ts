@@ -26,6 +26,12 @@ interface ContactPayload {
   styleUrls: ['./contact.scss'],
 })
 export class Contact {
+  heroTitle = 'Contact Us';
+  heroSubtitle =
+    'A glimpse into the passion, craftsmanship, and people that make every meal an experience.';
+  heroImage =
+    'https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?w=1600&q=80';
+
   contactForm: FormGroup;
   isSubmitting = false;
   submitSuccess = false;
