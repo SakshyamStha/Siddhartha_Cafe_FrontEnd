@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
 
 interface MenuItem {
   name: string;
@@ -21,6 +20,8 @@ interface MenuItem {
 })
 export class Menu {
   activeCategory = 'All';
+  currentPage = 1;
+  readonly itemsPerPage = 6;
 
   heroTitle = 'Our Menu';
   heroSubtitle =
@@ -234,7 +235,49 @@ export class Menu {
     );
   }
 
+  get totalPages(): number {
+    return Math.ceil(this.filteredMenuItems.length / this.itemsPerPage);
+  }
+
+  get pagedMenuItems(): MenuItem[] {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    return this.filteredMenuItems.slice(start, start + this.itemsPerPage);
+  }
+
+  get pageNumbers(): number[] {
+    const total = this.totalPages;
+    const current = this.currentPage;
+    const pages: number[] = [];
+
+    if (total <= 7) {
+      for (let i = 1; i <= total; i++) pages.push(i);
+      return pages;
+    }
+
+    pages.push(1);
+    if (current > 3) pages.push(-1);
+    for (
+      let i = Math.max(2, current - 1);
+      i <= Math.min(total - 1, current + 1);
+      i++
+    ) {
+      pages.push(i);
+    }
+    if (current < total - 2) pages.push(-1);
+    pages.push(total);
+    return pages;
+  }
+
   setCategory(cat: string): void {
     this.activeCategory = cat;
+    this.currentPage = 1;
+  }
+
+  goToPage(page: number): void {
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage = page;
+    document
+      .getElementById('menu')
+      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }

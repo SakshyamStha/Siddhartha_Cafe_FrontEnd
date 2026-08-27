@@ -27,7 +27,7 @@
     </div>
 
     <div class="row g-4">
-      <div class="col-sm-6 col-lg-4" *ngFor="let item of filteredMenuItems">
+      <div class="col-sm-6 col-lg-4" *ngFor="let item of pagedMenuItems">
         <div class="menu-card h-100">
           <div class="menu-card__img-wrap">
             <img [src]="item.image" [alt]="item.name" class="menu-card__img" />
@@ -47,6 +47,48 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="mt-5" *ngIf="totalPages > 1">
+      <nav class="pagination">
+        <button
+          class="pagination__btn pagination__btn--nav"
+          [disabled]="currentPage === 1"
+          (click)="goToPage(currentPage - 1)"
+          aria-label="Previous page"
+        >
+          <i class="bi bi-chevron-left"></i>
+        </button>
+
+        <ng-container *ngFor="let page of pageNumbers">
+          <span *ngIf="page === -1" class="pagination__ellipsis">…</span>
+          <button
+            *ngIf="page !== -1"
+            class="pagination__btn"
+            [class.active]="page === currentPage"
+            (click)="goToPage(page)"
+            [attr.aria-current]="page === currentPage ? 'page' : null"
+          >
+            {{ page }}
+          </button>
+        </ng-container>
+
+        <button
+          class="pagination__btn pagination__btn--nav"
+          [disabled]="currentPage === totalPages"
+          (click)="goToPage(currentPage + 1)"
+          aria-label="Next page"
+        >
+          <i class="bi bi-chevron-right"></i>
+        </button>
+      </nav>
+
+      <p class="pagination__info">
+        Page <span>{{ currentPage }}</span> of
+        <span>{{ totalPages }}</span> &nbsp;·&nbsp; Showing
+        <span>{{ pagedMenuItems.length }}</span> of
+        <span>{{ filteredMenuItems.length }}</span> items
+      </p>
     </div>
   </div>
 </section>
