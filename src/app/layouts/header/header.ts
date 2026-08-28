@@ -5,6 +5,7 @@ import {
   Inject,
   OnInit,
   PLATFORM_ID,
+  ViewChild,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import {
@@ -14,6 +15,7 @@ import {
   RouterLinkActive,
 } from '@angular/router';
 import { filter } from 'rxjs';
+import { ReservationModalComponent } from '../../shared/reservation/reservation';
 
 interface NavLink {
   label: string;
@@ -25,9 +27,17 @@ interface NavLink {
   standalone: true,
   templateUrl: './header.html',
   styleUrls: ['./header.scss'],
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [
+    CommonModule,
+    RouterLink,
+    RouterLinkActive,
+    ReservationModalComponent,
+  ],
 })
 export class HeaderComponent implements OnInit {
+  @ViewChild(ReservationModalComponent)
+  reservationModal!: ReservationModalComponent;
+
   isScrolled = false;
   navOpen = false;
   isBrowser: boolean;
@@ -60,23 +70,14 @@ export class HeaderComponent implements OnInit {
 
   @HostListener('window:scroll')
   onWindowScroll(): void {
-    if (!this.isBrowser) {
-      return;
-    }
-
+    if (!this.isBrowser) return;
     const isHome = this.router.url === '/' || this.router.url === '/home';
-
-    if (isHome) {
-      this.isScrolled = window.scrollY > 60;
-    } else {
-      this.isScrolled = true;
-    }
+    this.isScrolled = isHome ? window.scrollY > 60 : true;
   }
 
   private updateNavbarState(): void {
     const isHome = this.router.url === '/' || this.router.url === '/home';
     const scrollY = this.isBrowser ? window.scrollY : 0;
-
     this.isScrolled = !isHome || scrollY > 60;
   }
 
@@ -86,5 +87,9 @@ export class HeaderComponent implements OnInit {
 
   closeNav(): void {
     this.navOpen = false;
+  }
+
+  openReservation(): void {
+    this.reservationModal.open();
   }
 }

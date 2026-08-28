@@ -11,7 +11,7 @@
     </ul>
 
     <div class="navbar-actions">
-      <a class="btn btn-primary">Reserve a Table</a>
+      <a class="btn btn-primary" (click)="openReservation()">Reserve a Table</a>
     </div>
 
     <button
@@ -37,8 +37,12 @@
       </a>
       <div class="navbar-mobile-menu__actions">
         <a class="btn btn-outline-light" (click)="closeNav()">Sign In</a>
-        <a class="btn btn-primary" (click)="closeNav()">Request a Demo</a>
+        <a class="btn btn-primary" (click)="openReservation(); closeNav()"
+          >Reserve a Table</a
+        >
       </div>
     </div>
   </div>
 </nav>
+
+<app-reservation-modal></app-reservation-modal>
