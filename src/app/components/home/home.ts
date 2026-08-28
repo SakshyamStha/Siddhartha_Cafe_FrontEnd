@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { ReservationModalComponent } from '../../shared/reservation/reservation';
 
 interface About {
   heading: string;
@@ -60,9 +61,11 @@ interface BlogPost {
   standalone: true,
   templateUrl: './home.html',
   styleUrls: ['./home.scss'],
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, ReservationModalComponent],
 })
 export class HomeComponent implements OnInit {
+  @ViewChild(ReservationModalComponent)
+  reservationModal!: ReservationModalComponent;
   activeCategory = 'All';
 
   about: About = {
@@ -314,5 +317,10 @@ export class HomeComponent implements OnInit {
     } else if (event.key === 'ArrowLeft') {
       this.prevImage();
     }
+  }
+
+  // reservation
+  openReservation(): void {
+    this.reservationModal.open();
   }
 }

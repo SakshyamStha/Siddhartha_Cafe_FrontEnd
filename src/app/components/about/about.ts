@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { ReservationModalComponent } from '../../shared/reservation/reservation';
+import { RouterLink } from '@angular/router';
 
 interface TeamMember {
   name: string;
@@ -31,9 +33,11 @@ interface Stat {
   standalone: true,
   templateUrl: './about.html',
   styleUrls: ['./about.scss'],
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink, ReservationModalComponent],
 })
 export class About {
+  @ViewChild(ReservationModalComponent)
+  reservationModal!: ReservationModalComponent;
   heroTitle = 'About Us';
   heroSubtitle =
     'A glimpse into the passion, craftsmanship, and people that make every meal an experience.';
@@ -155,4 +159,8 @@ export class About {
 
   chefSignatureImage =
     'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80';
+
+  openReservation(): void {
+    this.reservationModal.open();
+  }
 }

@@ -9,7 +9,7 @@
     </p>
     <div class="hero__actions">
       <a routerLink="/menu" class="btn btn-primary btn-lg me-3">View Menu</a>
-      <a routerLink="/reservation" class="btn btn-outline-light btn-lg"
+      <a (click)="openReservation()" class="btn btn-outline-light btn-lg"
         >Make Reservation</a
       >
     </div>
@@ -212,7 +212,7 @@
     <p class="text-white-50 mb-4 fs-5">
       Join us for lunch or dinner. Reservations are recommended.
     </p>
-    <a routerLink="/reservation" class="btn btn-light btn-lg px-5 me-3"
+    <a (click)="openReservation()" class="btn btn-light btn-lg px-5 me-3"
       >Reserve Now</a
     >
     <a href="tel:{{ contactPhone }}" class="btn btn-outline-light btn-lg px-5">
@@ -220,3 +220,5 @@
     </a>
   </div>
 </section>
+
+<app-reservation-modal></app-reservation-modal>
