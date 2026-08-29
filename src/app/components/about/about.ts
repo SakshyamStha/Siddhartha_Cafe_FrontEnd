@@ -50,8 +50,8 @@ export class About {
 
   storyTitle = 'Our Story';
   storyBody = [
-    "Born from a lifelong devotion to Italian cuisine and a relentless pursuit of flavour, our restaurant opened its doors over three decades ago on a quiet cobblestone corner. What began as a family trattoria has grown into one of the city's most celebrated dining destinations, yet our soul remains the same.",
-    'Every dish we serve is a conversation between tradition and innovation. We source ingredients with obsessive care, build relationships with farmers and artisans, and train every chef to treat the kitchen as a stage for storytelling.',
+    'Rooted in a love for Nepal’s rich culinary heritage and warm hospitality, Siddhartha Cafe and Restro brings together authentic Nepali flavors and modern dining. Inspired by the diverse tastes and traditions of Nepal, we create a welcoming space where every meal feels familiar, fresh, and memorable.',
+    'Every dish is thoughtfully prepared with quality ingredients, traditional flavors, and a touch of creativity. From beloved Nepali classics to modern café favorites, our menu celebrates the stories, culture, and warmth of Nepal bringing people together, one delicious meal at a time.',
   ];
 
   features: string[] = [
@@ -62,9 +62,9 @@ export class About {
   ];
 
   stats: Stat[] = [
-    { value: '30+', label: 'Years of Excellence' },
-    { value: '18', label: 'Culinary Awards' },
-    { value: '200+', label: 'Wines on List' },
+    { value: '2+', label: 'Years of Excellence' },
+    { value: '12', label: 'Culinary Awards' },
+    { value: '200+', label: 'Drinks on List' },
     { value: '12k+', label: 'Happy Guests / Year' },
   ];
 

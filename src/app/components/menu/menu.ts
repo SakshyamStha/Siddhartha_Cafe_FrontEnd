@@ -136,16 +136,7 @@ export class Menu {
       badge: 'Chefs Pick',
       tags: ['Gluten-free'],
     },
-    {
-      name: 'Wild Mushroom Ravioli',
-      description:
-        'Hand-folded ravioli filled with wild mushrooms in a sage brown butter.',
-      price: 310,
-      image:
-        'https://images.unsplash.com/photo-1587740908075-9e245070dfc7?w=500&q=80',
-      category: 'Mains',
-      tags: ['Vegetarian'],
-    },
+
     {
       name: 'Tiramisu della Casa',
       description:
@@ -216,15 +207,6 @@ export class Menu {
         'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=500&q=80',
       category: 'Drinks',
       tags: ['By the glass'],
-    },
-    {
-      name: 'Espresso Martini',
-      description: 'Vodka, espresso, and coffee liqueur shaken until frothy.',
-      price: 170,
-      image:
-        'https://images.unsplash.com/photo-1541591740828-99b03e8c8c9e?w=500&q=80',
-      category: 'Drinks',
-      tags: [],
     },
   ];
 
