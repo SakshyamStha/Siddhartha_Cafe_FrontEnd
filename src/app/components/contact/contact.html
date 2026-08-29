@@ -69,7 +69,7 @@
                 id="firstName"
                 type="text"
                 formControlName="firstName"
-                placeholder="Johaness Mark"
+                placeholder="Ram"
                 [class.is-invalid]="
                   hasError('firstName', 'required') ||
                   hasError('firstName', 'minlength')
@@ -92,7 +92,7 @@
                 id="lastName"
                 type="text"
                 formControlName="lastName"
-                placeholder="Parker"
+                placeholder="Shrestha"
                 [class.is-invalid]="
                   hasError('lastName', 'required') ||
                   hasError('lastName', 'minlength')
@@ -113,7 +113,7 @@
               id="email"
               type="email"
               formControlName="email"
-              placeholder="contact.uixmk@gmail.com"
+              placeholder="ramstha@gmail.com"
               [class.is-invalid]="
                 hasError('email', 'required') || hasError('email', 'pattern')
               "
@@ -132,7 +132,7 @@
               id="phone"
               type="tel"
               formControlName="phone"
-              placeholder="+5 123 4554 784"
+              placeholder="9841123300"
               [class.is-invalid]="
                 hasError('phone', 'required') || hasError('phone', 'pattern')
               "
@@ -146,29 +146,12 @@
           </div>
 
           <div class="form-group">
-            <label for="companyWebsite">Company website</label>
-            <input
-              id="companyWebsite"
-              type="text"
-              formControlName="companyWebsite"
-              placeholder="meostudio.agency"
-              [class.is-invalid]="hasError('companyWebsite', 'invalidWebsite')"
-            />
-            <div
-              class="form-error"
-              *ngIf="hasError('companyWebsite', 'invalidWebsite')"
-            >
-              Enter a valid website domain.
-            </div>
-          </div>
-
-          <div class="form-group">
             <label for="message">Your message</label>
             <textarea
               id="message"
               rows="4"
               formControlName="message"
-              placeholder="Tell us more about your project..."
+              placeholder="Tell us more about your necessity..."
               [class.is-invalid]="
                 hasError('message', 'required') ||
                 hasError('message', 'minlength')

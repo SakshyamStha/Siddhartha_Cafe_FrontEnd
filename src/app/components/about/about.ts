@@ -44,13 +44,13 @@ export class About {
   heroImage =
     'https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?w=1600&q=80';
 
-  foundedYear = '1994';
+  foundedYear = '2025';
   storyImage =
     'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80';
 
   storyTitle = 'Our Story';
   storyBody = [
-    "Born from a lifelong devotion to Italian cuisine and a relentless pursuit of flavour, our restaurant opened its doors over three decades ago on a quiet cobblestone corner. What began as a family trattoria has grown into one of the city's most celebrated dining destinations — yet our soul remains the same.",
+    "Born from a lifelong devotion to Italian cuisine and a relentless pursuit of flavour, our restaurant opened its doors over three decades ago on a quiet cobblestone corner. What began as a family trattoria has grown into one of the city's most celebrated dining destinations, yet our soul remains the same.",
     'Every dish we serve is a conversation between tradition and innovation. We source ingredients with obsessive care, build relationships with farmers and artisans, and train every chef to treat the kitchen as a stage for storytelling.',
   ];
 
@@ -85,7 +85,7 @@ export class About {
       icon: 'bi-shop',
       title: 'Wine Bar',
       description:
-        'Over 200 labels from boutique Italian producers, served with small plates in our relaxed cellar bar downstairs.',
+        'Over 200 labels from boutique  producers, served with small plates in our relaxed cellar bar downstairs.',
     },
     {
       icon: 'bi-mortarboard',

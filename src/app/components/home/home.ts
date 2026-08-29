@@ -70,13 +70,13 @@ export class HomeComponent implements OnInit {
 
   about: About = {
     heading: 'Where Every Bite Tells a Story',
-    body: `Founded in 2007, Siddhartha Cafe has been serving contemporary Italian-inspired cuisine
+    body: `Founded in 2025, Siddhartha Cafe has been serving contemporary Nepalese cuisine
            crafted from the finest locally sourced ingredients. Our philosophy is simple:
            respect the ingredient, honor the tradition, and surprise the palate.`,
     image:
       'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=80',
     imageAlt: 'Restaurant interior ambiance',
-    yearsOpen: 17,
+    yearsOpen: 2,
     features: [
       'Farm-to-table ingredients sourced daily',
       'Award-winning wine cellar with 300+ labels',
@@ -92,7 +92,7 @@ export class HomeComponent implements OnInit {
       name: 'Truffle Arancini',
       description:
         'Crispy Siddhartha Cafe balls filled with black truffle and fontina, served with aioli.',
-      price: 18,
+      price: 180,
       image:
         'https://images.unsplash.com/photo-1541014741259-de529411b96a?w=500&q=80',
       category: 'Starters',
@@ -103,7 +103,7 @@ export class HomeComponent implements OnInit {
       name: 'Burrata & Heirloom Tomato',
       description:
         'Creamy burrata with heirloom tomatoes, basil oil, and aged balsamic.',
-      price: 22,
+      price: 220,
       image:
         'https://images.unsplash.com/photo-1608897013039-887f21d8c804?w=500&q=80',
       category: 'Starters',
@@ -113,7 +113,7 @@ export class HomeComponent implements OnInit {
       name: 'Saffron Siddhartha Cafe',
       description:
         'Classic Milanese Siddhartha Cafe with aged Parmigiano-Reggiano and gold leaf.',
-      price: 34,
+      price: 340,
       image:
         'https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=500&q=80',
       category: 'Mains',
@@ -124,7 +124,7 @@ export class HomeComponent implements OnInit {
       name: 'Branzino al Forno',
       description:
         'Whole roasted sea bass with capers, lemon butter, and herb gremolata.',
-      price: 46,
+      price: 460,
       image:
         'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=500&q=80',
       category: 'Mains',
@@ -134,7 +134,7 @@ export class HomeComponent implements OnInit {
       name: 'Wagyu Tagliata',
       description:
         'Sliced A5 Wagyu striploin with rocket, truffle shavings, and Pecorino.',
-      price: 72,
+      price: 720,
       image:
         'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&q=80',
       category: 'Mains',
@@ -145,7 +145,7 @@ export class HomeComponent implements OnInit {
       name: 'Tiramisu della Casa',
       description:
         'House-made tiramisu with espresso-soaked savoiardi and mascarpone cream.',
-      price: 14,
+      price: 140,
       image:
         'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=500&q=80',
       category: 'Desserts',
@@ -196,75 +196,26 @@ export class HomeComponent implements OnInit {
 
   testimonials: Testimonial[] = [
     {
-      name: 'Sophia M.',
-      location: 'New York, NY',
-      body: 'Hands down the finest Siddhartha Cafe Ive had outside of Milan. The service is impeccable and the ambiance absolutely divine.',
+      name: 'Ramhari Pathak',
+      location: 'Chabahil, Kathmandu',
+      body: 'Hands down the finest Siddhartha Cafe Ive had outside of Chabahil. The service is impeccable and the ambiance absolutely divine.',
       avatar: 'https://i.pravatar.cc/80?img=47',
     },
     {
-      name: 'James T.',
-      location: 'London, UK',
+      name: 'Sita Sharma',
+      location: 'Ratnapark, Kathmandu',
       body: 'We celebrated our anniversary here and it was perfect in every way — the tasting menu paired beautifully with the sommeliers recommendations.',
       avatar: 'https://i.pravatar.cc/80?img=12',
     },
     {
-      name: 'Elena R.',
-      location: 'Paris, France',
+      name: 'Sunita Thapa',
+      location: 'Patan, Lalitpur',
       body: 'The Wagyu tagliata melted in my mouth. A truly world-class kitchen with warmth and personality thats rare to find.',
       avatar: 'https://i.pravatar.cc/80?img=32',
     },
   ];
 
-  chef: Chef = {
-    name: 'Marco Albanese',
-    role: 'Executive Chef & Co-Founder',
-    bio: `Trained under three Michelin-starred mentors across Italy and France, Marco returned
-          to New York with a singular vision: to serve the soul of Italian cooking through
-          the lens of a modern kitchen. His menus change with the seasons and his philosophy
-          never does — ingredient first, ego last.`,
-    image:
-      'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=600&q=80',
-    awards: [
-      'James Beard Award — Best Chef: New York City (2019)',
-      'Michelin Star — Siddhartha Cafe NYC (2021, 2022, 2023)',
-      'Food & Wine Magazine — Best New Chef (2015)',
-    ],
-  };
-
-  blogPosts: BlogPost[] = [
-    {
-      title: 'Why Seasonal Menus Make Better Chefs',
-      slug: 'seasonal-menus-better-chefs',
-      excerpt:
-        'Forcing yourself to cook with whats available teaches restraint, creativity, and a deeper respect for ingredients.',
-      category: 'Philosophy',
-      date: 'August 14, 2026',
-      image:
-        'https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=600&q=80',
-    },
-    {
-      title: 'Our Guide to Pairing Wine with Siddhartha Cafe',
-      slug: 'wine-pairing-Siddhartha Cafe',
-      excerpt:
-        'Siddhartha Cafe is one of the most versatile canvases in Italian cuisine — and it deserves an equally thoughtful pour.',
-      category: 'Wine & Drinks',
-      date: 'July 28, 2026',
-      image:
-        'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600&q=80',
-    },
-    {
-      title: 'A Weekend at Our Favorite Truffle Farm',
-      slug: 'weekend-truffle-farm',
-      excerpt:
-        'We travelled to Périgord to spend two days with our truffle supplier. Heres what we learned about patience and perfume.',
-      category: 'Behind the Scenes',
-      date: 'June 5, 2026',
-      image:
-        'https://images.unsplash.com/photo-1484980972926-edee96e0960d?w=600&q=80',
-    },
-  ];
-
-  contactPhone = '+1 (555) 012-3456';
+  contactPhone = '9841123321';
 
   ngOnInit(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });

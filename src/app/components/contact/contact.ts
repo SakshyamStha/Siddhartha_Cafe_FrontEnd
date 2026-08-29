@@ -14,7 +14,6 @@ interface ContactPayload {
   lastName: string;
   email: string;
   phone: string;
-  companyWebsite: string;
   message: string;
 }
 
@@ -62,7 +61,6 @@ export class Contact {
         '',
         [Validators.required, Validators.pattern(/^\+?[0-9\s-]{7,15}$/)],
       ],
-      companyWebsite: ['', [Contact.websiteValidator]],
       message: [
         '',
         [
@@ -105,7 +103,6 @@ export class Contact {
       lastName: this.contactForm.value.lastName.trim(),
       email: this.contactForm.value.email.trim(),
       phone: this.contactForm.value.phone.trim(),
-      companyWebsite: this.contactForm.value.companyWebsite?.trim() || '',
       message: this.contactForm.value.message.trim(),
     };
 
