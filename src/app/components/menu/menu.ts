@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 
 interface MenuItem {
   name: string;
@@ -7,8 +7,8 @@ interface MenuItem {
   price: number;
   image: string;
   category: string;
+  dietary: 'veg' | 'non-veg';
   badge?: string;
-  tags: string[];
 }
 
 @Component({
@@ -20,12 +20,11 @@ interface MenuItem {
 })
 export class Menu {
   activeCategory = 'All';
+  activeDietary: 'all' | 'veg' | 'non-veg' = 'all';
   currentPage = 1;
   readonly itemsPerPage = 6;
 
   heroTitle = 'Our Menu';
-  heroSubtitle =
-    'In enim justo rhoncus ut imperdiet a venenatis vitae justo. Nullam dictum felis eu pede mollis pretium.';
   heroImage =
     'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=80';
 
@@ -40,8 +39,8 @@ export class Menu {
       image:
         'https://images.unsplash.com/photo-1541014741259-de529411b96a?w=500&q=80',
       category: 'Starters',
+      dietary: 'veg',
       badge: 'Chefs Pick',
-      tags: ['Vegetarian', 'Gluten-free available'],
     },
     {
       name: 'Burrata & Heirloom Tomato',
@@ -51,7 +50,7 @@ export class Menu {
       image:
         'https://images.unsplash.com/photo-1608897013039-887f21d8c804?w=500&q=80',
       category: 'Starters',
-      tags: ['Vegetarian'],
+      dietary: 'veg',
     },
     {
       name: 'Carpaccio di Manzo',
@@ -61,7 +60,7 @@ export class Menu {
       image:
         'https://images.unsplash.com/photo-1432139555190-58524dae6a55?w=500&q=80',
       category: 'Starters',
-      tags: ['Gluten-free'],
+      dietary: 'non-veg',
     },
     {
       name: 'Roasted Beet Salad',
@@ -71,7 +70,7 @@ export class Menu {
       image:
         'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500&q=80',
       category: 'Starters',
-      tags: ['Vegetarian', 'Gluten-free'],
+      dietary: 'veg',
     },
     {
       name: 'Calamari Fritti',
@@ -81,7 +80,7 @@ export class Menu {
       image:
         'https://images.unsplash.com/photo-1585238342024-78d387f4a707?w=500&q=80',
       category: 'Starters',
-      tags: ['Pescatarian'],
+      dietary: 'non-veg',
     },
     {
       name: 'Saffron Risotto',
@@ -91,8 +90,8 @@ export class Menu {
       image:
         'https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=500&q=80',
       category: 'Mains',
+      dietary: 'veg',
       badge: 'Signature',
-      tags: ['Vegetarian', 'Gluten-free'],
     },
     {
       name: 'Branzino al Forno',
@@ -102,7 +101,7 @@ export class Menu {
       image:
         'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=500&q=80',
       category: 'Mains',
-      tags: ['Gluten-free', 'Pescatarian'],
+      dietary: 'non-veg',
     },
     {
       name: 'Wagyu Tagliata',
@@ -112,8 +111,8 @@ export class Menu {
       image:
         'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&q=80',
       category: 'Mains',
+      dietary: 'non-veg',
       badge: 'Premium',
-      tags: ['Gluten-free'],
     },
     {
       name: 'Tagliatelle al Ragù',
@@ -123,7 +122,7 @@ export class Menu {
       image:
         'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=500&q=80',
       category: 'Mains',
-      tags: [],
+      dietary: 'non-veg',
     },
     {
       name: 'Osso Buco alla Milanese',
@@ -133,10 +132,9 @@ export class Menu {
       image:
         'https://images.unsplash.com/photo-1544025162-d76694265947?w=500&q=80',
       category: 'Mains',
+      dietary: 'non-veg',
       badge: 'Chefs Pick',
-      tags: ['Gluten-free'],
     },
-
     {
       name: 'Tiramisu della Casa',
       description:
@@ -145,7 +143,7 @@ export class Menu {
       image:
         'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=500&q=80',
       category: 'Desserts',
-      tags: ['Vegetarian'],
+      dietary: 'veg',
     },
     {
       name: 'Panna Cotta al Limone',
@@ -155,7 +153,7 @@ export class Menu {
       image:
         'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=500&q=80',
       category: 'Desserts',
-      tags: ['Vegetarian', 'Gluten-free'],
+      dietary: 'veg',
     },
     {
       name: 'Flourless Chocolate Torte',
@@ -165,8 +163,8 @@ export class Menu {
       image:
         'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=500&q=80',
       category: 'Desserts',
+      dietary: 'veg',
       badge: 'Chefs Pick',
-      tags: ['Vegetarian', 'Gluten-free'],
     },
     {
       name: 'Affogato al Caffè',
@@ -176,7 +174,7 @@ export class Menu {
       image:
         'https://images.unsplash.com/photo-1516684732162-798a0062be99?w=500&q=80',
       category: 'Desserts',
-      tags: ['Vegetarian'],
+      dietary: 'veg',
     },
     {
       name: 'Negroni Classico',
@@ -185,7 +183,7 @@ export class Menu {
       image:
         'https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=500&q=80',
       category: 'Drinks',
-      tags: [],
+      dietary: 'veg',
     },
     {
       name: 'Aperol Spritz',
@@ -195,8 +193,8 @@ export class Menu {
       image:
         'https://images.unsplash.com/photo-1560512823-829485b8bf24?w=500&q=80',
       category: 'Drinks',
+      dietary: 'veg',
       badge: 'Popular',
-      tags: [],
     },
     {
       name: 'Barolo DOCG',
@@ -206,15 +204,18 @@ export class Menu {
       image:
         'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=500&q=80',
       category: 'Drinks',
-      tags: ['By the glass'],
+      dietary: 'veg',
     },
   ];
 
   get filteredMenuItems(): MenuItem[] {
-    if (this.activeCategory === 'All') return this.menuItems;
-    return this.menuItems.filter(
-      (item) => item.category === this.activeCategory,
-    );
+    return this.menuItems.filter((item) => {
+      const catMatch =
+        this.activeCategory === 'All' || item.category === this.activeCategory;
+      const dietMatch =
+        this.activeDietary === 'all' || item.dietary === this.activeDietary;
+      return catMatch && dietMatch;
+    });
   }
 
   get totalPages(): number {
@@ -255,11 +256,53 @@ export class Menu {
     this.currentPage = 1;
   }
 
+  setDietary(dietary: 'all' | 'veg' | 'non-veg'): void {
+    this.activeDietary = dietary;
+    this.currentPage = 1;
+  }
+
   goToPage(page: number): void {
     if (page < 1 || page > this.totalPages) return;
     this.currentPage = page;
     document
       .getElementById('menu')
       ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  lightboxOpen = false;
+  lightboxIndex = 0;
+  lightboxImages: { src: string; alt: string }[] = [];
+
+  openMenuLightbox(index: number): void {
+    this.lightboxImages = this.filteredMenuItems.map((i) => ({
+      src: i.image,
+      alt: i.name,
+    }));
+    this.lightboxIndex = index;
+    this.lightboxOpen = true;
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeLightbox(): void {
+    this.lightboxOpen = false;
+    document.body.style.overflow = '';
+  }
+
+  nextImage(): void {
+    this.lightboxIndex = (this.lightboxIndex + 1) % this.lightboxImages.length;
+  }
+
+  prevImage(): void {
+    this.lightboxIndex =
+      (this.lightboxIndex - 1 + this.lightboxImages.length) %
+      this.lightboxImages.length;
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeydown(event: KeyboardEvent): void {
+    if (!this.lightboxOpen) return;
+    if (event.key === 'Escape') this.closeLightbox();
+    else if (event.key === 'ArrowRight') this.nextImage();
+    else if (event.key === 'ArrowLeft') this.prevImage();
   }
 }

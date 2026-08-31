@@ -270,9 +270,35 @@ body {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  background: url("https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?w=1600&q=80")
-    center/cover no-repeat;
+  overflow: hidden;
 
+  //  Slide layer
+  &__slides {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  &__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.4s ease-in-out;
+
+    &--active {
+      opacity: 1;
+    }
+  }
+
+  &__slide-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  //  Overlay
   &__overlay {
     position: absolute;
     inset: 0;
@@ -281,11 +307,13 @@ body {
       rgba($dark, 0.72) 40%,
       rgba($dark, 0.4) 100%
     );
+    z-index: 1;
   }
 
+  //  Text content
   &__content {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     max-width: 640px;
     padding-top: 5rem;
   }
@@ -315,6 +343,82 @@ body {
     margin-bottom: 2.5rem;
   }
 
+  //  Thumbnail selector — bottom left
+  &__thumbnails {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 2rem;
+    z-index: 2;
+    display: flex;
+    gap: 0.625rem;
+    align-items: flex-end;
+  }
+
+  &__thumb {
+    position: relative;
+    width: 64px;
+    height: 44px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 2px solid rgba($white, 0.25);
+    padding: 0;
+    background: none;
+    cursor: pointer;
+    transition:
+      border-color 0.3s ease,
+      transform 0.3s ease;
+    flex-shrink: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: opacity 0.3s ease;
+      opacity: 0.55;
+    }
+
+    &:hover {
+      border-color: rgba($white, 0.6);
+      transform: translateY(-2px);
+
+      img {
+        opacity: 0.8;
+      }
+    }
+
+    &--active {
+      border-color: $primary;
+      width: 80px;
+      height: 54px;
+
+      img {
+        opacity: 1;
+      }
+    }
+  }
+
+  // Progress bar that runs across the bottom of the active thumb
+  &__thumb-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba($white, 0.2);
+    overflow: hidden;
+  }
+
+  &__thumb-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: $primary;
+    animation: thumb-progress linear forwards;
+
+    // duration is set inline via [style.animation-duration]
+  }
+
+  //  Scroll indicator
   &__scroll-indicator {
     position: absolute;
     bottom: 2.5rem;
@@ -325,7 +429,7 @@ body {
     align-items: center;
     gap: 5px;
     cursor: pointer;
-    z-index: 1;
+    z-index: 2;
 
     span {
       display: block;
@@ -342,6 +446,16 @@ body {
         animation-delay: 0.4s;
       }
     }
+  }
+}
+
+//  Keyframes
+@keyframes thumb-progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
   }
 }
 
@@ -472,6 +586,10 @@ body {
   background: $bg-light;
 }
 
+.menu-filters {
+  margin-bottom: 0;
+}
+
 .menu-tabs {
   .menu-tab {
     background: none;
@@ -490,6 +608,7 @@ body {
       border-color: $primary;
       color: $primary;
     }
+
     &.active {
       background: $primary;
       border-color: $primary;
@@ -498,30 +617,146 @@ body {
   }
 }
 
-.menu-card {
-  background: $white;
-  border-radius: $border-radius;
-  overflow: hidden;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-  transition:
-    transform 0.25s,
-    box-shadow 0.25s;
+.dietary-tabs {
+  .dietary-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: none;
+    border: 1.5px solid $border;
+    border-radius: 2rem;
+    padding: 0.35rem 1.1rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: $text-muted;
+    cursor: pointer;
+    transition: all 0.2s;
 
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    &:hover {
+      border-color: $primary;
+      color: $dark;
+    }
+
+    &.active {
+      border-color: $primary;
+      color: $dark;
+      background: rgba($primary, 0.08);
+    }
   }
+}
+
+.dietary-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+
+  &--veg {
+    background: #2e7d32;
+    border: 1.5px solid #2e7d32;
+  }
+
+  &--nonveg {
+    background: #c62828;
+    border: 1.5px solid #c62828;
+  }
+
+  &--all {
+    background: linear-gradient(135deg, #2e7d32 50%, #c62828 50%);
+    border: 1.5px solid $border;
+  }
+}
+
+.dietary-badge {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.55rem;
+  border-radius: 2rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  &--veg {
+    background: rgba(#2e7d32, 0.1);
+    color: #2e7d32;
+    border: 1px solid rgba(#2e7d32, 0.25);
+  }
+
+  &--nonveg {
+    background: rgba(#c62828, 0.1);
+    color: #c62828;
+    border: 1px solid rgba(#c62828, 0.25);
+  }
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem 3rem;
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+.menu-empty {
+  text-align: center;
+  padding: 4rem 1rem;
+
+  &__icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+
+  &__title {
+    font-family: $font-display;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: $dark;
+    margin-bottom: 0.5rem;
+  }
+
+  &__sub {
+    font-size: 0.9rem;
+    color: $text-muted;
+    line-height: 1.7;
+
+    strong {
+      color: $dark;
+    }
+  }
+}
+
+.menu-row {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
 
   &__img-wrap {
     position: relative;
+    flex-shrink: 0;
+    width: 130px;
+    height: 110px;
+    border-radius: $border-radius;
     overflow: hidden;
-    height: 220px;
+    cursor: pointer;
+
+    @media (max-width: 480px) {
+      width: 100px;
+      height: 90px;
+    }
   }
 
   &__img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
     transition: transform 0.4s ease;
   }
 
@@ -531,28 +766,64 @@ body {
 
   &__badge {
     position: absolute;
-    top: 0.75rem;
-    left: 0.75rem;
+    top: 0.4rem;
+    left: 0.4rem;
     background: $primary;
     color: $white;
-    font-size: 0.68rem;
+    font-size: 0.6rem;
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    padding: 0.3rem 0.7rem;
+    padding: 0.2rem 0.5rem;
     border-radius: 2rem;
   }
 
   &__body {
-    padding: 1.25rem;
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__header {
+    margin-bottom: 0.35rem;
+  }
+
+  &__name-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   &__name {
     font-family: $font-display;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 600;
     color: $dark;
     margin: 0;
+    line-height: 1.3;
+  }
+
+  &__desc {
+    font-size: 0.83rem;
+    text-align: justify;
+    color: $text-muted;
+    line-height: 1.6;
+    margin: 0 0 0.6rem;
+    flex: 1;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: auto;
+  }
+
+  &__dotted {
+    flex: 1;
+    border-bottom: 1.5px dotted rgba($text-muted, 0.4);
+    margin-bottom: 1px;
   }
 
   &__price {
@@ -560,31 +831,75 @@ body {
     font-weight: 700;
     color: $primary;
     white-space: nowrap;
-  }
-
-  &__desc {
-    font-size: 0.87rem;
-    color: $text-muted;
-    line-height: 1.6;
-    margin: 0.5rem 0 0.75rem;
-  }
-
-  &__tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-
-    .tag {
-      font-size: 0.68rem;
-      background: $bg-light;
-      color: $text-muted;
-      border-radius: 2rem;
-      padding: 0.2rem 0.6rem;
-      letter-spacing: 0.04em;
-    }
+    font-family: $font-display;
   }
 }
 
+.menu-empty {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: $text-muted;
+  font-size: 0.95rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+
+  &__btn {
+    min-width: 2.25rem;
+    height: 2.25rem;
+    padding: 0 0.5rem;
+    border-radius: 0.4rem;
+    border: 1.5px solid $border;
+    background: $white;
+    color: $dark;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover:not(:disabled) {
+      border-color: $primary;
+      color: $primary;
+    }
+
+    &.active {
+      background: $primary;
+      border-color: $primary;
+      color: $white;
+    }
+
+    &:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    &--nav {
+      font-size: 0.75rem;
+    }
+  }
+
+  &__ellipsis {
+    padding: 0 0.3rem;
+    color: $text-muted;
+  }
+}
+
+.pagination__info {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: $text-muted;
+
+  span {
+    font-weight: 600;
+    color: $dark;
+  }
+}
 .section-stats {
   padding-block: 5rem;
   background: $dark;
