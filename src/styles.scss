@@ -1032,37 +1032,31 @@ body {
   }
 }
 
-.section-chef {
+.section-about-chef {
   padding-block: $section-py;
 
   .chef__img {
     border-radius: $border-radius;
     object-fit: cover;
-    max-height: 580px;
     width: 100%;
-  }
-
-  .chef__role {
-    font-size: 0.9rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
+    max-height: 480px;
+    display: block;
   }
 
   .chef__awards {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-
     .chef__award {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 0.6rem;
-      font-size: 0.88rem;
-      color: $text-muted;
+      margin-bottom: 0.75rem;
+      font-size: 0.93rem;
+      color: $text;
 
       i {
         color: $primary;
+        font-size: 1rem;
         flex-shrink: 0;
+        margin-top: 2px;
       }
     }
   }
