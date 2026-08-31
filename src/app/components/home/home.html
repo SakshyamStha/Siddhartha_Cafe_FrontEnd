@@ -271,11 +271,17 @@
     <p class="text-white-50 mb-4 fs-5">
       Join us for lunch or dinner. Reservations are recommended.
     </p>
-    <a (click)="openReservation()" class="btn btn-light btn-lg px-5 me-3"
-      >Reserve Now</a
+    <div
+      class="d-flex align-items-stretch justify-content-center gap-3 flex-wrap"
     >
-    <div class="btn btn-outline-light btn-lg px-5 text-white">
-      <app-whatsapp-link [phone]="contactPhone" [label]="contactPhone" />
+      <a (click)="openReservation()" class="btn btn-light btn-lg px-5">
+        Reserve Now
+      </a>
+      <app-whatsapp-link
+        class="btn btn-outline-light btn-lg px-5"
+        [phone]="contactPhone"
+        [label]="contactPhone"
+      />
     </div>
   </div>
 </section>
