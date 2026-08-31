@@ -8,6 +8,7 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
+import { WhatsappLinkComponent } from '../../shared/whatsapp-navigation/whatsapp-nav';
 
 interface ContactPayload {
   firstName: string;
@@ -20,7 +21,7 @@ interface ContactPayload {
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, WhatsappLinkComponent],
   templateUrl: './contact.html',
   styleUrls: ['./contact.scss'],
 })

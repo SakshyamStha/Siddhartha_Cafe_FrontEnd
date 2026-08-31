@@ -1,4 +1,9 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -6,6 +11,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './whatsapp-nav.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WhatsappLinkComponent implements OnChanges {
   @Input({ required: true }) phone!: string;
@@ -16,7 +22,6 @@ export class WhatsappLinkComponent implements OnChanges {
   displayLabel = '';
 
   ngOnChanges(): void {
-    // Strip everything except digits and a leading +
     const digits = this.phone.replace(/[^\d+]/g, '');
     const encoded = this.message
       ? `?text=${encodeURIComponent(this.message)}`

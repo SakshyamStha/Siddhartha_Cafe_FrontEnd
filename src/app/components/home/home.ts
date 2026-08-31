@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ReservationModalComponent } from '../../shared/reservation/reservation';
+import { WhatsappLinkComponent } from '../../shared/whatsapp-navigation/whatsapp-nav';
 
 interface About {
   heading: string;
@@ -61,7 +62,12 @@ interface BlogPost {
   standalone: true,
   templateUrl: './home.html',
   styleUrls: ['./home.scss'],
-  imports: [CommonModule, RouterLink, ReservationModalComponent],
+  imports: [
+    CommonModule,
+    RouterLink,
+    ReservationModalComponent,
+    WhatsappLinkComponent,
+  ],
 })
 export class HomeComponent implements OnInit {
   @ViewChild(ReservationModalComponent)

@@ -39,7 +39,10 @@
         <h6 class="footer__heading">Find Us</h6>
         <address class="footer__address">
           <p><i class="bi bi-geo-alt me-2"></i>{{ address }}</p>
-          <p><i class="bi bi-telephone me-2"></i>{{ contactPhone }}</p>
+          <p>
+            <app-whatsapp-link [phone]="contactPhone" [label]="contactPhone" />
+          </p>
+
           <p><i class="bi bi-envelope me-2"></i>{{ contactEmail }}</p>
         </address>
       </div>

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { WhatsappLinkComponent } from '../../shared/whatsapp-navigation/whatsapp-nav';
 
 interface NavLink {
   label: string;
@@ -24,7 +25,7 @@ interface Hours {
   standalone: true,
   templateUrl: './footer.html',
   styleUrls: ['./footer.scss'],
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, WhatsappLinkComponent],
 })
 export class FooterComponent {
   currentYear = new Date().getFullYear();

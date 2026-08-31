@@ -1293,6 +1293,32 @@ body {
     i {
       color: $primary;
     }
+
+    app-whatsapp-link {
+      a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.88rem;
+        font-weight: 400;
+        color: rgba($white, 0.6);
+        text-decoration: none;
+        transition: color 0.2s;
+
+        i {
+          color: rgba($white, 0.6);
+          font-size: 0.88rem;
+        }
+
+        &:hover {
+          color: $primary;
+
+          i {
+            color: $primary;
+          }
+        }
+      }
+    }
   }
 
   &__newsletter {
@@ -1392,6 +1418,15 @@ body {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   border-radius: $border-radius;
+
+  app-whatsapp-link a {
+    color: inherit; // picks up text-white from the button
+    text-decoration: none;
+  }
+
+  &:hover app-whatsapp-link a {
+    color: $primary;
+  }
 }
 
 @media (max-width: 991px) {
@@ -1512,6 +1547,28 @@ body {
 
     &:hover {
       color: $primary-dark;
+      scale: 1.02;
+    }
+
+    // whatsapp component — target the inner anchor
+    a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: $primary;
+      text-decoration: none;
+      transition: color 0.2s;
+
+      i {
+        font-size: 0.9rem;
+      }
+
+      &:hover {
+        color: $primary-dark;
+        scale: 1.02;
+      }
     }
   }
 }

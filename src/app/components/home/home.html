@@ -274,9 +274,9 @@
     <a (click)="openReservation()" class="btn btn-light btn-lg px-5 me-3"
       >Reserve Now</a
     >
-    <a href="tel:{{ contactPhone }}" class="btn btn-outline-light btn-lg px-5">
-      <i class="bi bi-telephone me-2"></i>{{ contactPhone }}
-    </a>
+    <div class="btn btn-outline-light btn-lg px-5 text-white">
+      <app-whatsapp-link [phone]="contactPhone" [label]="contactPhone" />
+    </div>
   </div>
 </section>
 
