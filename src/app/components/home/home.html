@@ -1,5 +1,17 @@
 <section class="hero" id="hero">
-  <div class="hero__overlay"></div>
+  <!-- Carousel slides -->
+  <div class="hero__slides">
+    <div
+      *ngFor="let slide of heroSlides; let i = index"
+      class="hero__slide"
+      [class.hero__slide--active]="i === activeSlide"
+    >
+      <img [src]="slide.src" [alt]="slide.alt" class="hero__slide-img" />
+    </div>
+    <div class="hero__overlay"></div>
+  </div>
+
+  <!-- Content -->
   <div class="container hero__content">
     <p class="hero__eyebrow">Fine Dining Experience</p>
     <h1 class="hero__title">Crafted with<br /><em>Passion & Flavor</em></h1>
@@ -14,6 +26,27 @@
       >
     </div>
   </div>
+
+  <!-- Thumbnail selector — bottom left -->
+  <div class="hero__thumbnails">
+    <button
+      *ngFor="let slide of heroSlides; let i = index"
+      class="hero__thumb"
+      [class.hero__thumb--active]="i === activeSlide"
+      (click)="goToSlide(i)"
+      [attr.aria-label]="'View slide ' + (i + 1)"
+    >
+      <img [src]="slide.src" [alt]="slide.alt" />
+      <div class="hero__thumb-progress" *ngIf="i === activeSlide">
+        <div
+          class="hero__thumb-progress-bar"
+          [style.animation-duration]="slideInterval + 'ms'"
+        ></div>
+      </div>
+    </button>
+  </div>
+
+  <!-- Scroll indicator -->
   <div class="hero__scroll-indicator" (click)="scrollToAbout()">
     <span></span>
     <span></span>
@@ -73,27 +106,53 @@
       </button>
     </div>
 
-    <div class="row g-4">
-      <div class="col-sm-6 col-lg-4" *ngFor="let item of filteredMenuItems">
-        <div class="menu-card h-100">
-          <div class="menu-card__img-wrap">
-            <img [src]="item.image" [alt]="item.name" class="menu-card__img" />
-            <span class="menu-card__badge" *ngIf="item.badge">{{
-              item.badge
-            }}</span>
+    <div class="menu-grid" *ngIf="filteredMenuItems.length > 0">
+      <div
+        class="menu-row"
+        *ngFor="let item of filteredMenuItems; let i = index"
+      >
+        <div
+          class="menu-row__img-wrap"
+          (click)="openMenuLightbox(filteredMenuItems, i)"
+        >
+          <img [src]="item.image" [alt]="item.name" class="menu-row__img" />
+          <!-- <span class="menu-row__badge" *ngIf="item.badge">{{
+            item.badge
+          }}</span> -->
+          <div class="gallery-item__overlay">
+            <i class="bi bi-zoom-in"></i>
           </div>
-          <div class="menu-card__body">
-            <div class="d-flex justify-content-between align-items-start mb-1">
-              <h3 class="menu-card__name">{{ item.name }}</h3>
-              <span class="menu-card__price">Rs.{{ item.price }}</span>
+        </div>
+        <div class="menu-row__body">
+          <div class="menu-row__header">
+            <div class="menu-row__name-wrap">
+              <h3 class="menu-row__name">{{ item.name }}</h3>
+              <span
+                class="dietary-badge"
+                [class.dietary-badge--veg]="item.dietary === 'veg'"
+                [class.dietary-badge--nonveg]="item.dietary === 'non-veg'"
+              >
+                {{ item.dietary === "veg" ? "Veg" : "Non-Veg" }}
+              </span>
             </div>
-            <p class="menu-card__desc">{{ item.description }}</p>
-            <div class="menu-card__tags">
-              <span class="tag" *ngFor="let tag of item.tags">{{ tag }}</span>
-            </div>
+          </div>
+          <p class="menu-row__desc">{{ item.description }}</p>
+          <div class="menu-row__footer">
+            <div class="menu-row__dotted"></div>
+            <span class="menu-row__price">Rs. {{ item.price }}</span>
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="menu-empty" *ngIf="filteredMenuItems.length === 0">
+      <div class="menu-empty__icon">🍽️</div>
+      <h4 class="menu-empty__title">Nothing here yet</h4>
+      <p class="menu-empty__sub">
+        We're still crafting something special for
+        <strong>{{ activeCategory }}</strong
+        >. Check back soon.
+      </p>
     </div>
 
     <div class="text-center mt-5">
@@ -155,13 +214,13 @@
 
   <div class="lightbox__content" (click)="$event.stopPropagation()">
     <img
-      [src]="galleryImages[lightboxIndex].src"
-      [alt]="galleryImages[lightboxIndex].alt"
+      [src]="lightboxImages[lightboxIndex].src"
+      [alt]="lightboxImages[lightboxIndex].alt"
       class="lightbox__image"
     />
-    <div class="lightbox__caption">{{ galleryImages[lightboxIndex].alt }}</div>
+    <div class="lightbox__caption">{{ lightboxImages[lightboxIndex].alt }}</div>
     <div class="lightbox__counter">
-      {{ lightboxIndex + 1 }} / {{ galleryImages.length }}
+      {{ lightboxIndex + 1 }} / {{ lightboxImages.length }}
     </div>
   </div>
 

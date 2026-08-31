@@ -18,8 +18,8 @@ interface MenuItem {
   price: number;
   image: string;
   category: string;
+  dietary: 'veg' | 'non-veg';
   badge?: string;
-  tags: string[];
 }
 
 interface Stat {
@@ -68,6 +68,48 @@ export class HomeComponent implements OnInit {
   reservationModal!: ReservationModalComponent;
   activeCategory = 'All';
 
+  heroSlides = [
+    {
+      src: 'https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?w=1600&q=80',
+      alt: 'Restaurant ambiance',
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=80',
+      alt: 'Chef plating a dish',
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1600&q=80',
+      alt: 'Signature dish',
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=1600&q=80',
+      alt: 'Pasta close-up',
+    },
+  ];
+
+  activeSlide = 0;
+  slideInterval = 5000;
+  private slideTimer: ReturnType<typeof setInterval> | null = null;
+
+  startSlideshow(): void {
+    this.slideTimer = setInterval(() => {
+      this.activeSlide = (this.activeSlide + 1) % this.heroSlides.length;
+    }, this.slideInterval);
+  }
+
+  goToSlide(index: number): void {
+    this.activeSlide = index;
+    // Reset the timer so the new slide gets a full interval
+    if (this.slideTimer) {
+      clearInterval(this.slideTimer);
+    }
+    this.startSlideshow();
+  }
+
+  ngOnDestroy(): void {
+    if (this.slideTimer) clearInterval(this.slideTimer);
+  }
+
   about: About = {
     heading: 'Where Every Bite Tells a Story',
     body: `Founded in 2025, Siddhartha Cafe has been serving contemporary Nepalese cuisine
@@ -91,13 +133,13 @@ export class HomeComponent implements OnInit {
     {
       name: 'Truffle Arancini',
       description:
-        'Crispy Siddhartha Cafe balls filled with black truffle and fontina, served with aioli.',
+        'Crispy risotto balls filled with black truffle and fontina, served with aioli.',
       price: 180,
       image:
         'https://images.unsplash.com/photo-1541014741259-de529411b96a?w=500&q=80',
       category: 'Starters',
+      dietary: 'veg',
       badge: 'Chefs Pick',
-      tags: ['Vegetarian', 'Gluten-free available'],
     },
     {
       name: 'Burrata & Heirloom Tomato',
@@ -107,18 +149,18 @@ export class HomeComponent implements OnInit {
       image:
         'https://images.unsplash.com/photo-1608897013039-887f21d8c804?w=500&q=80',
       category: 'Starters',
-      tags: ['Vegetarian'],
+      dietary: 'veg',
     },
     {
-      name: 'Saffron Siddhartha Cafe',
+      name: 'Saffron Risotto',
       description:
-        'Classic Milanese Siddhartha Cafe with aged Parmigiano-Reggiano and gold leaf.',
+        'Classic Milanese risotto with aged Parmigiano-Reggiano and gold leaf.',
       price: 340,
       image:
         'https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=500&q=80',
       category: 'Mains',
+      dietary: 'veg',
       badge: 'Signature',
-      tags: ['Vegetarian', 'Gluten-free'],
     },
     {
       name: 'Branzino al Forno',
@@ -128,7 +170,7 @@ export class HomeComponent implements OnInit {
       image:
         'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=500&q=80',
       category: 'Mains',
-      tags: ['Gluten-free', 'Pescatarian'],
+      dietary: 'non-veg',
     },
     {
       name: 'Wagyu Tagliata',
@@ -138,8 +180,8 @@ export class HomeComponent implements OnInit {
       image:
         'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&q=80',
       category: 'Mains',
+      dietary: 'non-veg',
       badge: 'Premium',
-      tags: ['Gluten-free'],
     },
     {
       name: 'Tiramisu della Casa',
@@ -149,7 +191,7 @@ export class HomeComponent implements OnInit {
       image:
         'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=500&q=80',
       category: 'Desserts',
-      tags: ['Vegetarian'],
+      dietary: 'veg',
     },
   ];
 
@@ -219,6 +261,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.startSlideshow();
   }
 
   scrollToAbout(): void {
@@ -234,25 +277,34 @@ export class HomeComponent implements OnInit {
   lightboxOpen = false;
   lightboxIndex = 0;
 
-  openLightbox(index: number): void {
+  lightboxImages: { src: string; alt: string }[] = [];
+
+  openMenuLightbox(items: MenuItem[], index: number): void {
+    this.lightboxImages = items.map((i) => ({ src: i.image, alt: i.name }));
     this.lightboxIndex = index;
     this.lightboxOpen = true;
     document.body.style.overflow = 'hidden';
   }
 
+  openLightbox(index: number): void {
+    this.lightboxImages = this.galleryImages;
+    this.lightboxIndex = index;
+    this.lightboxOpen = true;
+    document.body.style.overflow = 'hidden';
+  }
   closeLightbox(): void {
     this.lightboxOpen = false;
     document.body.style.overflow = '';
   }
 
   nextImage(): void {
-    this.lightboxIndex = (this.lightboxIndex + 1) % this.galleryImages.length;
+    this.lightboxIndex = (this.lightboxIndex + 1) % this.lightboxImages.length;
   }
 
   prevImage(): void {
     this.lightboxIndex =
-      (this.lightboxIndex - 1 + this.galleryImages.length) %
-      this.galleryImages.length;
+      (this.lightboxIndex - 1 + this.lightboxImages.length) %
+      this.lightboxImages.length;
   }
 
   @HostListener('document:keydown', ['$event'])
