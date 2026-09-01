@@ -46,8 +46,8 @@ export class Contact {
 
   openingHours: OpeningHour[] = [
     { day: 'Monday – Friday', time: '8:00 AM – 9:00 PM' },
-    { day: 'Saturday', time: '9:00 AM – 9:00 PM' },
-    { day: 'Sunday', time: '9:00 AM – 9:00 PM' },
+    { day: 'Saturday', time: '9:00 AM – 11:00 PM' },
+    { day: 'Sunday', time: '12:00 PM – 9:00 PM' },
   ];
 
   constructor(

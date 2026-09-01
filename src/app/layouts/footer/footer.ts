@@ -67,9 +67,9 @@ export class FooterComponent {
   ];
 
   hours: Hours[] = [
-    { day: 'Mon – Fri', time: '12:00 – 22:30' },
-    { day: 'Saturday', time: '11:00 – 23:00' },
-    { day: 'Sunday', time: '11:00 – 21:00' },
+    { day: 'Monday – Friday', time: '8:00 AM – 9:00 PM' },
+    { day: 'Saturday', time: '9:00 AM – 11:00 PM' },
+    { day: 'Sunday', time: '12:00 PM – 9:00 PM' },
   ];
 
   subscribeNewsletter(): void {
