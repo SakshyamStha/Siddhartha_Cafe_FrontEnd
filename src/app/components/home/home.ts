@@ -263,7 +263,7 @@ export class HomeComponent implements OnInit {
     },
   ];
 
-  contactPhone = '9841123321';
+  contactPhone = '9849738096';
 
   ngOnInit(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });

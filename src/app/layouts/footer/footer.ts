@@ -31,8 +31,8 @@ export class FooterComponent {
   currentYear = new Date().getFullYear();
   newsletterEmail = '';
 
-  contactPhone = '+9841123322';
-  contactEmail = 'siddarthacafe1@gmail.com';
+  contactPhone = '9849738096';
+  contactEmail = 'siddharthapalacecafe@gmail.com';
   address = 'Thulovaryang, Kathmandu, Nepal';
 
   navLinks: NavLink[] = [
