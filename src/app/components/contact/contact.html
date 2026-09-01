@@ -5,7 +5,6 @@
   <div class="page-banner__overlay"></div>
   <div class="page-banner__content">
     <h1 class="page-banner__title">{{ heroTitle }}</h1>
-    <!-- <p class="page-banner__subtitle">{{ heroSubtitle }}</p> -->
   </div>
 </section>
 
@@ -14,25 +13,7 @@
     <div class="contact-page__left">
       <span class="section-eyebrow">Contact Us</span>
       <h1 class="section-title">How can We Help?</h1>
-      <p class="contact-page__desc">
-        Get in touch with our sales and support teams for demos, onboarding
-        support, or product questions.
-      </p>
-
-      <!-- <ul class="contact-page__list">
-        <li>
-          <i class="bi bi-check-circle"></i>
-          Request a demo
-        </li>
-        <li>
-          <i class="bi bi-check-circle"></i>
-          Learn which plan is right for your team
-        </li>
-        <li>
-          <i class="bi bi-check-circle"></i>
-          Get onboarding help
-        </li>
-      </ul> -->
+      <p class="contact-page__desc">Get in touch with us.</p>
 
       <div class="contact-page__cards">
         <div class="info-card">
@@ -40,22 +21,55 @@
           <p class="info-card__desc">
             For other queries, please get in touch with us via email.
           </p>
-          <a class="info-card__link" href="mailto:siddarthacafe1@gmail.com">
+          <a
+            class="info-card__link"
+            href="mailto:siddharthapalacecafe@gmail.com"
+          >
             <i class="bi bi-envelope"></i>
-            siddarthacafe1@gmail.com
+            siddharthapalacecafe@gmail.com
           </a>
         </div>
 
         <div class="info-card">
-          <h3 class="info-card__title">Documentation</h3>
+          <h3 class="info-card__title">Contact Information</h3>
           <p class="info-card__desc">Phone number</p>
           <app-whatsapp-link
             class="info-card__link"
-            phone="9767224731"
-            label="Call / WhatsApp"
+            [phone]="contactPhone"
+            [label]="contactPhone"
             message="Hello, I'd like to make a reservation."
           />
+          <br />
+          <a href="tel:015928196" class="info-card__inp"> TEL: 015928196 </a>
         </div>
+      </div>
+
+      <div class="location-card">
+        <h4 class="location-card__title">Address</h4>
+
+        <div class="location-card__block">
+          <p class="location-card__value">{{ address }}</p>
+        </div>
+
+        <div class="location-card__block">
+          <span class="location-card__label">Opening hours</span>
+          <ul class="location-card__hours">
+            <li *ngFor="let slot of openingHours">
+              <span>{{ slot.day }}</span>
+              <span>{{ slot.time }}</span>
+            </li>
+          </ul>
+        </div>
+
+        <a
+          class="btn btn-dark w-100"
+          [href]="googleMapsUrl(address)"
+          target="_blank"
+          rel="noopener"
+        >
+          <i class="bi bi-geo-alt"></i>
+          Get directions
+        </a>
       </div>
     </div>
 
@@ -182,4 +196,22 @@
       </div>
     </div>
   </div>
+
+  <section class="map-section">
+    <div class="container-xl">
+      <div class="map-panel">
+        <div class="map-image">
+          @if (address) {
+            <iframe
+              [src]="mapUrl()"
+              allowfullscreen
+              loading="lazy"
+              referrerpolicy="strict-origin-when-cross-origin"
+            >
+            </iframe>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
 </section>

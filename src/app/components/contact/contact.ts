@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -9,6 +9,7 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { WhatsappLinkComponent } from '../../shared/whatsapp-navigation/whatsapp-nav';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 interface ContactPayload {
   firstName: string;
@@ -16,6 +17,11 @@ interface ContactPayload {
   email: string;
   phone: string;
   message: string;
+}
+
+interface OpeningHour {
+  day: string;
+  time: string;
 }
 
 @Component({
@@ -35,8 +41,19 @@ export class Contact {
   contactForm: FormGroup;
   isSubmitting = false;
   submitSuccess = false;
+  contactPhone: string = '';
+  address: string = '';
 
-  constructor(private fb: FormBuilder) {
+  openingHours: OpeningHour[] = [
+    { day: 'Monday – Friday', time: '8:00 AM – 9:00 PM' },
+    { day: 'Saturday', time: '9:00 AM – 9:00 PM' },
+    { day: 'Sunday', time: '9:00 AM – 9:00 PM' },
+  ];
+
+  constructor(
+    private fb: FormBuilder,
+    private sanitizer: DomSanitizer,
+  ) {
     this.contactForm = this.fb.group({
       firstName: [
         '',
@@ -71,6 +88,8 @@ export class Contact {
         ],
       ],
     });
+    this.address = 'P8HW+7FW, Sukedhara chowk, Kathmandu 44600';
+    this.contactPhone = '9849738096';
   }
 
   static websiteValidator(control: AbstractControl): ValidationErrors | null {
@@ -115,4 +134,15 @@ export class Contact {
       this.contactForm.reset();
     }, 800);
   }
+
+  googleMapsUrl(address: string): string {
+    return `https://www.google.com/maps?q=${encodeURIComponent(address)}`;
+  }
+
+  mapUrl = computed<SafeResourceUrl>(() => {
+    const lat = 27.7285436;
+    const lng = 85.3464575;
+    const url = `https://www.google.com/maps?q=${lat},${lng}&z=15&output=embed`;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  });
 }
