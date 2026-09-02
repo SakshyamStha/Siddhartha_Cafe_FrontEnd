@@ -68,17 +68,107 @@
     </div>
     <div class="row g-4">
       <div class="col-md-6 col-lg-4" *ngFor="let svc of services">
-        <div class="about-service-card">
-          <div class="about-service-card__icon">
+        <div
+          class="about-service-card"
+          [class.about-service-card--clickable]="!svc.isMenu"
+          (click)="!svc.isMenu && openServiceModal(svc)"
+        >
+          <div class="about-service-card__icon-wrap">
             <i [class]="'bi ' + svc.icon"></i>
           </div>
           <h3 class="about-service-card__title">{{ svc.title }}</h3>
           <p class="about-service-card__desc">{{ svc.description }}</p>
+
+          <div class="about-service-card__footer">
+            <a
+              *ngIf="svc.isMenu"
+              routerLink="/menu"
+              class="about-service-card__link"
+              (click)="$event.stopPropagation()"
+            >
+              View Menu <i class="bi bi-arrow-right"></i>
+            </a>
+
+            <span *ngIf="!svc.isMenu" class="about-service-card__link">
+              View Details <i class="bi bi-arrow-right"></i>
+            </span>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<div
+  class="modal fade"
+  id="serviceDetailModal"
+  tabindex="-1"
+  aria-labelledby="serviceDetailModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered service-modal-dialog">
+    <div class="modal-content service-modal-content" *ngIf="selectedService">
+      <div class="service-modal-left">
+        <img
+          [src]="selectedService.image"
+          [alt]="selectedService.title"
+          class="service-modal-image"
+        />
+      </div>
+
+      <div class="service-modal-right">
+        <button
+          type="button"
+          class="service-modal-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >
+          <i class="bi bi-x-lg"></i>
+        </button>
+
+        <div class="service-modal-icon">
+          <i [class]="'bi ' + selectedService.icon"></i>
+        </div>
+
+        <h2 class="service-modal-title">{{ selectedService.title }}</h2>
+        <p class="service-modal-tagline">{{ selectedService.tagline }}</p>
+
+        <div class="service-modal-stats">
+          <div class="service-stat" *ngFor="let stat of selectedService.stats">
+            <i [class]="'bi ' + stat.icon"></i>
+            <span class="service-stat__value">{{ stat.value }}</span>
+            <span class="service-stat__label">{{ stat.label }}</span>
+          </div>
+        </div>
+
+        <div class="service-modal-section">
+          <p class="service-modal-section-label">Ideal For</p>
+          <div class="service-ideal-pills">
+            <span
+              class="service-pill"
+              *ngFor="let tag of selectedService.idealFor"
+            >
+              {{ tag }}
+            </span>
+          </div>
+        </div>
+
+        <div class="service-modal-section">
+          <p class="service-modal-section-label">What's Included</p>
+          <div class="service-inclusions">
+            <div
+              class="service-inclusion"
+              *ngFor="let inc of selectedService.inclusions"
+            >
+              <i [class]="'bi ' + inc.icon"></i>
+              <span>{{ inc.label }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <section class="section-about-chef">
   <div class="container">

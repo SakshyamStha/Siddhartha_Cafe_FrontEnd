@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { ReservationModalComponent } from '../../shared/reservation/reservation';
 import { RouterLink } from '@angular/router';
+
+declare var bootstrap: any;
 
 interface TeamMember {
   name: string;
@@ -10,10 +12,27 @@ interface TeamMember {
   bio: string;
 }
 
+interface ServiceStat {
+  icon: string;
+  value: string;
+  label: string;
+}
+
+interface ServiceInclusion {
+  icon: string;
+  label: string;
+}
+
 interface Service {
   icon: string;
   title: string;
   description: string;
+  isMenu?: boolean;
+  image?: string;
+  tagline?: string;
+  stats?: ServiceStat[];
+  idealFor?: string[];
+  inclusions?: ServiceInclusion[];
 }
 
 interface Testimonial {
@@ -38,6 +57,11 @@ interface Stat {
 export class About {
   @ViewChild(ReservationModalComponent)
   reservationModal!: ReservationModalComponent;
+
+  @ViewChild('serviceModal') serviceModalRef!: ElementRef;
+
+  selectedService: Service | null = null;
+
   heroTitle = 'About Us';
   heroSubtitle =
     'A glimpse into the passion, craftsmanship, and people that make every meal an experience.';
@@ -50,7 +74,7 @@ export class About {
 
   storyTitle = 'Our Story';
   storyBody = [
-    'Rooted in a love for Nepal’s rich culinary heritage and warm hospitality, Siddhartha Cafe and Restro brings together authentic Nepali flavors and modern dining. Inspired by the diverse tastes and traditions of Nepal, we create a welcoming space where every meal feels familiar, fresh, and memorable.',
+    'Rooted in a love for Nepal s rich culinary heritage and warm hospitality, Siddhartha Cafe and Restro brings together authentic Nepali flavors and modern dining. Inspired by the diverse tastes and traditions of Nepal, we create a welcoming space where every meal feels familiar, fresh, and memorable.',
     'Every dish is thoughtfully prepared with quality ingredients, traditional flavors, and a touch of creativity. From beloved Nepali classics to modern café favorites, our menu celebrates the stories, culture, and warmth of Nepal bringing people together, one delicious meal at a time.',
   ];
 
@@ -71,39 +95,64 @@ export class About {
   services: Service[] = [
     {
       icon: 'bi-cup-hot',
-      title: 'Fine Dining',
+      title: 'Restaurant / Café',
       description:
-        'An intimate, candlelit experience where every course is a deliberate act of hospitality and craft.',
+        'Relax at Siddhartha Café with authentic Nepali flavours, continental favourites, and locally sourced ingredients served with warmth.',
+      isMenu: true,
     },
     {
-      icon: 'bi-bag-heart',
-      title: 'Private Events',
+      icon: 'bi-building',
+      title: 'Siddhartha Palace Banquet',
       description:
-        'From intimate anniversaries to corporate soirées, our team curates every detail so you can simply savour the moment.',
-    },
-    {
-      icon: 'bi-shop',
-      title: 'Wine Bar',
-      description:
-        'Over 200 labels from boutique  producers, served with small plates in our relaxed cellar bar downstairs.',
-    },
-    {
-      icon: 'bi-mortarboard',
-      title: 'Cooking Classes',
-      description:
-        'Learn the art of handmade pasta, risotto, and more from our head chef in our dedicated teaching kitchen.',
+        'Spacious and elegant banquet halls designed to make every wedding, reception, and celebration truly memorable.',
+      isMenu: false,
+      image: 'assets/image/hero1.png',
+      tagline:
+        'Two grand halls crafted for celebrations that deserve the best.',
+      stats: [
+        { icon: 'bi-door-open', value: '2', label: 'Halls' },
+        { icon: 'bi-people', value: '500+', label: 'Capacity' },
+        { icon: 'bi-grid', value: '5,000', label: 'Sq Ft' },
+      ],
+      idealFor: [
+        'Weddings',
+        'Receptions',
+        'Birthdays',
+        'Corporate',
+        'Cultural',
+      ],
+      inclusions: [
+        { icon: 'bi-stars', label: 'Decor Setup (Minimal)' },
+        { icon: 'bi-cup-straw', label: 'Tea/Coffee' },
+        { icon: 'bi-mic', label: 'Stage & Sound' },
+        { icon: 'bi-person-check', label: 'Service Staff' },
+      ],
     },
     {
       icon: 'bi-truck',
-      title: 'Catering',
+      title: 'Outdoor Catering',
       description:
-        'Restaurant-quality cuisine delivered to your venue — weddings, launches, or a luxurious garden party.',
-    },
-    {
-      icon: 'bi-gift',
-      title: 'Gift Experiences',
-      description:
-        'Give the gift of a memorable meal. Our experience vouchers are the perfect gesture for any occasion.',
+        'Delicious, freshly prepared catering for weddings, celebrations, corporate events, and special occasions across the Valley.',
+      isMenu: false,
+      image: 'assets/image/catering1.jpg',
+      tagline: 'Restaurant-quality feasts at any venue you choose.',
+      stats: [
+        { icon: 'bi-geo-alt', value: 'Valley-wide', label: 'Coverage' },
+        { icon: 'bi-house-heart', label: 'Any Venue', value: 'Any Venue' },
+        { icon: 'bi-box-seam', value: 'Full', label: 'Setup Included' },
+      ],
+      idealFor: [
+        'Garden Weddings',
+        'Corporate Retreats',
+        'Ceremonies',
+        'Gatherings',
+      ],
+      inclusions: [
+        { icon: 'bi-fire', label: 'Live Cooking' },
+        { icon: 'bi-layout-split', label: 'Display Counters' },
+        { icon: 'bi-person-check', label: 'Service Staff' },
+        { icon: 'bi-truck', label: 'Transport' },
+      ],
     },
   ];
 
@@ -159,6 +208,15 @@ export class About {
 
   chefSignatureImage =
     'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80';
+
+  openServiceModal(svc: Service): void {
+    this.selectedService = svc;
+    const modalEl = document.getElementById('serviceDetailModal');
+    if (modalEl) {
+      const modal = new bootstrap.Modal(modalEl);
+      modal.show();
+    }
+  }
 
   openReservation(): void {
     this.reservationModal.open();
