@@ -51,13 +51,13 @@ export class FooterComponent {
     },
     {
       name: 'Facebook',
-      url: 'https://facebook.com',
+      url: 'https://www.facebook.com/profile.php?id=61593592081775&sk=reels_tab',
       icon: 'fab fa-facebook-f',
     },
     {
-      name: 'Twitter/X',
-      url: 'https://x.com',
-      icon: 'fab fa-x-twitter',
+      name: 'Tiktok',
+      url: 'https://www.tiktok.com/@shidartha.cafe',
+      icon: 'fab fa-tiktok',
     },
     {
       name: 'YouTube',
