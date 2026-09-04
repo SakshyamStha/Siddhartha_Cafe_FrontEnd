@@ -27,33 +27,69 @@
       </div>
 
       <div
-        class="dietary-tabs d-flex justify-content-center gap-2 mb-5 flex-wrap"
-      >
-        <button
-          class="dietary-tab"
-          [class.active]="activeDietary === 'all'"
-          (click)="setDietary('all')"
-        >
-          <span class="dietary-dot dietary-dot--all"></span>
-          All
-        </button>
-        <button
-          class="dietary-tab"
-          [class.active]="activeDietary === 'veg'"
-          (click)="setDietary('veg')"
-        >
-          <span class="dietary-dot dietary-dot--veg"></span>
-          Veg
-        </button>
-        <button
-          class="dietary-tab"
-          [class.active]="activeDietary === 'non-veg'"
-          (click)="setDietary('non-veg')"
-        >
-          <span class="dietary-dot dietary-dot--nonveg"></span>
-          Non-Veg
-        </button>
-      </div>
+  class="dietary-tabs d-flex justify-content-center gap-2 mb-5 flex-wrap"
+  *ngIf="!isDrinksCategory"
+>
+  <button
+    class="dietary-tab"
+    [class.active]="activeDietary === 'all'"
+    (click)="setDietary('all')"
+  >
+    <span class="dietary-dot dietary-dot--all"></span>
+    All
+  </button>
+  <button
+    class="dietary-tab"
+    [class.active]="activeDietary === 'veg'"
+    (click)="setDietary('veg')"
+  >
+    <span class="dietary-dot dietary-dot--veg"></span>
+    Veg
+  </button>
+  <button
+    class="dietary-tab"
+    [class.active]="activeDietary === 'non-veg'"
+    (click)="setDietary('non-veg')"
+  >
+    <span class="dietary-dot dietary-dot--nonveg"></span>
+    Non-Veg
+  </button>
+</div>
+
+<div
+  class="dietary-tabs d-flex justify-content-center gap-2 mb-5 flex-wrap"
+  *ngIf="isDrinksCategory"
+>
+  <button
+    class="dietary-tab"
+    [class.active]="activeDrinkFilter === 'all'"
+    (click)="setDrinkFilter('all')"
+  >
+    <span class="dietary-dot dietary-dot--all"></span>
+    All
+  </button>
+  <button
+    class="dietary-tab"
+    [class.active]="activeDrinkFilter === 'Hot'"
+    (click)="setDrinkFilter('Hot')"
+  >
+    Hot
+  </button>
+  <button
+    class="dietary-tab"
+    [class.active]="activeDrinkFilter === 'Cold'"
+    (click)="setDrinkFilter('Cold')"
+  >
+    Cold
+  </button>
+  <button
+    class="dietary-tab"
+    [class.active]="activeDrinkFilter === 'Hard Drinks'"
+    (click)="setDrinkFilter('Hard Drinks')"
+  >
+    Hard Drinks
+  </button>
+</div>
     </div>
 
     <div class="menu-grid">
@@ -72,11 +108,20 @@
             <div class="menu-row__name-wrap">
               <h3 class="menu-row__name">{{ item.name }}</h3>
               <span
+                *ngIf="!item.drinkType"
                 class="dietary-badge"
                 [class.dietary-badge--veg]="item.dietary === 'veg'"
                 [class.dietary-badge--nonveg]="item.dietary === 'non-veg'"
               >
                 {{ item.dietary === "veg" ? "Veg" : "Non-Veg" }}
+              </span>
+              <span
+                *ngIf="item.drinkType"
+                class="dietary-badge"
+               [style.color]="drinkTypeColor(item.drinkType)"
+                [style.border-color]="drinkTypeColor(item.drinkType)"
+                    >
+                {{ item.drinkType }}
               </span>
             </div>
           </div>

@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { API_ENDPOINTS } from '../../api- configs/api-endpoints';
 
 interface GalleryImage {
   src: string;
@@ -14,7 +16,9 @@ interface GalleryImage {
   styleUrls: ['./gallery.scss'],
   imports: [CommonModule],
 })
-export class Gallery {
+export class Gallery implements OnInit {
+  private http = inject(HttpClient);
+
   heroTitle = 'Our Gallery';
   heroSubtitle =
     'A glimpse into the moments, flavours, and stories that make us who we are.';
@@ -25,106 +29,33 @@ export class Gallery {
   currentPage = 1;
   readonly itemsPerPage = 10;
 
-  galleryCategories: string[] = [
-    'All',
-    'Dining',
-    'Kitchen',
-    'Dishes',
-    'Events',
-  ];
+  galleryCategories: string[] = ['All'];
+  galleryImages: GalleryImage[] = [];
+  loading = true;
 
-  galleryImages: GalleryImage[] = [
-    {
-      src: 'https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=800&q=80',
-      alt: 'Dining room ambiance',
-      category: 'Dining',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80',
-      alt: 'Chef plating a dish',
-      category: 'Kitchen',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80',
-      alt: 'Pasta dish close-up',
-      category: 'Dishes',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1551782450-17144efb9c50?w=800&q=80',
-      alt: 'Wine selection',
-      category: 'Dining',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1578474846511-04ba529f0b88?w=800&q=80',
-      alt: 'Private dining setup',
-      category: 'Events',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=800&q=80',
-      alt: 'Dessert plating',
-      category: 'Dishes',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80',
-      alt: 'Wagyu steak preparation',
-      category: 'Kitchen',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=800&q=80',
-      alt: 'Saffron risotto',
-      category: 'Dishes',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=800&q=80',
-      alt: 'Wine cellar',
-      category: 'Dining',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=800&q=80',
-      alt: 'Kitchen prep station',
-      category: 'Kitchen',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1484980972926-edee96e0960d?w=800&q=80',
-      alt: 'Truffle harvest table',
-      category: 'Events',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=800&q=80',
-      alt: 'Tiramisu plating',
-      category: 'Dishes',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=800&q=80',
-      alt: 'Chef at work',
-      category: 'Kitchen',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&q=80',
-      alt: 'Branzino al forno',
-      category: 'Dishes',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?w=800&q=80',
-      alt: 'Candlelit dinner event',
-      category: 'Events',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1541014741259-de529411b96a?w=800&q=80',
-      alt: 'Truffle arancini',
-      category: 'Dishes',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80',
-      alt: 'Osso buco plating',
-      category: 'Dishes',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=800&q=80',
-      alt: 'Restaurant bar area',
-      category: 'Dining',
-    },
-  ];
+  ngOnInit(): void {
+    this.http.get<GalleryImage[]>(API_ENDPOINTS.GALLERY_LIST).subscribe({
+      next: (images) => {
+        this.galleryImages = images.map((img) => ({
+          ...img,
+          src: img.src.startsWith('http')
+            ? img.src
+            : `http://localhost:3000${img.src}`,
+        }));
+
+        const uniqueCategories = Array.from(
+          new Set(this.galleryImages.map((i) => i.category)),
+        );
+        this.galleryCategories = ['All', ...uniqueCategories];
+
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Failed to load gallery images', err);
+        this.loading = false;
+      },
+    });
+  }
 
   lightboxOpen = false;
   lightboxIndex = 0;
