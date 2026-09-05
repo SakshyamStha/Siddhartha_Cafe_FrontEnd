@@ -1,4 +1,4 @@
-import { Component, computed } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -10,6 +10,7 @@ import {
 } from '@angular/forms';
 import { WhatsappLinkComponent } from '../../shared/whatsapp-navigation/whatsapp-nav';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ApiService } from '../../api- configs/api';
 
 interface ContactPayload {
   firstName: string;
@@ -32,6 +33,8 @@ interface OpeningHour {
   styleUrls: ['./contact.scss'],
 })
 export class Contact {
+  private api = inject(ApiService);
+
   heroTitle = 'Contact Us';
   heroSubtitle =
     'A glimpse into the passion, craftsmanship, and people that make every meal an experience.';
@@ -126,13 +129,17 @@ export class Contact {
       message: this.contactForm.value.message.trim(),
     };
 
-    console.log('Contact form payload:', payload);
-
-    setTimeout(() => {
-      this.isSubmitting = false;
-      this.submitSuccess = true;
-      this.contactForm.reset();
-    }, 800);
+    this.api.createData(payload, 'CONTACT_ADD').subscribe({
+      next: () => {
+        this.isSubmitting = false;
+        this.submitSuccess = true;
+        this.contactForm.reset();
+      },
+      error: (err) => {
+        this.isSubmitting = false;
+        console.error('Contact submit failed', err);
+      },
+    });
   }
 
   googleMapsUrl(address: string): string {
