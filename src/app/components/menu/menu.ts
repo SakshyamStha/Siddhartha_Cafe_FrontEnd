@@ -27,12 +27,15 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
   activeDietary: 'all' | 'veg' | 'non-veg' = 'all';
   currentPage = 1;
   searchTerm = '';
-  readonly itemsPerPage = 6;
+  readonly itemsPerPage = 20;
   readonly maxPopularItems = 8;
+  readonly desktopBreakpoint = 992;
 
   heroTitle = 'Our Menu';
   heroImage =
     'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=80';
+
+  isDesktopLayout = true;
 
   constructor(private menuService: MenuService) {}
 
@@ -40,15 +43,18 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
     this.menuService.getMenuItems().subscribe((items) => {
       this.allMenuItems = items;
     });
+    this.updateLayoutMode();
   }
 
   @ViewChild('popularScroll') popularScroll?: ElementRef<HTMLDivElement>;
   @ViewChildren('popularCardRef')
   popularCardRefs?: QueryList<ElementRef<HTMLDivElement>>;
+  @ViewChild('menuTabsRef') menuTabsRef?: ElementRef<HTMLDivElement>;
 
   popularActiveIndex = 0;
   private carouselTimer?: ReturnType<typeof setInterval>;
   private readonly carouselIntervalMs = 3000;
+  private scrollDebounceTimer?: ReturnType<typeof setTimeout>;
 
   ngAfterViewInit(): void {
     setTimeout(() => this.centerActiveCard(), 0);
@@ -57,6 +63,32 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.stopCarousel();
+    if (this.scrollDebounceTimer) {
+      clearTimeout(this.scrollDebounceTimer);
+    }
+  }
+
+  @HostListener('window:resize')
+  onWindowResize(): void {
+    this.updateLayoutMode();
+  }
+
+  private updateLayoutMode(): void {
+    if (typeof window === 'undefined') return;
+    const desktop = window.innerWidth >= this.desktopBreakpoint;
+    if (desktop !== this.isDesktopLayout) {
+      this.isDesktopLayout = desktop;
+      setTimeout(() => this.centerActiveCard(), 0);
+    }
+  }
+
+  onTabsWheel(event: WheelEvent): void {
+    const el = this.menuTabsRef?.nativeElement;
+    if (!el) return;
+    if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
+      event.preventDefault();
+      el.scrollLeft += event.deltaY;
+    }
   }
 
   startCarousel(): void {
@@ -82,6 +114,46 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
     this.startCarousel();
   }
 
+  onPopularScroll(): void {
+    if (this.scrollDebounceTimer) {
+      clearTimeout(this.scrollDebounceTimer);
+    }
+    this.scrollDebounceTimer = setTimeout(
+      () => this.syncActiveFromScroll(),
+      120,
+    );
+  }
+
+  private syncActiveFromScroll(): void {
+    const container = this.popularScroll?.nativeElement;
+    const cards = this.popularCardRefs?.toArray();
+    if (!container || !cards || !cards.length) return;
+
+    const containerCenter = this.isDesktopLayout
+      ? container.scrollTop + container.clientHeight / 2
+      : container.scrollLeft + container.clientWidth / 2;
+
+    let closestIndex = this.popularActiveIndex;
+    let closestDistance = Infinity;
+
+    cards.forEach((ref, index) => {
+      const el = ref.nativeElement;
+      const cardCenter = this.isDesktopLayout
+        ? el.offsetTop + el.clientHeight / 2
+        : el.offsetLeft + el.clientWidth / 2;
+      const distance = Math.abs(cardCenter - containerCenter);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    if (closestIndex !== this.popularActiveIndex) {
+      this.popularActiveIndex = closestIndex;
+      setTimeout(() => this.centerActiveCard(), 0);
+    }
+  }
+
   nextPopular(): void {
     const len = this.popularItems.length;
     if (!len) return;
@@ -101,6 +173,11 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
     this.centerActiveCard();
   }
 
+  selectPopularItem(item: MenuItem, i: number): void {
+    this.setActivePopular(i);
+    this.jumpToItem(item);
+  }
+
   popularDistance(i: number): number {
     const len = this.popularItems.length;
     if (!len) return 99;
@@ -114,13 +191,17 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
       this.popularCardRefs?.toArray()[this.popularActiveIndex]?.nativeElement;
     if (!container || !card) return;
 
-    const targetScrollLeft =
-      card.offsetLeft - (container.clientWidth - card.clientWidth) / 2;
-
-    container.scrollTo({
-      left: targetScrollLeft,
-      behavior: 'smooth',
-    });
+    setTimeout(() => {
+      if (this.isDesktopLayout) {
+        const targetScrollTop =
+          card.offsetTop - (container.clientHeight - card.clientHeight) / 2;
+        container.scrollTo({ top: targetScrollTop, behavior: 'smooth' });
+      } else {
+        const targetScrollLeft =
+          card.offsetLeft - (container.clientWidth - card.clientWidth) / 2;
+        container.scrollTo({ left: targetScrollLeft, behavior: 'smooth' });
+      }
+    }, 0);
   }
 
   get menuCategories(): string[] {
@@ -209,9 +290,21 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
     this.activeDietary = 'all';
     const index = this.filteredIndexOf(item);
     this.currentPage = Math.floor(index / this.itemsPerPage) + 1;
-    document
-      .getElementById('menu')
-      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    this.highlightItem(item.id);
+  }
+
+  private highlightItem(itemId: string): void {
+    this.highlightedItemId = itemId;
+    setTimeout(() => {
+      document
+        .getElementById('menu-item-' + itemId)
+        ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 50);
+    setTimeout(() => {
+      if (this.highlightedItemId === itemId) {
+        this.highlightedItemId = null;
+      }
+    }, 2000);
   }
 
   private filteredIndexOf(item: MenuItem): number {
@@ -224,6 +317,8 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
   trackById(_: number, item: MenuItem): string {
     return item.id;
   }
+
+  highlightedItemId: string | null = null;
 
   lightboxOpen = false;
   lightboxIndex = 0;

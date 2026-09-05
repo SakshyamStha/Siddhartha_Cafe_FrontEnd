@@ -8,208 +8,247 @@
   </div>
 </section>
 
-<section class="section-next-banner" *ngIf="popularItems.length > 0">
+<section class="menu-section" id="menu">
   <div class="container">
-    <div class="section-header text-center">
-      <p class="section-eyebrow">Popular Picks</p>
-    </div>
-
-    <div
-      class="popular-carousel"
-      (mouseenter)="pauseCarousel()"
-      (mouseleave)="resumeCarousel()"
-    >
-      <button
-        type="button"
-        class="popular-arrow popular-arrow--left"
-        (click)="prevPopular()"
-        aria-label="Previous"
-      >
-        <i class="bi bi-chevron-left"></i>
-      </button>
-
-      <div class="popular-scroll" #popularScroll>
-        <div
-          class="popular-card"
-          *ngFor="let item of popularItems; let i = index; trackBy: trackById"
-          #popularCardRef
-          [class.is-active]="popularActiveIndex === i"
-          [class.is-near]="popularDistance(i) === 1"
-          (click)="setActivePopular(i)"
-        >
-          <div class="popular-card__img-wrap">
-            <img
-              [src]="item.image"
-              [alt]="item.name"
-              class="popular-card__img"
-            />
-            <i
-              class="bi bi-star-fill popular-card__favourite"
-              *ngIf="item.favourite"
-            ></i>
-            <span class="popular-card__badge" *ngIf="item.badge">{{
-              item.badge
-            }}</span>
+    <div class="menu-layout">
+      <aside class="popular-sidebar" *ngIf="popularItems.length > 0">
+        <div class="popular-sidebar__inner">
+          <div class="section-header text-center">
+            <p class="section-eyebrow">Popular Picks</p>
           </div>
-          <div class="popular-card__body">
-            <h4 class="popular-card__name">{{ item.name }}</h4>
-            <span class="popular-card__price">Rs. {{ item.price }}</span>
-          </div>
-        </div>
-      </div>
 
-      <button
-        type="button"
-        class="popular-arrow popular-arrow--right"
-        (click)="nextPopular()"
-        aria-label="Next"
-      >
-        <i class="bi bi-chevron-right"></i>
-      </button>
-    </div>
-  </div>
-</section>
+          <div
+            class="popular-carousel"
+            [class.popular-carousel--vertical]="isDesktopLayout"
+            (mouseenter)="pauseCarousel()"
+            (mouseleave)="resumeCarousel()"
+          >
+            <button
+              type="button"
+              class="popular-arrow popular-arrow--left"
+              (click)="prevPopular()"
+              aria-label="Previous"
+            >
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <button
+              type="button"
+              class="popular-arrow popular-arrow--up"
+              (click)="prevPopular()"
+              aria-label="Previous"
+            >
+              <i class="bi bi-chevron-up"></i>
+            </button>
 
-<section class="section-next-banner" id="menu">
-  <div class="container">
-    <div class="section-header text-center">
-      <p class="section-eyebrow">Taste & Explore</p>
-    </div>
-
-    <div class="menu-filters">
-      <div class="menu-search mb-4 d-flex justify-content-center">
-        <input
-          type="text"
-          class="form-control menu-search__input"
-          placeholder="Search dishes..."
-          [(ngModel)]="searchTerm"
-          (ngModelChange)="onSearchChange()"
-        />
-      </div>
-
-      <div class="menu-tabs d-flex justify-content-start gap-2 mb-3">
-        <button
-          *ngFor="let cat of menuCategories"
-          class="menu-tab"
-          [class.active]="activeCategory === cat"
-          (click)="setCategory(cat)"
-        >
-          {{ cat }}
-        </button>
-      </div>
-
-      <div
-        class="dietary-tabs d-flex justify-content-center gap-2 mb-5 flex-wrap"
-      >
-        <button
-          class="dietary-tab"
-          [class.active]="activeDietary === 'all'"
-          (click)="setDietary('all')"
-        >
-          <span class="dietary-dot dietary-dot--all"></span>
-          All
-        </button>
-        <button
-          class="dietary-tab"
-          [class.active]="activeDietary === 'veg'"
-          (click)="setDietary('veg')"
-        >
-          <span class="dietary-dot dietary-dot--veg"></span>
-          Veg
-        </button>
-        <button
-          class="dietary-tab"
-          [class.active]="activeDietary === 'non-veg'"
-          (click)="setDietary('non-veg')"
-        >
-          <span class="dietary-dot dietary-dot--nonveg"></span>
-          Non-Veg
-        </button>
-      </div>
-    </div>
-
-    <div class="menu-grid">
-      <div
-        class="menu-row"
-        *ngFor="let item of pagedMenuItems; let i = index; trackBy: trackById"
-      >
-        <div class="menu-row__img-wrap" (click)="openMenuLightbox(i)">
-          <img [src]="item.image" [alt]="item.name" class="menu-row__img" />
-          <i
-            class="bi bi-star-fill menu-row__favourite"
-            *ngIf="item.favourite"
-          ></i>
-          <div class="gallery-item__overlay">
-            <i class="bi bi-zoom-in"></i>
-          </div>
-        </div>
-        <div class="menu-row__body">
-          <div class="menu-row__header">
-            <div class="menu-row__name-wrap">
-              <h3 class="menu-row__name">{{ item.name }}</h3>
-              <span
-                class="dietary-badge"
-                [class.dietary-badge--veg]="item.dietary === 'veg'"
-                [class.dietary-badge--nonveg]="item.dietary === 'non-veg'"
+            <div
+              class="popular-scroll"
+              #popularScroll
+              (scroll)="onPopularScroll()"
+            >
+              <div
+                class="popular-card"
+                *ngFor="
+                  let item of popularItems;
+                  let i = index;
+                  trackBy: trackById
+                "
+                #popularCardRef
+                [class.is-active]="popularActiveIndex === i"
+                [class.is-near]="popularDistance(i) === 1"
+                (click)="selectPopularItem(item, i)"
               >
-                {{ item.dietary === "veg" ? "Veg" : "Non-Veg" }}
-              </span>
-              <span class="popular-badge" *ngIf="item.popular">Popular</span>
+                <div class="popular-card__img-wrap">
+                  <img
+                    [src]="item.image"
+                    [alt]="item.name"
+                    class="popular-card__img"
+                  />
+                  <i
+                    class="bi bi-star-fill popular-card__favourite"
+                    *ngIf="item.favourite"
+                  ></i>
+                  <div class="popular-card__overlay">
+                    <span class="popular-card__badge" *ngIf="item.badge">{{
+                      item.badge
+                    }}</span>
+                    <h4 class="popular-card__name">{{ item.name }}</h4>
+                    <span class="popular-card__price"
+                      >Rs. {{ item.price }}</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="popular-arrow popular-arrow--right"
+              (click)="nextPopular()"
+              aria-label="Next"
+            >
+              <i class="bi bi-chevron-right"></i>
+            </button>
+            <button
+              type="button"
+              class="popular-arrow popular-arrow--down"
+              (click)="nextPopular()"
+              aria-label="Next"
+            >
+              <i class="bi bi-chevron-down"></i>
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <div class="menu-main">
+        <div class="section-header text-center">
+          <p class="section-eyebrow">Taste & Explore</p>
+        </div>
+
+        <div class="menu-filters">
+          <div class="menu-search mb-4 d-flex justify-content-center">
+            <input
+              type="text"
+              class="form-control menu-search__input"
+              placeholder="Search dishes..."
+              [(ngModel)]="searchTerm"
+              (ngModelChange)="onSearchChange()"
+            />
+          </div>
+
+          <div class="menu-tabs-wrap">
+            <div class="menu-tabs" #menuTabsRef (wheel)="onTabsWheel($event)">
+              <button
+                *ngFor="let cat of menuCategories"
+                class="menu-tab"
+                [class.active]="activeCategory === cat"
+                (click)="setCategory(cat)"
+              >
+                {{ cat }}
+              </button>
             </div>
           </div>
-          <p class="menu-row__desc">{{ item.description }}</p>
-          <div class="menu-row__footer">
-            <div class="menu-row__dotted"></div>
-            <span class="menu-row__price">Rs. {{ item.price }}</span>
+
+          <div class="dietary-tabs justify-content-center mb-5">
+            <button
+              class="dietary-tab"
+              [class.active]="activeDietary === 'all'"
+              (click)="setDietary('all')"
+            >
+              <span class="dietary-dot dietary-dot--all"></span>
+              All
+            </button>
+            <button
+              class="dietary-tab"
+              [class.active]="activeDietary === 'veg'"
+              (click)="setDietary('veg')"
+            >
+              <span class="dietary-dot dietary-dot--veg"></span>
+              Veg
+            </button>
+            <button
+              class="dietary-tab"
+              [class.active]="activeDietary === 'non-veg'"
+              (click)="setDietary('non-veg')"
+            >
+              <span class="dietary-dot dietary-dot--nonveg"></span>
+              Non-Veg
+            </button>
           </div>
         </div>
-      </div>
-    </div>
 
-    <div class="menu-empty" *ngIf="pagedMenuItems.length === 0">
-      <p>No items match your current filters.</p>
-    </div>
-
-    <div class="mt-5" *ngIf="totalPages > 1">
-      <nav class="pagination">
-        <button
-          class="pagination__btn pagination__btn--nav"
-          [disabled]="currentPage === 1"
-          (click)="goToPage(currentPage - 1)"
-          aria-label="Previous page"
-        >
-          <i class="bi bi-chevron-left"></i>
-        </button>
-
-        <ng-container *ngFor="let page of pageNumbers">
-          <span *ngIf="page === -1" class="pagination__ellipsis">…</span>
-          <button
-            *ngIf="page !== -1"
-            class="pagination__btn"
-            [class.active]="page === currentPage"
-            (click)="goToPage(page)"
-            [attr.aria-current]="page === currentPage ? 'page' : null"
+        <div class="menu-grid">
+          <div
+            class="menu-row"
+            [id]="'menu-item-' + item.id"
+            [class.menu-row--highlight]="item.id === highlightedItemId"
+            *ngFor="
+              let item of pagedMenuItems;
+              let i = index;
+              trackBy: trackById
+            "
           >
-            {{ page }}
-          </button>
-        </ng-container>
+            <div class="menu-row__img-wrap" (click)="openMenuLightbox(i)">
+              <img [src]="item.image" [alt]="item.name" class="menu-row__img" />
+              <i
+                class="bi bi-star-fill menu-row__favourite"
+                *ngIf="item.favourite"
+              ></i>
+              <div class="gallery-item__overlay">
+                <i class="bi bi-zoom-in"></i>
+              </div>
+            </div>
+            <div class="menu-row__body">
+              <div class="menu-row__header">
+                <div class="menu-row__name-wrap">
+                  <h3 class="menu-row__name">{{ item.name }}</h3>
+                  <span
+                    class="dietary-badge"
+                    [class.dietary-badge--veg]="item.dietary === 'veg'"
+                    [class.dietary-badge--nonveg]="item.dietary === 'non-veg'"
+                  >
+                    {{ item.dietary === "veg" ? "Veg" : "Non-Veg" }}
+                  </span>
+                  <span class="popular-badge" *ngIf="item.popular"
+                    >Popular</span
+                  >
+                </div>
+              </div>
+              <p class="menu-row__desc">{{ item.description }}</p>
+              <div class="menu-row__footer">
+                <div class="menu-row__dotted"></div>
+                <span class="menu-row__price">Rs. {{ item.price }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <button
-          class="pagination__btn pagination__btn--nav"
-          [disabled]="currentPage === totalPages"
-          (click)="goToPage(currentPage + 1)"
-          aria-label="Next page"
-        >
-          <i class="bi bi-chevron-right"></i>
-        </button>
-      </nav>
+        <div class="menu-empty" *ngIf="pagedMenuItems.length === 0">
+          <p>No items match your current filters.</p>
+        </div>
 
-      <p class="pagination__info">
-        Page <span>{{ currentPage }}</span> of
-        <span>{{ totalPages }}</span> &nbsp;·&nbsp; Showing
-        <span>{{ pagedMenuItems.length }}</span> of
-        <span>{{ filteredMenuItems.length }}</span> items
-      </p>
+        <div class="mt-5" *ngIf="totalPages > 1">
+          <nav class="pagination">
+            <button
+              class="pagination__btn pagination__btn--nav"
+              [disabled]="currentPage === 1"
+              (click)="goToPage(currentPage - 1)"
+              aria-label="Previous page"
+            >
+              <i class="bi bi-chevron-left"></i>
+            </button>
+
+            <ng-container *ngFor="let page of pageNumbers">
+              <span *ngIf="page === -1" class="pagination__ellipsis">…</span>
+              <button
+                *ngIf="page !== -1"
+                class="pagination__btn"
+                [class.active]="page === currentPage"
+                (click)="goToPage(page)"
+                [attr.aria-current]="page === currentPage ? 'page' : null"
+              >
+                {{ page }}
+              </button>
+            </ng-container>
+
+            <button
+              class="pagination__btn pagination__btn--nav"
+              [disabled]="currentPage === totalPages"
+              (click)="goToPage(currentPage + 1)"
+              aria-label="Next page"
+            >
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </nav>
+
+          <p class="pagination__info">
+            Page <span>{{ currentPage }}</span> of
+            <span>{{ totalPages }}</span> &nbsp;·&nbsp; Showing
+            <span>{{ pagedMenuItems.length }}</span> of
+            <span>{{ filteredMenuItems.length }}</span> items
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </section>

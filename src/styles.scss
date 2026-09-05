@@ -586,6 +586,492 @@ body {
   background: $bg-light;
 }
 
+.menu-filters {
+  margin-bottom: 0;
+}
+
+.menu-tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 0.6rem;
+  padding: 0.25rem 0.15rem 0.9rem;
+  margin-bottom: 1.25rem;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    height: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $border;
+    border-radius: 3px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .menu-tab {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    background: none;
+    border: 1.5px solid $border;
+    border-radius: 2rem;
+    padding: 0.45rem 1.4rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: $text-muted;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      border-color: $primary;
+      color: $primary;
+    }
+
+    &.active {
+      background: $primary;
+      border-color: $primary;
+      color: $white;
+    }
+  }
+}
+
+.menu-tabs-wrap {
+  position: relative;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0.75rem;
+    width: 2.5rem;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  &::before {
+    left: 0;
+    background: linear-gradient(90deg, $bg-light, rgba($bg-light, 0));
+  }
+
+  &::after {
+    right: 0;
+    background: linear-gradient(270deg, $bg-light, rgba($bg-light, 0));
+  }
+}
+
+.dietary-tabs {
+  .dietary-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: none;
+    border: 1.5px solid $border;
+    border-radius: 2rem;
+    padding: 0.35rem 1.1rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: $text-muted;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      border-color: $primary;
+      color: $dark;
+    }
+
+    &.active {
+      border-color: $primary;
+      color: $dark;
+      background: rgba($primary, 0.08);
+    }
+  }
+}
+
+.dietary-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+
+  &--veg {
+    background: #2e7d32;
+    border: 1.5px solid #2e7d32;
+  }
+
+  &--nonveg {
+    background: #c62828;
+    border: 1.5px solid #c62828;
+  }
+
+  &--all {
+    background: linear-gradient(135deg, #2e7d32 50%, #c62828 50%);
+    border: 1.5px solid $border;
+  }
+}
+
+.dietary-badge {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.55rem;
+  border-radius: 2rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  &--veg {
+    background: rgba(#2e7d32, 0.1);
+    color: #2e7d32;
+    border: 1px solid rgba(#2e7d32, 0.25);
+  }
+
+  &--nonveg {
+    background: rgba(#c62828, 0.1);
+    color: #c62828;
+    border: 1px solid rgba(#c62828, 0.25);
+  }
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem 3rem;
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+.menu-empty {
+  text-align: center;
+  padding: 4rem 1rem;
+
+  &__icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+
+  &__title {
+    font-family: $font-display;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: $dark;
+    margin-bottom: 0.5rem;
+  }
+
+  &__sub {
+    font-size: 0.9rem;
+    color: $text-muted;
+    line-height: 1.7;
+
+    strong {
+      color: $dark;
+    }
+  }
+}
+
+.menu-row {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+
+  &__img-wrap {
+    position: relative;
+    flex-shrink: 0;
+    width: 130px;
+    height: 110px;
+    border-radius: $border-radius;
+    overflow: hidden;
+    cursor: pointer;
+
+    @media (max-width: 480px) {
+      width: 100px;
+      height: 90px;
+    }
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  &:hover &__img {
+    transform: scale(1.05);
+  }
+
+  &__badge {
+    position: absolute;
+    top: 0.4rem;
+    left: 0.4rem;
+    background: $primary;
+    color: $white;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border-radius: 2rem;
+  }
+
+  &__body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__header {
+    margin-bottom: 0.35rem;
+  }
+
+  &__name-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__name {
+    font-family: $font-display;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: $dark;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  &__desc {
+    font-size: 0.83rem;
+    text-align: justify;
+    color: $text-muted;
+    line-height: 1.6;
+    margin: 0 0 0.6rem;
+    flex: 1;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: auto;
+  }
+
+  &__dotted {
+    flex: 1;
+    border-bottom: 1.5px dotted rgba($text-muted, 0.4);
+    margin-bottom: 1px;
+  }
+
+  &__price {
+    font-size: 1rem;
+    font-weight: 700;
+    color: $primary;
+    white-space: nowrap;
+    font-family: $font-display;
+  }
+}
+
+.menu-empty {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: $text-muted;
+  font-size: 0.95rem;
+}
+
+.popular-scroll {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scroll-snap-type: x mandatory;
+
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $border;
+    border-radius: 3px;
+  }
+}
+
+.popular-card {
+  flex: 0 0 220px;
+  scroll-snap-align: start;
+  cursor: pointer;
+  border-radius: $border-radius;
+  overflow: hidden;
+  background: $white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  transition: transform 0.25s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  &__img-wrap {
+    position: relative;
+    width: 100%;
+    height: 150px;
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  &__favourite {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    color: gold;
+    font-size: 0.95rem;
+  }
+
+  &__badge {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 0.5rem;
+    background: $primary;
+    color: $white;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border-radius: 2rem;
+  }
+
+  &__body {
+    padding: 0.75rem 1rem;
+  }
+
+  &__name {
+    font-family: $font-display;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: $dark;
+    margin: 0 0 0.25rem;
+  }
+
+  &__price {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: $primary;
+  }
+}
+
+.menu-search {
+  &__input {
+    max-width: 360px;
+    border-radius: 2rem;
+    border: 1.5px solid $border;
+    padding: 0.55rem 1.2rem;
+    font-size: 0.9rem;
+
+    &:focus {
+      outline: none;
+      border-color: $primary;
+      box-shadow: none;
+    }
+  }
+}
+
+.dietary-tabs {
+  .dietary-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: none;
+    border: 1.5px solid $border;
+    border-radius: 2rem;
+    padding: 0.35rem 1rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: $text-muted;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      border-color: $primary;
+      color: $primary;
+    }
+
+    &.active {
+      background: $dark;
+      border-color: $dark;
+      color: $white;
+    }
+  }
+}
+
+.dietary-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+
+  &--all {
+    background: $text-muted;
+  }
+  &--veg {
+    background: #2e8b57;
+  }
+  &--nonveg {
+    background: #c0392b;
+  }
+}
+
+.dietary-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  border-radius: 2rem;
+  background: rgba($text-muted, 0.15);
+  color: $text-muted;
+
+  &--veg {
+    background: rgba(#2e8b57, 0.12);
+    color: #2e8b57;
+  }
+  &--nonveg {
+    background: rgba(#c0392b, 0.12);
+    color: #c0392b;
+  }
+}
+
+.popular-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $primary;
+}
+
+.menu-row__favourite {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  color: gold;
+  font-size: 0.9rem;
+}
+
 .pagination {
   display: flex;
   justify-content: center;

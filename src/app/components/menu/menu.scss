@@ -13,20 +13,336 @@ $font-body: "Inter", "Helvetica Neue", sans-serif;
 $section-py: 3rem;
 $border-radius: 4px;
 $navbar-height: 90px;
+$desktop-breakpoint: 992px;
+
+.menu-section {
+  padding: $section-py 0;
+}
+
+.menu-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  align-items: start;
+
+  @media (min-width: $desktop-breakpoint) {
+    grid-template-columns: minmax(240px, 25%) 1fr;
+    gap: 2.5rem;
+  }
+}
+
+.popular-sidebar {
+  min-width: 0;
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (min-width: $desktop-breakpoint) {
+    position: sticky;
+    top: calc(#{$navbar-height} + 1.5rem);
+    max-height: calc(100vh - #{$navbar-height} - 3rem);
+  }
+}
+
+.popular-carousel {
+  position: relative;
+  max-width: 68.5rem;
+  margin: 0 auto;
+
+  @media (min-width: $desktop-breakpoint) {
+    max-width: none;
+    margin: 0;
+  }
+}
+
+.popular-scroll {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding: 1.5rem 0.5rem 1rem;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.popular-card {
+  flex: 0 0 150px;
+  height: 210px;
+  scroll-snap-align: center;
+  cursor: pointer;
+  border-radius: $border-radius;
+  overflow: hidden;
+  position: relative;
+  background: $dark;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  opacity: 0.45;
+  transform: scale(0.85);
+  filter: brightness(0.85);
+  transition:
+    transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+    filter 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+    flex-basis 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  &.is-active {
+    flex-basis: 190px;
+    opacity: 1;
+    transform: scale(1.05);
+    filter: brightness(1.05);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+  }
+
+  &.is-near {
+    opacity: 0.7;
+    transform: scale(0.92);
+  }
+
+  &__img-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 45%,
+      rgba(0, 0, 0, 0.8) 100%
+    );
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0.65rem 0.75rem;
+  }
+
+  &__favourite {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    color: gold;
+    font-size: 0.9rem;
+  }
+
+  &__badge {
+    align-self: flex-start;
+    background: $primary;
+    color: $white;
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.18rem 0.5rem;
+    border-radius: 2rem;
+    margin-bottom: 0.4rem;
+  }
+
+  &__name {
+    font-family: $font-display;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: $white;
+    margin: 0 0 0.2rem;
+    line-height: 1.25;
+  }
+
+  &__price {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: $primary;
+  }
+
+  &.is-active &__name {
+    font-size: 1rem;
+  }
+}
+
+.popular-arrow {
+  position: absolute;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid $border;
+  background: $white;
+  color: $dark;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  z-index: 3;
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: $primary;
+    color: $primary;
+  }
+
+  &--left,
+  &--right {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &--left {
+    left: -1.1rem;
+  }
+
+  &--right {
+    right: -1.1rem;
+  }
+
+  &--up,
+  &--down {
+    display: none;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &--up {
+    top: -1.1rem;
+  }
+
+  &--down {
+    bottom: -1.1rem;
+  }
+
+  @media (max-width: 767px) {
+    width: 32px;
+    height: 32px;
+
+    &--left {
+      left: 0.15rem;
+    }
+    &--right {
+      right: 0.15rem;
+    }
+  }
+}
+
+.popular-carousel--vertical {
+  .popular-scroll {
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    height: min(70vh, 32rem);
+    padding: 1rem 0.15rem;
+  }
+
+  .popular-card {
+    flex: 0 0 auto;
+    width: 100%;
+    height: 62px;
+    transform: none;
+
+    &.is-active {
+      height: 280px;
+      transform: none;
+    }
+
+    &.is-near {
+      transform: none;
+    }
+  }
+
+  .popular-arrow--left,
+  .popular-arrow--right {
+    display: none;
+  }
+
+  .popular-arrow--up,
+  .popular-arrow--down {
+    display: flex;
+  }
+}
+
+.menu-main {
+  min-width: 0;
+}
 
 .menu-filters {
   margin-bottom: 0;
+  min-width: 0;
+}
+
+.menu-search {
+  &__input {
+    max-width: 360px;
+    border-radius: 2rem;
+    border: 1.5px solid $border;
+    padding: 0.55rem 1.2rem;
+    font-size: 0.9rem;
+
+    &:focus {
+      outline: none;
+      border-color: $primary;
+      box-shadow: none;
+    }
+  }
+}
+
+.menu-tabs-wrap {
+  position: relative;
+  min-width: 0;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0.9rem;
+    width: 2.5rem;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  &::before {
+    left: 0;
+    background: linear-gradient(90deg, $bg-light, rgba($bg-light, 0));
+  }
+
+  &::after {
+    right: 0;
+    background: linear-gradient(270deg, $bg-light, rgba($bg-light, 0));
+  }
 }
 
 .menu-tabs {
   display: flex;
   flex-wrap: nowrap;
+  min-width: 0;
   overflow-x: auto;
+  overscroll-behavior-x: contain;
   gap: 0.6rem;
   padding: 0.25rem 0.15rem 0.9rem;
   margin-bottom: 1.25rem;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
 
   &::-webkit-scrollbar {
     height: 5px;
@@ -67,185 +383,10 @@ $navbar-height: 90px;
   }
 }
 
-.popular-carousel {
-  position: relative;
-  max-width: 68.5rem;
-  margin: 0 auto;
-}
-
-.popular-scroll {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  scroll-snap-type: x mandatory;
-  padding: 1.5rem 0.5rem 1rem;
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-.popular-card {
-  flex: 0 0 12.5rem;
-  scroll-snap-align: center;
-  cursor: pointer;
-  border-radius: $border-radius;
-  overflow: hidden;
-  background: $white;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
-  transform: scale(0.82);
-  opacity: 0.4;
-  filter: brightness(0.85);
-  transition:
-    transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1),
-    opacity 0.5s cubic-bezier(0.22, 0.61, 0.36, 1),
-    filter 0.5s cubic-bezier(0.22, 0.61, 0.36, 1),
-    box-shadow 0.5s cubic-bezier(0.22, 0.61, 0.36, 1),
-    flex-basis 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
-
-  &.is-active {
-    flex-basis: 14.5rem;
-    transform: scale(1.12);
-    opacity: 1;
-    filter: brightness(1.05);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
-    z-index: 2;
-  }
-
-  &.is-near {
-    transform: scale(0.92);
-    opacity: 0.7;
-    filter: brightness(0.95);
-  }
-
-  &__img-wrap {
-    position: relative;
-    width: 100%;
-    height: 150px;
-  }
-
-  &__img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  &__favourite {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    color: gold;
-    font-size: 0.95rem;
-  }
-
-  &__badge {
-    position: absolute;
-    bottom: 0.5rem;
-    left: 0.5rem;
-    background: $primary;
-    color: $white;
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    padding: 0.2rem 0.5rem;
-    border-radius: 2rem;
-  }
-
-  &__body {
-    padding: 0.75rem 1rem;
-  }
-
-  &__name {
-    font-family: $font-display;
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: $dark;
-    margin: 0 0 0.25rem;
-  }
-
-  &__price {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: $primary;
-  }
-}
-
-.popular-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  border: 1.5px solid $border;
-  background: $white;
-  color: $dark;
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  z-index: 3;
-  transition: all 0.2s;
-
-  &:hover {
-    border-color: $primary;
-    color: $primary;
-  }
-
-  &--left {
-    left: -1.25rem;
-  }
-
-  &--right {
-    right: -1.25rem;
-  }
-
-  @media (max-width: 767px) {
-    width: 34px;
-    height: 34px;
-
-    &--left {
-      left: 0.25rem;
-    }
-    &--right {
-      right: 0.25rem;
-    }
-  }
-}
-
-.menu-tabs-wrap {
-  position: relative;
-
-  &::before,
-  &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0.75rem;
-    width: 2.5rem;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  &::before {
-    left: 0;
-    background: linear-gradient(90deg, $bg-light, rgba($bg-light, 0));
-  }
-
-  &::after {
-    right: 0;
-    background: linear-gradient(270deg, $bg-light, rgba($bg-light, 0));
-  }
-}
-
 .dietary-tabs {
+  display: flex;
+  flex-wrap: wrap;
+
   .dietary-tab {
     display: inline-flex;
     align-items: center;
@@ -268,32 +409,29 @@ $navbar-height: 90px;
     }
 
     &.active {
-      border-color: $primary;
-      color: $dark;
-      background: rgba($primary, 0.08);
+      background: $dark;
+      border-color: $dark;
+      color: $white;
     }
   }
 }
 
 .dietary-dot {
   display: inline-block;
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
 
   &--veg {
     background: #2e7d32;
-    border: 1.5px solid #2e7d32;
   }
 
   &--nonveg {
     background: #c62828;
-    border: 1.5px solid #c62828;
   }
 
   &--all {
     background: linear-gradient(135deg, #2e7d32 50%, #c62828 50%);
-    border: 1.5px solid $border;
   }
 }
 
@@ -307,6 +445,8 @@ $navbar-height: 90px;
   border-radius: 2rem;
   white-space: nowrap;
   flex-shrink: 0;
+  background: rgba($text-muted, 0.15);
+  color: $text-muted;
 
   &--veg {
     background: rgba(#2e7d32, 0.1);
@@ -321,19 +461,33 @@ $navbar-height: 90px;
   }
 }
 
+.popular-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $primary;
+}
+
 .menu-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem 3rem;
+  grid-template-columns: 1fr;
+  gap: 1.75rem;
 
-  @media (max-width: 767px) {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+  @media (min-width: 576px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem 2rem;
+  }
+
+  @media (min-width: $desktop-breakpoint) {
+    gap: 2rem 2.5rem;
   }
 }
+
 .menu-empty {
   text-align: center;
   padding: 4rem 1rem;
+  color: $text-muted;
 
   &__icon {
     font-size: 3rem;
@@ -364,6 +518,14 @@ $navbar-height: 90px;
   display: flex;
   gap: 1.25rem;
   align-items: flex-start;
+  min-width: 0;
+  border-radius: $border-radius;
+  scroll-margin-top: calc(#{$navbar-height} + 1.5rem);
+  transition: background-color 0.4s ease;
+
+  &--highlight {
+    animation: menu-row-highlight 2s ease-out;
+  }
 
   &__img-wrap {
     position: relative;
@@ -392,18 +554,12 @@ $navbar-height: 90px;
     transform: scale(1.05);
   }
 
-  &__badge {
+  &__favourite {
     position: absolute;
     top: 0.4rem;
-    left: 0.4rem;
-    background: $primary;
-    color: $white;
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding: 0.2rem 0.5rem;
-    border-radius: 2rem;
+    right: 0.4rem;
+    color: gold;
+    font-size: 0.9rem;
   }
 
   &__body {
@@ -420,6 +576,7 @@ $navbar-height: 90px;
   &__name-wrap {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 0.5rem;
   }
 
@@ -463,192 +620,11 @@ $navbar-height: 90px;
   }
 }
 
-.menu-empty {
-  text-align: center;
-  padding: 4rem 1rem;
-  color: $text-muted;
-  font-size: 0.95rem;
-}
-
-.popular-scroll {
-  display: flex;
-  gap: 1.5rem;
-  overflow-x: auto;
-  padding-bottom: 0.5rem;
-  scroll-snap-type: x mandatory;
-
-  &::-webkit-scrollbar {
-    height: 6px;
+@keyframes menu-row-highlight {
+  0% {
+    background-color: rgba($primary, 0.18);
   }
-  &::-webkit-scrollbar-thumb {
-    background: $border;
-    border-radius: 3px;
+  100% {
+    background-color: transparent;
   }
-}
-
-.popular-card {
-  flex: 0 0 220px;
-  scroll-snap-align: start;
-  cursor: pointer;
-  border-radius: $border-radius;
-  overflow: hidden;
-  background: $white;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
-  transition: transform 0.25s ease;
-
-  &:hover {
-    transform: translateY(-4px);
-  }
-
-  &__img-wrap {
-    position: relative;
-    width: 100%;
-    height: 150px;
-  }
-
-  &__img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  &__favourite {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    color: gold;
-    font-size: 0.95rem;
-  }
-
-  &__badge {
-    position: absolute;
-    bottom: 0.5rem;
-    left: 0.5rem;
-    background: $primary;
-    color: $white;
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    padding: 0.2rem 0.5rem;
-    border-radius: 2rem;
-  }
-
-  &__body {
-    padding: 0.75rem 1rem;
-  }
-
-  &__name {
-    font-family: $font-display;
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: $dark;
-    margin: 0 0 0.25rem;
-  }
-
-  &__price {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: $primary;
-  }
-}
-
-.menu-search {
-  &__input {
-    max-width: 360px;
-    border-radius: 2rem;
-    border: 1.5px solid $border;
-    padding: 0.55rem 1.2rem;
-    font-size: 0.9rem;
-
-    &:focus {
-      outline: none;
-      border-color: $primary;
-      box-shadow: none;
-    }
-  }
-}
-
-.dietary-tabs {
-  .dietary-tab {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    background: none;
-    border: 1.5px solid $border;
-    border-radius: 2rem;
-    padding: 0.35rem 1rem;
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: $text-muted;
-    cursor: pointer;
-    transition: all 0.2s;
-
-    &:hover {
-      border-color: $primary;
-      color: $primary;
-    }
-
-    &.active {
-      background: $dark;
-      border-color: $dark;
-      color: $white;
-    }
-  }
-}
-
-.dietary-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  display: inline-block;
-
-  &--all {
-    background: $text-muted;
-  }
-  &--veg {
-    background: #2e8b57;
-  }
-  &--nonveg {
-    background: #c0392b;
-  }
-}
-
-.dietary-badge {
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  padding: 0.15rem 0.5rem;
-  border-radius: 2rem;
-  background: rgba($text-muted, 0.15);
-  color: $text-muted;
-
-  &--veg {
-    background: rgba(#2e8b57, 0.12);
-    color: #2e8b57;
-  }
-  &--nonveg {
-    background: rgba(#c0392b, 0.12);
-    color: #c0392b;
-  }
-}
-
-.popular-badge {
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: $primary;
-}
-
-.menu-row__favourite {
-  position: absolute;
-  top: 0.4rem;
-  right: 0.4rem;
-  color: gold;
-  font-size: 0.9rem;
 }
