@@ -1,124 +1,151 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, OnInit, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { API_ENDPOINTS } from '../../api- configs/api-endpoints';
-
-type DietaryFilter = 'all' | 'veg' | 'non-veg';
-type DrinkFilter = 'all' | 'Hot' | 'Cold' | 'Hard Drinks';
-
-interface MenuItem {
-  name: string;
-  description: string;
-  price: number;
-  image: string;
-  category: string;
-  dietary: 'veg' | 'non-veg';
-  badge?: string;
-  drinkType?: 'Hot' | 'Cold' | 'Hard Drinks';
-}
-
-interface ApiMenuItem {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  image: string;
-  category: string;
-  badge: string | null;
-  tags: string[];
-}
-
-const DRINK_ORDER: Record<string, number> = {
-  Hot: 1,
-  Cold: 2,
-  'Hard Drinks': 3,
-};
+import { FormsModule } from '@angular/forms';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
+import { MenuItem } from './service/menu.modal';
+import { MenuService } from './service/menu.service';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
   templateUrl: './menu.html',
   styleUrls: ['./menu.scss'],
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
 })
-export class Menu implements OnInit {
-  private http = inject(HttpClient);
-
+export class Menu implements OnInit, AfterViewInit, OnDestroy {
+  allMenuItems: MenuItem[] = [];
   activeCategory = 'All';
-  activeDietary: DietaryFilter = 'all';
-  activeDrinkFilter: DrinkFilter = 'all';
+  activeDietary: 'all' | 'veg' | 'non-veg' = 'all';
   currentPage = 1;
+  searchTerm = '';
   readonly itemsPerPage = 6;
+  readonly maxPopularItems = 8;
 
   heroTitle = 'Our Menu';
   heroImage =
     'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=80';
 
-  menuCategories: string[] = ['All'];
-  menuItems: MenuItem[] = [];
-  loading = true;
+  constructor(private menuService: MenuService) {}
 
   ngOnInit(): void {
-    this.http.get<ApiMenuItem[]>(API_ENDPOINTS.MENU_LIST).subscribe({
-      next: (items) => {
-        this.menuItems = items.map((item) => {
-          const isDrink = item.category.trim().toLowerCase() === 'drinks';
-          const drinkTypeTags: MenuItem['drinkType'][] = ['Hot', 'Cold', 'Hard Drinks'];
-          const matchedDrinkType = drinkTypeTags.find((t) => item.tags.includes(t as string));
-
-          return {
-            name: item.name,
-            description: item.description,
-            price: item.price,
-            image: item.image.startsWith('http')
-              ? item.image
-              : `http://localhost:3000${item.image}`,
-            category: item.category,
-            dietary: item.tags.includes('Non-Veg') ? 'non-veg' : 'veg',
-            badge: item.badge || undefined,
-            drinkType: isDrink ? matchedDrinkType : undefined,
-          };
-        });
-
-        const uniqueCategories = Array.from(
-          new Set(items.map((i) => i.category)),
-        );
-        this.menuCategories = ['All', ...uniqueCategories];
-
-        this.loading = false;
-      },
-      error: (err) => {
-        console.error('Failed to load menu items', err);
-        this.loading = false;
-      },
+    this.menuService.getMenuItems().subscribe((items) => {
+      this.allMenuItems = items;
     });
   }
 
-  get isDrinksCategory(): boolean {
-    return this.activeCategory.trim().toLowerCase() === 'drinks';
+  @ViewChild('popularScroll') popularScroll?: ElementRef<HTMLDivElement>;
+  @ViewChildren('popularCardRef')
+  popularCardRefs?: QueryList<ElementRef<HTMLDivElement>>;
+
+  popularActiveIndex = 0;
+  private carouselTimer?: ReturnType<typeof setInterval>;
+  private readonly carouselIntervalMs = 3000;
+
+  ngAfterViewInit(): void {
+    setTimeout(() => this.centerActiveCard(), 0);
+    this.startCarousel();
+  }
+
+  ngOnDestroy(): void {
+    this.stopCarousel();
+  }
+
+  startCarousel(): void {
+    this.stopCarousel();
+    this.carouselTimer = setInterval(
+      () => this.nextPopular(),
+      this.carouselIntervalMs,
+    );
+  }
+
+  stopCarousel(): void {
+    if (this.carouselTimer) {
+      clearInterval(this.carouselTimer);
+      this.carouselTimer = undefined;
+    }
+  }
+
+  pauseCarousel(): void {
+    this.stopCarousel();
+  }
+
+  resumeCarousel(): void {
+    this.startCarousel();
+  }
+
+  nextPopular(): void {
+    const len = this.popularItems.length;
+    if (!len) return;
+    this.popularActiveIndex = (this.popularActiveIndex + 1) % len;
+    this.centerActiveCard();
+  }
+
+  prevPopular(): void {
+    const len = this.popularItems.length;
+    if (!len) return;
+    this.popularActiveIndex = (this.popularActiveIndex - 1 + len) % len;
+    this.centerActiveCard();
+  }
+
+  setActivePopular(i: number): void {
+    this.popularActiveIndex = i;
+    this.centerActiveCard();
+  }
+
+  popularDistance(i: number): number {
+    const len = this.popularItems.length;
+    if (!len) return 99;
+    const diff = Math.abs(i - this.popularActiveIndex);
+    return Math.min(diff, len - diff);
+  }
+
+  private centerActiveCard(): void {
+    const container = this.popularScroll?.nativeElement;
+    const card =
+      this.popularCardRefs?.toArray()[this.popularActiveIndex]?.nativeElement;
+    if (!container || !card) return;
+
+    const targetScrollLeft =
+      card.offsetLeft - (container.clientWidth - card.clientWidth) / 2;
+
+    container.scrollTo({
+      left: targetScrollLeft,
+      behavior: 'smooth',
+    });
+  }
+
+  get menuCategories(): string[] {
+    return ['All', ...new Set(this.allMenuItems.map((i) => i.category))];
+  }
+
+  get popularItems(): MenuItem[] {
+    return this.allMenuItems
+      .filter((item) => item.popular)
+      .slice(0, this.maxPopularItems);
   }
 
   get filteredMenuItems(): MenuItem[] {
-    let items = this.menuItems.filter((item) => {
+    const term = this.searchTerm.trim().toLowerCase();
+    return this.allMenuItems.filter((item) => {
       const catMatch =
         this.activeCategory === 'All' || item.category === this.activeCategory;
-      return catMatch;
+      const dietMatch =
+        this.activeDietary === 'all' || item.dietary === this.activeDietary;
+      const searchMatch =
+        !term ||
+        item.name.toLowerCase().includes(term) ||
+        item.description.toLowerCase().includes(term);
+      return catMatch && dietMatch && searchMatch;
     });
-
-    if (this.isDrinksCategory) {
-      if (this.activeDrinkFilter !== 'all') {
-        items = items.filter((item) => item.drinkType === this.activeDrinkFilter);
-      }
-      items = [...items].sort(
-        (a, b) => (DRINK_ORDER[a.drinkType || ''] || 99) - (DRINK_ORDER[b.drinkType || ''] || 99),
-      );
-    } else {
-      if (this.activeDietary !== 'all') {
-        items = items.filter((item) => item.dietary === this.activeDietary);
-      }
-    }
-
-    return items;
   }
 
   get totalPages(): number {
@@ -156,18 +183,15 @@ export class Menu implements OnInit {
 
   setCategory(cat: string): void {
     this.activeCategory = cat;
-    this.activeDietary = 'all';
-    this.activeDrinkFilter = 'all';
     this.currentPage = 1;
   }
 
-  setDietary(dietary: DietaryFilter): void {
+  setDietary(dietary: 'all' | 'veg' | 'non-veg'): void {
     this.activeDietary = dietary;
     this.currentPage = 1;
   }
 
-  setDrinkFilter(filter: DrinkFilter): void {
-    this.activeDrinkFilter = filter;
+  onSearchChange(): void {
     this.currentPage = 1;
   }
 
@@ -179,17 +203,26 @@ export class Menu implements OnInit {
       ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  drinkTypeColor(type?: string): string {
-    switch (type) {
-      case 'Hot':
-        return '#c2410c';
-      case 'Cold':
-        return '#1d4ed8';
-      case 'Hard Drinks':
-        return '#7e22ce';
-      default:
-        return '#6b7280';
-    }
+  jumpToItem(item: MenuItem): void {
+    this.searchTerm = '';
+    this.activeCategory = item.category;
+    this.activeDietary = 'all';
+    const index = this.filteredIndexOf(item);
+    this.currentPage = Math.floor(index / this.itemsPerPage) + 1;
+    document
+      .getElementById('menu')
+      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  private filteredIndexOf(item: MenuItem): number {
+    const index = this.allMenuItems
+      .filter((i) => i.category === item.category)
+      .findIndex((i) => i.id === item.id);
+    return index === -1 ? 0 : index;
+  }
+
+  trackById(_: number, item: MenuItem): string {
+    return item.id;
   }
 
   lightboxOpen = false;
