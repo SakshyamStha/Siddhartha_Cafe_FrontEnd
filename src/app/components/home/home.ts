@@ -194,8 +194,7 @@ export class HomeComponent implements OnInit {
       description:
         'Traditional home-style chicken curry simmered in onion-tomato gravy.',
       price: 400,
-      image:
-        'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=500&q=80',
+      image: 'assets/image/chickencurry.jpg',
       category: 'Curry',
       dietary: 'non-veg',
     },
@@ -204,8 +203,7 @@ export class HomeComponent implements OnInit {
       description:
         'Slow-cooked mutton curry with a rich blend of traditional spices.',
       price: 650,
-      image:
-        'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=500&q=80',
+      image: 'assets/image/mutton-curry.jfif',
       category: 'Curry',
       dietary: 'non-veg',
     },
