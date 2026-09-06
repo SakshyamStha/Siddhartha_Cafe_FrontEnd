@@ -214,8 +214,7 @@ export class HomeComponent implements OnInit {
       description:
         'Traditional Thakali thali with rice, chicken curry, lentils, greens and pickle.',
       price: 475,
-      image:
-        'https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?w=500&q=80',
+      image: 'assets/image/nonvegkhana.jpg',
       category: 'Thakali Khana',
       dietary: 'non-veg',
       badge: 'Signature',
@@ -313,7 +312,7 @@ export class HomeComponent implements OnInit {
       alt: 'Chef plating a dish',
     },
     {
-      src: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=400&q=80',
+      src: 'assets/image/gallery2.jpg',
       alt: 'Pasta dish close-up',
     },
     {
@@ -321,7 +320,7 @@ export class HomeComponent implements OnInit {
       alt: 'Wine selection',
     },
     {
-      src: 'https://images.unsplash.com/photo-1578474846511-04ba529f0b88?w=800&q=80',
+      src: 'assets/image/gallery1.jpg',
       alt: 'Private dining setup',
     },
     {
