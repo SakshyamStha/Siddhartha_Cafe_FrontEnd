@@ -72,7 +72,7 @@ interface BlogPost {
 export class HomeComponent implements OnInit {
   @ViewChild(ReservationModalComponent)
   reservationModal!: ReservationModalComponent;
-  activeCategory = 'All';
+  activeCategory = 'Popular';
 
   heroSlides = [
     {
@@ -133,76 +133,159 @@ export class HomeComponent implements OnInit {
     ],
   };
 
-  menuCategories: string[] = ['All', 'Starters', 'Mains', 'Desserts', 'Drinks'];
-
+  menuCategories: string[] = [
+    'Popular',
+    'Tandoor & Kebabs',
+    'Curry',
+    'Thakali Khana',
+    'Pizza',
+    'Coffee & Tea',
+  ];
   menuItems: MenuItem[] = [
     {
-      name: 'Truffle Arancini',
+      name: 'Chicken Tikka',
       description:
-        'Crispy risotto balls filled with black truffle and fontina, served with aioli.',
-      price: 180,
+        'Boneless chicken marinated in yogurt and spices, chargrilled in the tandoor.',
+      price: 600,
       image:
-        'https://images.unsplash.com/photo-1541014741259-de529411b96a?w=500&q=80',
-      category: 'Starters',
-      dietary: 'veg',
+        'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=500&q=80',
+      category: 'Tandoor & Kebabs',
+      dietary: 'non-veg',
       badge: 'Chefs Pick',
     },
     {
-      name: 'Burrata & Heirloom Tomato',
+      name: 'Paneer Tikka',
       description:
-        'Creamy burrata with heirloom tomatoes, basil oil, and aged balsamic.',
-      price: 220,
+        'Cottage cheese cubes marinated and grilled with peppers and onions.',
+      price: 330,
       image:
-        'https://images.unsplash.com/photo-1608897013039-887f21d8c804?w=500&q=80',
-      category: 'Starters',
+        'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=500&q=80',
+      category: 'Tandoor & Kebabs',
       dietary: 'veg',
     },
     {
-      name: 'Saffron Risotto',
+      name: 'Seekh Kebab (Mutton/Chicken)',
       description:
-        'Classic Milanese risotto with aged Parmigiano-Reggiano and gold leaf.',
-      price: 340,
+        'Minced meat skewers seasoned with herbs and spices, cooked over charcoal.',
+      price: 950,
       image:
-        'https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=500&q=80',
-      category: 'Mains',
+        'https://images.unsplash.com/photo-1544025162-d76694265947?w=500&q=80',
+      category: 'Tandoor & Kebabs',
+      dietary: 'non-veg',
+    },
+    {
+      name: 'Palak Paneer',
+      description:
+        'Cottage cheese cubes simmered in a smooth spiced spinach gravy.',
+      price: 350,
+      image:
+        'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=500&q=80',
+      category: 'Curry',
       dietary: 'veg',
+    },
+    {
+      name: 'Chicken Curry',
+      description:
+        'Traditional home-style chicken curry simmered in onion-tomato gravy.',
+      price: 400,
+      image:
+        'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=500&q=80',
+      category: 'Curry',
+      dietary: 'non-veg',
+    },
+    {
+      name: 'Mutton Curry',
+      description:
+        'Slow-cooked mutton curry with a rich blend of traditional spices.',
+      price: 650,
+      image:
+        'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=500&q=80',
+      category: 'Curry',
+      dietary: 'non-veg',
+    },
+    {
+      name: 'Chicken Khana Set',
+      description:
+        'Traditional Thakali thali with rice, chicken curry, lentils, greens and pickle.',
+      price: 475,
+      image:
+        'https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?w=500&q=80',
+      category: 'Thakali Khana',
+      dietary: 'non-veg',
       badge: 'Signature',
     },
     {
-      name: 'Branzino al Forno',
+      name: 'Veg Khana Set',
       description:
-        'Whole roasted sea bass with capers, lemon butter, and herb gremolata.',
-      price: 460,
+        'Traditional Thakali thali with rice, seasonal vegetables, lentils and pickle.',
+      price: 375,
       image:
-        'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=500&q=80',
-      category: 'Mains',
-      dietary: 'non-veg',
+        'https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?w=500&q=80',
+      category: 'Thakali Khana',
+      dietary: 'veg',
     },
     {
-      name: 'Wagyu Tagliata',
+      name: 'Margherita Pizza',
       description:
-        'Sliced A5 Wagyu striploin with rocket, truffle shavings, and Pecorino.',
-      price: 720,
+        'Classic pizza with tomato sauce, mozzarella and fresh basil.',
+      price: 495,
       image:
-        'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&q=80',
-      category: 'Mains',
-      dietary: 'non-veg',
-      badge: 'Premium',
+        'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=500&q=80',
+      category: 'Pizza',
+      dietary: 'veg',
     },
     {
-      name: 'Tiramisu della Casa',
+      name: 'Siddhartha Special Pizza',
       description:
-        'House-made tiramisu with espresso-soaked savoiardi and mascarpone cream.',
-      price: 140,
+        'Loaded pizza with chicken, sausage, ham, salami, bacon, mixed fruits and cashew nut topping.',
+      price: 795,
       image:
-        'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=500&q=80',
-      category: 'Desserts',
+        'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=500&q=80',
+      category: 'Pizza',
+      dietary: 'non-veg',
+      badge: 'Signature',
+    },
+    {
+      name: 'Cappuccino',
+      description: 'Espresso with steamed milk and a thick layer of foam.',
+      price: 195,
+      image:
+        'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=500&q=80',
+      category: 'Coffee & Tea',
+      dietary: 'veg',
+    },
+    {
+      name: 'Cafe Latte',
+      description: 'Smooth espresso balanced with steamed milk.',
+      price: 190,
+      image:
+        'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=500&q=80',
+      category: 'Coffee & Tea',
+      dietary: 'veg',
+    },
+    {
+      name: 'Masala Milk Tea',
+      description: 'Classic spiced milk tea, brewed strong and fragrant.',
+      price: 110,
+      image:
+        'https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=500&q=80',
+      category: 'Coffee & Tea',
+      dietary: 'veg',
+    },
+    {
+      name: 'Strawberry Smoothie',
+      description:
+        'Blended fresh strawberries with yogurt and a touch of honey.',
+      price: 250,
+      image:
+        'https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=500&q=80',
+      category: 'Coffee & Tea',
       dietary: 'veg',
     },
   ];
 
   get filteredMenuItems(): MenuItem[] {
-    if (this.activeCategory === 'All') return this.menuItems;
+    if (this.activeCategory === 'Popular') return this.menuItems;
     return this.menuItems.filter(
       (item) => item.category === this.activeCategory,
     );
