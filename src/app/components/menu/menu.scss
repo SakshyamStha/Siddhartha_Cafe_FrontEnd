@@ -24,6 +24,7 @@ $desktop-breakpoint: 992px;
   grid-template-columns: 1fr;
   gap: 2.5rem;
   align-items: start;
+  min-width: 0;
 
   @media (min-width: $desktop-breakpoint) {
     grid-template-columns: minmax(240px, 25%) 1fr;
@@ -33,10 +34,13 @@ $desktop-breakpoint: 992px;
 
 .popular-sidebar {
   min-width: 0;
+  width: 100%;
 
   &__inner {
     display: flex;
     flex-direction: column;
+    min-width: 0;
+    width: 100%;
   }
 
   @media (min-width: $desktop-breakpoint) {
@@ -48,7 +52,9 @@ $desktop-breakpoint: 992px;
 
 .popular-carousel {
   position: relative;
-  max-width: 68.5rem;
+  width: 100%;
+  min-width: 0;
+  max-width: 34rem;
   margin: 0 auto;
 
   @media (min-width: $desktop-breakpoint) {
@@ -61,6 +67,8 @@ $desktop-breakpoint: 992px;
   display: flex;
   align-items: center;
   gap: 1rem;
+  width: 100%;
+  min-width: 0;
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: smooth;
@@ -172,6 +180,15 @@ $desktop-breakpoint: 992px;
 
   &.is-active &__name {
     font-size: 1rem;
+  }
+
+  @media (max-width: 420px) {
+    flex: 0 0 120px;
+    height: 170px;
+
+    &.is-active {
+      flex-basis: 150px;
+    }
   }
 }
 

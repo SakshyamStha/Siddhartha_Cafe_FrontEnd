@@ -95,15 +95,17 @@
       </p>
     </div>
 
-    <div class="menu-tabs d-flex justify-content-center gap-2 mb-5 flex-wrap">
-      <button
-        *ngFor="let cat of menuCategories"
-        class="menu-tab"
-        [class.active]="activeCategory === cat"
-        (click)="setCategory(cat)"
-      >
-        {{ cat }}
-      </button>
+    <div class="menu-tabs-wrap">
+      <div class="menu-tabs" #menuTabsRef (wheel)="onTabsWheel($event)">
+        <button
+          *ngFor="let cat of menuCategories"
+          class="menu-tab"
+          [class.active]="activeCategory === cat"
+          (click)="setCategory(cat)"
+        >
+          {{ cat }}
+        </button>
+      </div>
     </div>
 
     <div class="menu-grid" *ngIf="filteredMenuItems.length > 0">

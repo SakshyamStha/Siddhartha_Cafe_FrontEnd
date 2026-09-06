@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ReservationModalComponent } from '../../shared/reservation/reservation';
 import { WhatsappLinkComponent } from '../../shared/whatsapp-navigation/whatsapp-nav';
@@ -219,8 +225,7 @@ export class HomeComponent implements OnInit {
       description:
         'Traditional Thakali thali with rice, seasonal vegetables, lentils and pickle.',
       price: 375,
-      image:
-        'https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?w=500&q=80',
+      image: 'assets/image/veg-khana.jpg',
       category: 'Thakali Khana',
       dietary: 'veg',
     },
@@ -414,5 +419,15 @@ export class HomeComponent implements OnInit {
   // reservation
   openReservation(): void {
     this.reservationModal.open();
+  }
+
+  @ViewChild('menuTabsRef') menuTabsRef?: ElementRef<HTMLDivElement>;
+  onTabsWheel(event: WheelEvent): void {
+    const el = this.menuTabsRef?.nativeElement;
+    if (!el) return;
+    if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
+      event.preventDefault();
+      el.scrollLeft += event.deltaY;
+    }
   }
 }

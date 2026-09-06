@@ -594,12 +594,19 @@ body {
 .menu-tabs {
   display: flex;
   flex-wrap: nowrap;
+  min-width: 0;
   overflow-x: auto;
+  overscroll-behavior-x: contain;
   gap: 0.6rem;
   padding: 0.25rem 0.15rem 0.9rem;
   margin-bottom: 1.25rem;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
+  cursor: grab;
+
+  @media (min-width: 992px) {
+    justify-content: safe center;
+  }
 
   &::-webkit-scrollbar {
     height: 5px;
