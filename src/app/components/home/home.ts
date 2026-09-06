@@ -76,6 +76,10 @@ export class HomeComponent implements OnInit {
 
   heroSlides = [
     {
+      src: 'assets/image/heroooo.jpg',
+      alt: 'Our Cafe',
+    },
+    {
       src: 'https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?w=1600&q=80',
       alt: 'Restaurant ambiance',
     },
@@ -86,10 +90,6 @@ export class HomeComponent implements OnInit {
     {
       src: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1600&q=80',
       alt: 'Signature dish',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=1600&q=80',
-      alt: 'Pasta close-up',
     },
   ];
 

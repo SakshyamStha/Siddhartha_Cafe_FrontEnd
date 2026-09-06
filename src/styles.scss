@@ -1,3 +1,4 @@
+// styles.scss
 html,
 body {
   height: 100%;
@@ -747,7 +748,7 @@ body {
 
   @media (max-width: 767px) {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 2rem;
   }
 }
 .menu-empty {
@@ -879,6 +880,18 @@ body {
     color: $primary;
     white-space: nowrap;
     font-family: $font-display;
+  }
+  @media (max-width: 576px) {
+    flex-direction: column;
+
+    &__img-wrap {
+      width: 100%;
+      height: 180px;
+    }
+
+    &__name-wrap {
+      flex-wrap: wrap;
+    }
   }
 }
 
@@ -2675,5 +2688,69 @@ body {
 
   @media (max-width: 992px) {
     font-size: 0.8rem;
+  }
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+
+  .btn {
+    margin: 0 !important; // remove the me-3, use gap instead
+  }
+}
+
+@media (max-width: 575px) {
+  .hero {
+    &__content {
+      padding-top: 4rem;
+      padding-bottom: 6rem;
+    }
+
+    &__title {
+      font-size: clamp(2rem, 9vw, 2.75rem);
+    }
+
+    &__subtitle {
+      font-size: 0.95rem;
+      margin-bottom: 1.75rem;
+    }
+
+    &__actions {
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 0.6rem;
+
+      .btn {
+        flex: 1 1 0;
+        min-width: 0;
+        padding-inline: 0.75rem;
+        font-size: 0.72rem;
+        white-space: nowrap;
+      }
+    }
+
+    &__thumbnails {
+      bottom: 1rem;
+      left: 1rem;
+      right: 1rem;
+      justify-content: flex-start;
+      gap: 0.4rem;
+    }
+
+    &__thumb {
+      width: 44px;
+      height: 32px;
+
+      &--active {
+        width: 56px;
+        height: 38px;
+      }
+    }
+
+    &__scroll-indicator {
+      display: none;
+    }
   }
 }
