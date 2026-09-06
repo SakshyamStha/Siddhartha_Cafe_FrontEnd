@@ -195,7 +195,7 @@
     "name": "Veg Khana Set",
     "description": "Traditional Thakali thali with rice, seasonal vegetables, lentils and pickle.",
     "price": 375,
-    "image": "https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?w=500&q=80",
+    "image": "assets/image/veg-khana.jpg",
     "category": "Thakali Khana",
     "dietary": "veg",
     "popular": false,
