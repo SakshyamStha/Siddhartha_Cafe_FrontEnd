@@ -125,17 +125,51 @@
               <div class="invalid-feedback">Date is required.</div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6 position-relative">
               <label class="form-label"
                 >Time <span class="text-danger">*</span></label
               >
-              <input
-                type="time"
-                class="form-control"
-                formControlName="time"
+              <button
+                type="button"
+                class="form-control text-start d-flex justify-content-between align-items-center time-dropdown-btn"
+                (click)="toggleTimeDropdown()"
                 [class.is-invalid]="f['time'].invalid && f['time'].touched"
-              />
+              >
+                <span [class.text-muted]="!selectedTimeLabel">{{
+                  selectedTimeLabel || "Select time"
+                }}</span>
+                <i class="bi bi-clock"></i>
+              </button>
               <div class="invalid-feedback">Time is required.</div>
+
+              <div class="time-dropdown-panel shadow" *ngIf="timeDropdownOpen">
+                <div class="time-dropdown-col">
+                  <div class="time-dropdown-col-header">AM</div>
+                  <div class="time-dropdown-list">
+                    <div
+                      class="time-dropdown-option"
+                      *ngFor="let slot of amSlots"
+                      [class.active]="form.value.time === slot.value"
+                      (click)="selectTime(slot)"
+                    >
+                      {{ slot.label }}
+                    </div>
+                  </div>
+                </div>
+                <div class="time-dropdown-col">
+                  <div class="time-dropdown-col-header">PM</div>
+                  <div class="time-dropdown-list">
+                    <div
+                      class="time-dropdown-option"
+                      *ngFor="let slot of pmSlots"
+                      [class.active]="form.value.time === slot.value"
+                      (click)="selectTime(slot)"
+                    >
+                      {{ slot.label }}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div class="col-12">

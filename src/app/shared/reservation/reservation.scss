@@ -1,0 +1,60 @@
+.time-dropdown-btn {
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.time-dropdown-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1050;
+  display: flex;
+  width: 100%;
+  margin-top: 4px;
+  background: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.time-dropdown-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #eee;
+}
+
+.time-dropdown-col:last-child {
+  border-right: none;
+}
+
+.time-dropdown-col-header {
+  padding: 8px 12px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #6c757d;
+  background: #f8f9fa;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+.time-dropdown-list {
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.time-dropdown-option {
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.time-dropdown-option:hover {
+  background-color: #f1f3f5;
+}
+
+.time-dropdown-option.active {
+  background-color: #0d6efd;
+  color: #fff;
+}
