@@ -5,7 +5,6 @@
   <div class="page-banner__overlay"></div>
   <div class="page-banner__content">
     <h1 class="page-banner__title">{{ heroTitle }}</h1>
-    <!-- <p class="page-banner__subtitle">{{ heroSubtitle }}</p> -->
   </div>
 </section>
 
@@ -35,9 +34,26 @@
         [class.gallery-item--wide]="i === 0 || i === 4"
         (click)="openLightbox(i)"
       >
-        <img [src]="img.src" [alt]="img.alt" class="gallery-item__img" />
+        <video
+          *ngIf="isVideo(img.src)"
+          [src]="img.src"
+          class="gallery-item__img"
+          muted
+          loop
+          playsinline
+          preload="metadata"
+        ></video>
+        <img
+          *ngIf="!isVideo(img.src)"
+          [src]="img.src"
+          [alt]="img.alt"
+          class="gallery-item__img"
+        />
         <div class="gallery-item__overlay">
-          <i class="bi bi-zoom-in"></i>
+          <i
+            class="bi"
+            [ngClass]="isVideo(img.src) ? 'bi-play-circle' : 'bi-zoom-in'"
+          ></i>
         </div>
       </div>
     </div>
@@ -109,7 +125,17 @@
   </button>
 
   <div class="lightbox__content" (click)="$event.stopPropagation()">
+    <video
+      *ngIf="isVideo(filteredGalleryImages[lightboxIndex].src)"
+      [src]="filteredGalleryImages[lightboxIndex].src"
+      class="lightbox__image"
+      controls
+      autoplay
+      loop
+      playsinline
+    ></video>
     <img
+      *ngIf="!isVideo(filteredGalleryImages[lightboxIndex].src)"
       [src]="filteredGalleryImages[lightboxIndex].src"
       [alt]="filteredGalleryImages[lightboxIndex].alt"
       class="lightbox__image"

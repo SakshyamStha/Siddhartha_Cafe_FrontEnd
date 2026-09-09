@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener, OnInit, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { API_ENDPOINTS } from '../../api- configs/api-endpoints';
 
 interface GalleryImage {
   src: string;
@@ -34,19 +33,14 @@ export class Gallery implements OnInit {
   loading = true;
 
   ngOnInit(): void {
-    this.http.get<GalleryImage[]>(API_ENDPOINTS.GALLERY_LIST).subscribe({
+    this.http.get<GalleryImage[]>('assets/data/gallery-data.json').subscribe({
       next: (images) => {
-        this.galleryImages = images.map((img) => ({
-          ...img,
-          src: img.src.startsWith('http')
-            ? img.src
-            : `http://localhost:3000${img.src}`,
-        }));
+        this.galleryImages = images;
 
         const uniqueCategories = Array.from(
           new Set(this.galleryImages.map((i) => i.category)),
         );
-        this.galleryCategories = ['All', ...uniqueCategories];
+        this.galleryCategories = [...uniqueCategories];
 
         this.loading = false;
       },
@@ -98,6 +92,10 @@ export class Gallery implements OnInit {
     if (current < total - 2) pages.push(-1);
     pages.push(total);
     return pages;
+  }
+
+  isVideo(src: string): boolean {
+    return /\.(mp4|webm|mov|ogg)$/i.test(src);
   }
 
   setCategory(cat: string): void {
