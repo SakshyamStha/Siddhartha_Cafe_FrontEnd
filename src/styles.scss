@@ -534,7 +534,7 @@ body {
     .about__badge {
       position: absolute;
       bottom: -1.5rem;
-      right: -1.5rem;
+      right: -0.5rem;
       background: $primary;
       color: $white;
       width: 100px;
@@ -2760,4 +2760,9 @@ body {
       display: none;
     }
   }
+}
+
+.sid-logo {
+  height: 60px;
+  width: auto;
 }

@@ -1,6 +1,8 @@
 <nav class="navbar fixed-top" [class.scrolled]="isScrolled">
   <div class="container navbar__inner">
-    <a class="brand-name" routerLink="/home">Siddhartha Cafe</a>
+    <a class="brand-name" routerLink="/home">
+      <img src="assets/image/sidlogo.svg" class="sid-logo" alt="logo" />
+    </a>
 
     <ul class="navbar-desktop-nav">
       <li *ngFor="let link of navLinks">
