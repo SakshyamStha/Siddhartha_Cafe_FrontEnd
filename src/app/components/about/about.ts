@@ -159,29 +159,27 @@ export class About {
   testimonials: Testimonial[] = [
     {
       quote:
-        'Perhaps the most romantic restaurant in the city. The truffle risotto alone is worth the trip across the country.',
-      author: 'Mark Stone',
-      role: 'Food Critic, The Daily Table',
-      avatar:
-        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&q=80',
+        'Perhaps the coziest cafe in Kathmandu. The thakali set alone is worth the trip across town.',
+      author: 'Ishan Poudel',
+      role: 'Regular Guest, Ratnapark',
+      avatar: 'assets/image/jhats.jpg',
     },
     {
       quote:
-        'Seafood done with precision and heart. Every visit feels like the first — that is an incredibly rare thing.',
-      author: 'Michael Thomas',
-      role: 'Executive Chef & Author',
-      avatar:
-        'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&q=80',
+        'Nepali flavors done with precision and heart. Every visit feels like the first — that is an incredibly rare thing.',
+      author: 'Sakshyam Shrestha',
+      role: 'Food Blogger, Patan',
+      avatar: 'assets/image/sakshyam.jpg',
     },
   ];
 
   team: TeamMember[] = [
     {
-      name: 'Marco Bellini',
-      role: 'Executive Chef',
+      name: 'Narayan Panta',
+      role: 'Manager',
       image:
         'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=400&q=80',
-      bio: '3 Michelin stars, 20 years of culinary mastery across Italy and France.',
+      bio: '15 years of front-of-house excellence with warmth and precision.',
     },
     {
       name: 'Sophia Laurent',
