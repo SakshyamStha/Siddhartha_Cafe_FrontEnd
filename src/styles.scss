@@ -2763,6 +2763,6 @@ body {
 }
 
 .sid-logo {
-  height: 60px;
+  height: clamp(36px, 8vw, 60px);
   width: auto;
 }
