@@ -6,5 +6,5 @@
 
 export const environment = {
   production: true,
-  apiUrl: '/assets/data/',
+  apiUrl: 'http://13.140.59.188/api/',
 };
