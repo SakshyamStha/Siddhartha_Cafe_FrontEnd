@@ -33,7 +33,7 @@ export class FooterComponent {
 
   contactPhone = '9849738096';
   contactEmail = 'siddharthapalacecafe@gmail.com';
-  address = 'Thulovaryang, Kathmandu, Nepal';
+  address = 'Sukedhara, Kathmandu, Nepal';
 
   navLinks: NavLink[] = [
     { label: 'Home', path: '/home' },
