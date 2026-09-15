@@ -329,22 +329,22 @@ export class HomeComponent implements OnInit {
 
   testimonials: Testimonial[] = [
     {
-      name: 'Ramhari Pathak',
+      name: 'Alisha Adhikari',
       location: 'Chabahil, Kathmandu',
-      body: 'Hands down the finest Siddhartha Cafe Ive had outside of Chabahil. The service is impeccable and the ambiance absolutely divine.',
-      avatar: 'https://i.pravatar.cc/80?img=47',
+      body: 'The momo and thakali set here remind me of home cooking, but somehow even better. Service is warm and the ambiance feels like a proper celebration every time.',
+      avatar: 'assets/image/alsiha.jpg',
     },
     {
-      name: 'Sita Sharma',
+      name: 'Ishan Poudel',
       location: 'Ratnapark, Kathmandu',
-      body: 'We celebrated our anniversary here and it was perfect in every way — the tasting menu paired beautifully with the sommeliers recommendations.',
-      avatar: 'https://i.pravatar.cc/80?img=12',
+      body: 'Celebrated my birthday here with family and it was perfect — the staff even surprised us with a small cake and card. The mutton curry alone is worth coming back for.',
+      avatar: 'assets/image/jhats.jpg',
     },
     {
-      name: 'Sunita Thapa',
+      name: 'Sakshyam Shrestha',
       location: 'Patan, Lalitpur',
-      body: 'The Wagyu tagliata melted in my mouth. A truly world-class kitchen with warmth and personality thats rare to find.',
-      avatar: 'https://i.pravatar.cc/80?img=32',
+      body: 'Best chicken tikka in the valley, hands down. Cozy seating, quick service, and the kind of place you keep coming back to with friends after a long week.',
+      avatar: 'assets/image/sakshyam.jpg',
     },
   ];
 
