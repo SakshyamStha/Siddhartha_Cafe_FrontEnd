@@ -47,7 +47,7 @@ export class ReservationModalComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(100)]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', Validators.email],
       phone: ['', [Validators.required, Validators.maxLength(50)]],
       date: ['', Validators.required],
       time: ['', Validators.required],
