@@ -69,6 +69,16 @@ export class ApiService {
     );
   }
 
+  // Plain GET with no body/query — for public read endpoints like
+  // MENU_LIST / GALLERY_LIST that just return the full list.
+  getList(
+    module: keyof typeof API_ENDPOINTS,
+    useBase64?: boolean,
+  ): Observable<any> {
+    const encode = this.shouldEncode(useBase64);
+    return this.withDecode(this.http.get(API_ENDPOINTS[module]), encode);
+  }
+
   createData(
     postData: any,
     module: keyof typeof API_ENDPOINTS,
