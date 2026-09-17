@@ -130,16 +130,15 @@ export class About {
     },
     {
       icon: 'bi-truck',
-      title: 'Outdoor Catering',
+      title: 'Lord Buddha Event and Hospitality',
       description:
-        'Delicious, freshly prepared catering for weddings, celebrations, corporate events, and special occasions across the Valley.',
+        'We offer comprehensive event management and hospitality services, transforming your vision into reality with seamless execution and exceptional care',
       isMenu: false,
       image: 'assets/image/catering1.jpg',
       tagline: 'Restaurant-quality feasts at any venue you choose.',
       stats: [
-        { icon: 'bi-geo-alt', value: 'Valley-wide', label: 'Coverage' },
-        { icon: 'bi-house-heart', label: 'Any Venue', value: 'Any Venue' },
-        { icon: 'bi-box-seam', value: 'Full', label: 'Setup Included' },
+        { icon: 'bi-geo-alt', value: 'Outdoor Catering', label: 'Coverage' },
+        { icon: 'bi-house-heart', label: 'Any Venue', value: 'Decoration' },
       ],
       idealFor: [
         'Garden Weddings',
