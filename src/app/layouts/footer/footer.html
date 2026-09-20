@@ -40,12 +40,26 @@
       <div class="col-lg-3">
         <h6 class="footer__heading">Find Us</h6>
         <address class="footer__address">
-          <p><i class="bi bi-geo-alt me-2"></i>{{ address }}</p>
+          <p>
+            <a
+              [href]="mapUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="footer__link"
+            >
+              <i class="bi bi-geo-alt me-2"></i>{{ address }}
+            </a>
+          </p>
+
           <p>
             <app-whatsapp-link [phone]="contactPhone" [label]="contactPhone" />
           </p>
 
-          <p><i class="bi bi-envelope me-2"></i>{{ contactEmail }}</p>
+          <p>
+            <a [href]="'mailto:' + contactEmail" class="footer__link">
+              <i class="bi bi-envelope me-2"></i>{{ contactEmail }}
+            </a>
+          </p>
         </address>
       </div>
     </div>

@@ -1,0 +1,11 @@
+.footer__address a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.footer__address a:hover {
+  cursor: pointer;
+  color: #a67c2e;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none; /* optional */
+}

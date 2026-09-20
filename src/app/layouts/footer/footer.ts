@@ -81,4 +81,10 @@ export class FooterComponent {
     this.newsletterEmail = '';
     alert('Thank you for subscribing!');
   }
+  get mapUrl(): string {
+    return (
+      'https://www.google.com/maps/search/?api=1&query=' +
+      encodeURIComponent(this.address)
+    );
+  }
 }
