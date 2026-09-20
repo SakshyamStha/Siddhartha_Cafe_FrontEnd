@@ -29,6 +29,7 @@ interface Hours {
 })
 export class FooterComponent {
   currentYear = new Date().getFullYear();
+  copyright = 'Alisha Adhikari. All rights reserved.';
   newsletterEmail = '';
 
   contactPhone = '9849738096';
