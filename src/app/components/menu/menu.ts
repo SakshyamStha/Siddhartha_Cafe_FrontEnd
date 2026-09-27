@@ -25,6 +25,7 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
   allMenuItems: MenuItem[] = [];
   activeCategory = 'All';
   activeDietary: 'all' | 'veg' | 'non-veg' = 'all';
+  activeDrinkType: 'all' | 'hot' | 'cold' | 'hard' = 'all';
   currentPage = 1;
   searchTerm = '';
   readonly itemsPerPage = 20;
@@ -208,6 +209,10 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
     return ['All', ...new Set(this.allMenuItems.map((i) => i.category))];
   }
 
+  get isDrinksCategory(): boolean {
+    return this.activeCategory.toLowerCase() === 'drinks';
+  }
+
   get popularItems(): MenuItem[] {
     return this.allMenuItems
       .filter((item) => item.popular)
@@ -219,13 +224,22 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
     return this.allMenuItems.filter((item) => {
       const catMatch =
         this.activeCategory === 'All' || item.category === this.activeCategory;
-      const dietMatch =
-        this.activeDietary === 'all' || item.dietary === this.activeDietary;
+
+      let variantMatch: boolean;
+      if (this.isDrinksCategory) {
+        variantMatch =
+          this.activeDrinkType === 'all' ||
+          item.drinkType === this.activeDrinkType;
+      } else {
+        variantMatch =
+          this.activeDietary === 'all' || item.dietary === this.activeDietary;
+      }
+
       const searchMatch =
         !term ||
         item.name.toLowerCase().includes(term) ||
         item.description.toLowerCase().includes(term);
-      return catMatch && dietMatch && searchMatch;
+      return catMatch && variantMatch && searchMatch;
     });
   }
 
@@ -264,11 +278,18 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
 
   setCategory(cat: string): void {
     this.activeCategory = cat;
+    this.activeDietary = 'all';
+    this.activeDrinkType = 'all';
     this.currentPage = 1;
   }
 
   setDietary(dietary: 'all' | 'veg' | 'non-veg'): void {
     this.activeDietary = dietary;
+    this.currentPage = 1;
+  }
+
+  setDrinkType(drinkType: 'all' | 'hot' | 'cold' | 'hard'): void {
+    this.activeDrinkType = drinkType;
     this.currentPage = 1;
   }
 
@@ -288,6 +309,7 @@ export class Menu implements OnInit, AfterViewInit, OnDestroy {
     this.searchTerm = '';
     this.activeCategory = item.category;
     this.activeDietary = 'all';
+    this.activeDrinkType = 'all';
     const index = this.filteredIndexOf(item);
     this.currentPage = Math.floor(index / this.itemsPerPage) + 1;
     this.highlightItem(item.id);

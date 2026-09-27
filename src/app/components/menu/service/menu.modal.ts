@@ -5,40 +5,29 @@ export interface MenuItem {
   price: number;
   image: string;
   category: string;
-  dietary: 'veg' | 'non-veg';
+  dietary?: 'veg' | 'non-veg';
+  drinkType?: 'hot' | 'cold' | 'hard';
   badge?: string;
   popular?: boolean;
   favourite?: boolean;
+  tags?: string[];
 }
 
-// export interface MenuItem {
-//   id: string;
-//   name: string;
-//   description: string;
-//   price: number;
-//   image: string;
-//   category: string;
-//   // TODO: backend (Prisma MenuItem) has no dietary/popular field yet.
-//   // Defaulted in MenuService until the schema/API adds them.
-//   dietary: 'veg' | 'non-veg';
-//   badge?: string;
-//   popular?: boolean;
-//   favourite?: boolean;
-//   tags?: string[];
-// }
-
-// // Shape actually returned by GET /api/menu
-// export interface ApiMenuItem {
-//   id: number;
-//   name: string;
-//   description: string;
-//   price: number;
-//   image: string;
-//   category: string;
-//   badge: string | null;
-//   tags: string[];
-//   order: number;
-//   isActive: boolean;
-//   createdAt: string;
-//   updatedAt: string;
-// }
+// Shape actually returned by GET /api/menu
+export interface ApiMenuItem {
+  id: number;
+  slug: string;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  category: string;
+  badge: string | null;
+  tags: string[];
+  popular: boolean;
+  favourite: boolean;
+  order: number;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}

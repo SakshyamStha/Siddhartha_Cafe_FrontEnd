@@ -129,7 +129,7 @@
             </div>
           </div>
 
-          <div class="dietary-tabs justify-content-center mb-5">
+          <div class="dietary-tabs justify-content-center mb-5" *ngIf="!isDrinksCategory">
             <button
               class="dietary-tab"
               [class.active]="activeDietary === 'all'"
@@ -153,6 +153,41 @@
             >
               <span class="dietary-dot dietary-dot--nonveg"></span>
               Non-Veg
+            </button>
+          </div>
+
+          <div class="dietary-tabs justify-content-center mb-5" *ngIf="isDrinksCategory">
+            <button
+              class="dietary-tab"
+              [class.active]="activeDrinkType === 'all'"
+              (click)="setDrinkType('all')"
+            >
+              <span class="dietary-dot dietary-dot--all"></span>
+              All
+            </button>
+            <button
+              class="dietary-tab"
+              [class.active]="activeDrinkType === 'hot'"
+              (click)="setDrinkType('hot')"
+            >
+              <span class="dietary-dot" style="background:#c2410c"></span>
+              Hot Drinks
+            </button>
+            <button
+              class="dietary-tab"
+              [class.active]="activeDrinkType === 'cold'"
+              (click)="setDrinkType('cold')"
+            >
+              <span class="dietary-dot" style="background:#1d4ed8"></span>
+              Cold Drinks
+            </button>
+            <button
+              class="dietary-tab"
+              [class.active]="activeDrinkType === 'hard'"
+              (click)="setDrinkType('hard')"
+            >
+              <span class="dietary-dot" style="background:#7e22ce"></span>
+              Hard Drinks
             </button>
           </div>
         </div>
@@ -183,11 +218,26 @@
                 <div class="menu-row__name-wrap">
                   <h3 class="menu-row__name">{{ item.name }}</h3>
                   <span
+                    *ngIf="item.category.toLowerCase() !== 'drinks'"
                     class="dietary-badge"
                     [class.dietary-badge--veg]="item.dietary === 'veg'"
                     [class.dietary-badge--nonveg]="item.dietary === 'non-veg'"
                   >
                     {{ item.dietary === "veg" ? "Veg" : "Non-Veg" }}
+                  </span>
+                  <span
+                    *ngIf="item.category.toLowerCase() === 'drinks' && item.drinkType"
+                    class="dietary-badge"
+                    [style.background]="
+                      item.drinkType === 'hot' ? '#c2410c' :
+                      item.drinkType === 'cold' ? '#1d4ed8' : '#7e22ce'
+                    "
+                    style="color:#fff"
+                  >
+                    {{
+                      item.drinkType === "hot" ? "Hot" :
+                      item.drinkType === "cold" ? "Cold" : "Hard"
+                    }}
                   </span>
                   <span class="popular-badge" *ngIf="item.popular"
                     >Popular</span
