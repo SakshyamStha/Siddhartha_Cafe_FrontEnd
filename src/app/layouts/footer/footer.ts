@@ -57,7 +57,7 @@ export class FooterComponent {
     },
     {
       name: 'Tiktok',
-      url: 'https://www.tiktok.com/@shidartha.cafe',
+      url: 'https://www.tiktok.com/@siddarthacafe',
       icon: 'fab fa-tiktok',
     },
     {
