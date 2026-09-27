@@ -1,11 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener, OnInit, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { ApiService } from '../../api- configs/api';
 
 interface GalleryImage {
   src: string;
   alt: string;
   category: string;
+  mediaType?: 'image' | 'video';
+}
+
+interface ApiGalleryItem {
+  id: number;
+  src: string;
+  alt: string;
+  category: string;
+  mediaType: string;
+  order: number;
+  isActive: boolean;
 }
 
 @Component({
@@ -16,7 +27,7 @@ interface GalleryImage {
   imports: [CommonModule],
 })
 export class Gallery implements OnInit {
-  private http = inject(HttpClient);
+  private apiService = inject(ApiService);
 
   heroTitle = 'Our Gallery';
   heroSubtitle =
@@ -33,9 +44,14 @@ export class Gallery implements OnInit {
   loading = true;
 
   ngOnInit(): void {
-    this.http.get<GalleryImage[]>('assets/data/gallery-data.json').subscribe({
-      next: (images) => {
-        this.galleryImages = images;
+    this.apiService.getList('GALLERY_LIST').subscribe({
+      next: (items: ApiGalleryItem[]) => {
+        this.galleryImages = items.map((i) => ({
+          src: i.src,
+          alt: i.alt,
+          category: i.category,
+          mediaType: (i.mediaType as 'image' | 'video') || 'image',
+        }));
 
         const uniqueCategories = Array.from(
           new Set(this.galleryImages.map((i) => i.category)),
