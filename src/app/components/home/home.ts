@@ -124,18 +124,16 @@ export class HomeComponent implements OnInit {
 
   about: About = {
     heading: 'Where Every Bite Tells a Story',
-    body: `Founded in 2025, Siddhartha Cafe has been serving contemporary Nepalese cuisine
-           crafted from the finest locally sourced ingredients. Our philosophy is simple:
-           respect the ingredient, honor the tradition, and surprise the palate.`,
+    body: `Siddhartha Cafe is located opposite Hotel Mercure and beside the police beat. Since 2025, we have served Nepali, Thakali, and Indian dishes made with fresh local ingredients. Families, friends, and colleagues dine with us for everyday meals, meetings, and celebrations, in indoor seating or an outdoor space surrounded by nature.`,
     image:
       'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=80',
     imageAlt: 'Restaurant interior ambiance',
     yearsOpen: 2,
     features: [
-      'Farm-to-table ingredients sourced daily',
-      'Award-winning wine cellar with 300+ labels',
-      'Private dining rooms for up to 40 guests',
-      'Seasonal tasting menus curated monthly',
+      'Nepali, Thakali, and Indian dishes',
+      'Private meeting rooms for gatherings and celebrations',
+      'Indoor seating and outdoor dining in nature',
+      'Parking for cars and two-wheelers',
     ],
   };
 

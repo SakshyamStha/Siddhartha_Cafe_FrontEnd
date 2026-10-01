@@ -74,8 +74,8 @@ export class About {
 
   storyTitle = 'Our Story';
   storyBody = [
-    'Rooted in a love for Nepal s rich culinary heritage and warm hospitality, Siddhartha Cafe and Restro brings together authentic Nepali flavors and modern dining. Inspired by the diverse tastes and traditions of Nepal, we create a welcoming space where every meal feels familiar, fresh, and memorable.',
-    'Every dish is thoughtfully prepared with quality ingredients, traditional flavors, and a touch of creativity. From beloved Nepali classics to modern café favorites, our menu celebrates the stories, culture, and warmth of Nepal bringing people together, one delicious meal at a time.',
+    'Siddhartha Cafe and Restro is located opposite Hotel Mercure and beside the police beat. Since 2025, we have served Nepali, Thakali, and Indian dishes made with fresh ingredients and traditional recipes. Families, friends, and colleagues dine with us for everyday meals and group occasions.',
+    'The cafe has private rooms for meetings and celebrations, indoor seating, and an outdoor dining area surrounded by nature. Parking is available for cars and two-wheelers.',
   ];
 
   features: string[] = [
