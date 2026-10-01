@@ -76,8 +76,9 @@ export class ApiService {
     useBase64?: boolean,
   ): Observable<any> {
     const encode = this.shouldEncode(useBase64);
-    return this.withDecode(this.http.get(API_ENDPOINTS[module]), encode);
-  }
+    return this.withDecode(this.http.get(API_ENDPOINTS[module]), encode).pipe(
+      map((res: any) => res?.data ?? res),
+    );  }
 
   createData(
     postData: any,
