@@ -26,7 +26,7 @@
           {{ errorMsg }}
         </div>
 
-        <form [formGroup]="form" *ngIf="!success">
+        <form [formGroup]="form" *ngIf="!success" novalidate>
           <div class="row g-3">
             <div class="col-md-6">
               <label class="form-label"
@@ -43,9 +43,15 @@
                 <span *ngIf="f['name'].errors?.['required']"
                   >Name is required.</span
                 >
+                <span *ngIf="f['name'].errors?.['minlength']"
+                  >Name must be at least 2 characters.</span
+                >
                 <span *ngIf="f['name'].errors?.['maxlength']"
                   >Max 100 characters.</span
                 >
+                <span *ngIf="f['name'].errors?.['server']">{{
+                  f["name"].errors?.["server"]
+                }}</span>
               </div>
             </div>
 
@@ -59,12 +65,15 @@
                 placeholder="john@example.com"
               />
               <div class="invalid-feedback">
-                <span *ngIf="f['email'].errors?.['required']"
-                  >Email is required.</span
-                >
-                <span *ngIf="f['email'].errors?.['email']"
+                <span *ngIf="f['email'].errors?.['pattern']"
                   >Enter a valid email.</span
                 >
+                <span *ngIf="f['email'].errors?.['maxlength']"
+                  >Max 254 characters.</span
+                >
+                <span *ngIf="f['email'].errors?.['server']">{{
+                  f["email"].errors?.["server"]
+                }}</span>
               </div>
             </div>
 
@@ -83,6 +92,13 @@
                 <span *ngIf="f['phone'].errors?.['required']"
                   >Phone is required.</span
                 >
+                <span *ngIf="f['phone'].errors?.['pattern']"
+                  >Phone must be 7-20 characters (digits, +, -, space,
+                  brackets).</span
+                >
+                <span *ngIf="f['phone'].errors?.['server']">{{
+                  f["phone"].errors?.["server"]
+                }}</span>
               </div>
             </div>
 
@@ -98,6 +114,8 @@
                   f['number_of_guests'].invalid && f['number_of_guests'].touched
                 "
                 min="1"
+                max="50"
+                step="1"
               />
               <div class="invalid-feedback">
                 <span *ngIf="f['number_of_guests'].errors?.['required']"
@@ -106,6 +124,15 @@
                 <span *ngIf="f['number_of_guests'].errors?.['min']"
                   >At least 1 guest required.</span
                 >
+                <span *ngIf="f['number_of_guests'].errors?.['max']"
+                  >Maximum 50 guests.</span
+                >
+                <span *ngIf="f['number_of_guests'].errors?.['pattern']"
+                  >Enter a whole number.</span
+                >
+                <span *ngIf="f['number_of_guests'].errors?.['server']">{{
+                  f["number_of_guests"].errors?.["server"]
+                }}</span>
               </div>
             </div>
 
@@ -120,7 +147,17 @@
                 [min]="today"
                 [class.is-invalid]="f['date'].invalid && f['date'].touched"
               />
-              <div class="invalid-feedback">Date is required.</div>
+              <div class="invalid-feedback">
+                <span *ngIf="f['date'].errors?.['required']"
+                  >Date is required.</span
+                >
+                <span *ngIf="f['date'].errors?.['pastDate']"
+                  >Date cannot be in the past.</span
+                >
+                <span *ngIf="f['date'].errors?.['server']">{{
+                  f["date"].errors?.["server"]
+                }}</span>
+              </div>
             </div>
 
             <div class="col-md-6 position-relative">
@@ -138,7 +175,14 @@
                 }}</span>
                 <i class="bi bi-clock"></i>
               </button>
-              <div class="invalid-feedback">Time is required.</div>
+              <div class="invalid-feedback">
+                <span *ngIf="f['time'].errors?.['required']"
+                  >Time is required.</span
+                >
+                <span *ngIf="f['time'].errors?.['server']">{{
+                  f["time"].errors?.["server"]
+                }}</span>
+              </div>
 
               <div class="time-dropdown-panel shadow" *ngIf="timeDropdownOpen">
                 <div class="time-dropdown-col">
@@ -176,8 +220,19 @@
                 class="form-control"
                 formControlName="message"
                 rows="3"
+                [class.is-invalid]="
+                  f['message'].invalid && f['message'].touched
+                "
                 placeholder="Dietary requirements, special occasions, seating preferences..."
               ></textarea>
+              <div class="invalid-feedback">
+                <span *ngIf="f['message'].errors?.['maxlength']"
+                  >Max 500 characters.</span
+                >
+                <span *ngIf="f['message'].errors?.['server']">{{
+                  f["message"].errors?.["server"]
+                }}</span>
+              </div>
             </div>
           </div>
         </form>
