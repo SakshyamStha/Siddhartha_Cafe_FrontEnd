@@ -5,5 +5,5 @@ export const environment = {
   // apiUrl: 'http://13.140.59.188/api/',
 
   // live
-  apiUrl: 'https://cms.siddharthacafe.com/api',
+  apiUrl: 'https://cms.siddharthacafe.com/api/',
 };
